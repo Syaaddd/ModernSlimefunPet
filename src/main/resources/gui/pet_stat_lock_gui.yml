@@ -1,0 +1,116 @@
+# --------------------------------------------------------------------------
+#  Pet Stat Locks
+# --------------------------------------------------------------------------
+#  Opened from the reroll confirmation menu (pet_reroll_confirm_gui.yml).
+#
+#  One stat at a time is shown in the middle, so there is nothing to aim at:
+#  the up and down buttons walk through the stats of the pet and the button on
+#  the left locks or unlocks whichever one is on screen. That keeps it usable
+#  on Bedrock, where hovering a small icon to read its lore is awkward.
+#
+#  The charms are only spent when the reroll is confirmed, and walking away
+#  spends nothing. What the locks cost is a total for the attempt, set by
+#  'stats.stat-lock-cost' in pets.yml, so locking more stats at once can be
+#  made to cost more than one charm each.
+#
+#  Slots: up 4, stat 13, down 22, lock toggle 11, information 15, back 18.
+#
+#  Placeholders: {pet} {stat} {index} {total} {locked} {charms}
+#                {cost} charms the locks made so far cost in total
+#                {next_cost} what they would cost with one more stat locked
+# --------------------------------------------------------------------------
+
+title: '&8Stat Locks'
+
+filler:
+  material: GRAY_STAINED_GLASS_PANE
+  display-name: ' '
+
+up:
+  material: ARROW
+  display-name: '&e&lUp'
+  lore:
+    - '&7Show the stat above this one.'
+
+down:
+  material: ARROW
+  display-name: '&e&lDown'
+  lore:
+    - '&7Show the stat below this one.'
+
+# The stat currently on screen, shown with the button on the left able to lock it
+stat-unlocked:
+  material: BOOK
+  display-name: '&f&lStat {index}&7/&f{total}'
+  lore:
+    - '{stat}'
+    - ''
+    - '&7Status: &cUnlocked'
+    - '&7This stat can be rerolled or burned.'
+
+stat-locked:
+  material: ENCHANTED_BOOK
+  display-name: '&b&lStat {index}&7/&b{total}'
+  lore:
+    - '{stat}'
+    - ''
+    - '&7Status: &aLocked'
+    - '&7Kept exactly as it is by this reroll.'
+
+lock:
+  material: TRIPWIRE_HOOK
+  display-name: '&a&lLock This Stat'
+  lore:
+    - '&7Protect the stat on screen.'
+    - ''
+    - ' &8- &7Total cost: &b{next_cost}x Stat Lock Charm'
+    - ' &8- &7Charms owned: &b{charms}'
+    - ' &8- &7Locked so far: &b{locked} &7(&b{cost} &7charms)'
+
+# Shown in place of 'lock' once every stat but this one is already protected.
+# A reroll has to be left one stat it may touch, or it spends everything and
+# changes nothing, so the last free stat can never be locked.
+lock-blocked:
+  material: BARRIER
+  display-name: '&c&lCannot Lock This'
+  lore:
+    - '&7A reroll needs at least one stat'
+    - '&7it is allowed to change.'
+    - ''
+    - ' &8- &7Locked: &b{locked}&7/&b{total}'
+    - ' &8- &7Unlock another stat first.'
+
+unlock:
+  material: SHEARS
+  display-name: '&c&lUnlock This Stat'
+  lore:
+    - '&7Stop protecting the stat on screen'
+    - '&7and bring the cost back down.'
+    - ''
+    - ' &8- &7Locked so far: &b{locked} &7(&b{cost} &7charms)'
+
+info:
+  material: PAPER
+  display-name: '&e&lStat Locks'
+  lore:
+    - '&7Pet: {pet}'
+    - ''
+    - '&7Locked: &b{locked}&7/&b{total}'
+    - '&7Charms this costs: &b{cost}'
+    - '&7Charms owned: &b{charms}'
+    - ''
+    - '&7Locking more stats at once costs more,'
+    - '&7and is only spent when you confirm.'
+
+back:
+  material: RED_STAINED_GLASS_PANE
+  display-name: '&c&lBack'
+  lore:
+    - '&7Return to the reroll confirmation.'
+
+# Shown in the middle when the pet has no stats to lock at all
+no-stats:
+  material: BARRIER
+  display-name: '&c&lNo Stats'
+  lore:
+    - '&7{pet} &7has nothing to protect yet.'

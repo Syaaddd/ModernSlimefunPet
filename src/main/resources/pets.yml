@@ -1,0 +1,1057 @@
+# ╔═════════════════════════════════════════════════════════════════════════════╗
+# ║                         ModernSlimefunPet Pets                              ║
+# ╠═════════════════════════════════════════════════════════════════════════════╣
+# ║  Pets follow their owner, give stats and have to be fed to stay alive.      ║
+# ║  A pet gains exp in exactly two ways: by burning food, or from candy.       ║
+# ║  Ported from ModernMineGens; the stats and AFK XP are this server's own.    ║
+# ╚═════════════════════════════════════════════════════════════════════════════╝
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║                      Pet Food                            ║
+# ╚══════════════════════════════════════════════════════════╝
+food:
+  # The size of the food bar
+  max: 300
+  # How much food an EQUIPPED pet loses per hour.
+  # A pet sitting in the menu never gets hungry, only the ones a player has
+  # out are burning food. The decay keeps running while the owner is offline
+  # and is worked out from the time that actually passed, not tick by tick
+  decay-per-hour: 5
+  # Burning food is what levels a pet up, feeding it only refills the bar.
+  # For every 1 food burned the pet gains this much exp, so with 5 food per
+  # hour and 150 exp per food a pet earns 750 exp every hour it stays out
+  # and fed. How long a level takes is that against its 'level-cost'.
+  #
+  # This is the rate for every pet that does not set its own one, see the
+  # 'exp-per-food' of the pets down below.
+  # It can be a plain number or a formula using {level}, the level the pet is
+  # on while it is burning the food:
+  #   30                     a flat 30 exp per food at every level
+  #   30 + ({level} * 5)     the pet digests better as it grows
+  exp-per-food: 150
+  # Should pets get hungry while their owner is offline?
+  # Turn this off to freeze the bar until they come back
+  offline-decay: true
+  # Never take more than this many hours of decay off at once, so a player
+  # coming back from a long break does not lose everything.
+  # Set to 0 to remove the cap
+  max-offline-hours: 72
+  # How often the food bars are checked, in seconds
+  check-interval: 60
+  # Burns hunger faster (or slower) while the owner is standing in a given
+  # world. Only applies while the owner is online and actually in that
+  # world; a world not listed here uses 1.0 (no change). Only affects the
+  # rate at the moment the food task ticks, not offline catch-up decay.
+  #   1.5   burns 50% faster
+  #   0.5   burns 50% slower
+  # Example:
+  #   world-multipliers:
+  #     world_nether:
+  #       decay-multiplier: 1.5
+  world-multipliers: {}
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║                      Auto-Feed                           ║
+# ╚══════════════════════════════════════════════════════════╝
+#  A pet with Auto-Feed eats the pet food stored in it on its own, one at a
+#  time, whenever its food bar drops to the threshold of its tier. It also eats
+#  during the offline catch-up, so it does not starve while its owner is away.
+#  A food worth more than the room left on the bar fills it and the rest is
+#  lost, as when feeding by hand. A food item's commands only run when it is
+#  fed by hand.
+#
+#  Each pet unlocks it once with an Auto-Feed Unlocker (clicked in its options
+#  menu) and climbs one tier per Auto-Feed Upgrade (clicked in its Auto-Feed
+#  menu). The first tier is what an unlock gives.
+#    threshold   the food percent at or below which it eats, 0 to 95
+#    slots       how many of the 5 food slots are open, 1 to 5
+auto-feed:
+  tiers:
+    - threshold: 50
+      slots: 3
+    - threshold: 65
+      slots: 4
+    - threshold: 80
+      slots: 5
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║                      Equipping                           ║
+# ╚══════════════════════════════════════════════════════════╝
+equip:
+  # How many pets a player can have out at once. One active pet, so the
+  # stats never stack; no permission raises it.
+  max-equipped: 1
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║                       Display                            ║
+# ╚══════════════════════════════════════════════════════════╝
+display:
+  # Should other players see the pets of everyone around them?
+  visible-to-others: true
+  # How far away a pet can still be seen, in blocks
+  view-distance: 8
+  # How often the pets are moved, in ticks.
+  # Raise this on a busy server, 2 is already smooth
+  update-interval: 2
+  # How far apart several pets sit from each other
+  orbit-radius: 1.0
+  # The name tag above the pet
+  # Placeholders: {name} {level} {max_level} {owner} {food} {food_percent}
+  hologram: '&eLv {level} &r{name} &8[&6{food_percent}%&8]'
+  hologram-dead: '&c&lDEAD &r{name}'
+  # Pet models
+  # Drop any Blockbench .bbmodel into plugins/ModernSlimefunPet/models and run
+  # the reload command. No resource pack needed: every cube is drawn as one
+  # solid block picked from the colours of its texture, so the shape and
+  # the animations show but not the fine texture details. Animations used:
+  # 'idle' standing, 'walk' moving, 'fly' while you fly (falls back to
+  # 'idle'). A part scaled down past three quarters (how these models blink)
+  # is hidden outright rather than drawn shrinking into the head.
+  # A bone named 'head' glances around now and then while standing,
+  # and its details (eyes, nose) are drawn first when 'detail' runs short.
+  # See-through overlay cubes (a face or second skin drawn over a cube) are
+  # not drawn solid, only the parts of them that are painted. Glow textures
+  # (marked emissive in Blockbench, or named '<texture>_e') are skipped, a
+  # cube with nothing else on it is not drawn. Flat planes cut
+  # into a shape by see-through pixels (wings, spines, claws) keep their
+  # outline, big ones at 2x2 pixel steps. Every piece is an entity sent to
+  # each player near the pet: the console warns about heavy models.
+  # A pet uses the model named after its id on its own (models/<pet id>.bbmodel),
+  # or pick one under the pet:
+  #     model: redpanda
+  # or tune it:
+  #     model:
+  #       file: redpanda
+  #       scale: 0.6       # 1.0 is the size it has in Blockbench
+  #       y-offset: 0      # blocks above your feet, 0 is on the ground
+  #       facing: north    # where the model's front points in Blockbench:
+  #                        # north, east, south or west. Walks sideways or
+  #                        # backwards? This is the one to change
+  #       detail: 40       # face details (eyes, nose, stripes) drawn on top of the
+  #                        # cubes, sharpest first. Each is one more entity to send,
+  #                        # 0 for plain cubes, at most 128
+  #       blocks:          # optional, beats the picked colour
+  #         tail: orange_terracotta      # every cube named 'tail'
+  #         hat: black_concrete          # every cube in the 'hat' group (and its sub-groups)
+  #         hat.cube: red_concrete       # cubes named 'cube' inside the 'hat' group
+  #         head.hat.cube: red_concrete  # a longer group path, when 'hat' alone is not enough
+  #         hat.*: black_concrete        # the whole 'hat' group, use this form when
+  #                                      # 'hat.<cube>' is also set ('hat:' and 'hat.cube:'
+  #                                      # cannot both be written in YAML)
+  #       The most specific key wins: naming the cube beats a group, a longer
+  #       path beats a shorter one, a deeper group beats an outer one. Group
+  #       and cube names are the ones in Blockbench's outliner.
+  #       particles:       # optional. A cube whose name starts with 'particle'
+  #                        # is never drawn: it gives off particles from its
+  #                        # centre and follows its group's animation. With no
+  #                        # entry here the rest of its name is the particle
+  #                        # ('particle_flame' gives off flame)
+  #         particle_tail: soul_fire_flame   # just the particle
+  #         particle_wing:                   # or tuned
+  #           type: dust                     # any particle that needs no extra
+  #                                          # data, plus dust
+  #           color: '#FF8800'               # dust only
+  #           size: 1.0                      # dust only, 0.01 to 4
+  #           count: 1                       # particles per puff, 0 to 50
+  #           spread: 0.05                   # blocks each way they scatter
+  #           speed: 0
+  #           interval: 4                    # ticks between puffs, never faster
+  #                                          # than display.update-interval
+  #           animation: helix               # the shape each puff draws around the cube:
+  #                                          #  point  - at the centre (default)
+  #                                          #  circle - one particle going round
+  #                                          #  helix  - two strands going round while climbing
+  #                                          #  ring   - a full ring of 'points', slowly turning
+  #                                          #  pulse  - a ring growing out to 'radius'
+  #                                          #  rise   - one particle climbing straight up
+  #                                          #  spiral - circling inward while climbing
+  #           radius: 0.5                    # blocks out from the centre, 0 to 4
+  #           height: 1.0                    # blocks helix/rise/spiral climb, 0 to 4
+  #           period: 40                     # ticks for one full loop
+  #           points: 12                     # ring/pulse only, 1 to 24
+  # 'model: none' keeps the skull. Bedrock players see the skull instead
+  # (needs Floodgate to tell them apart), Geyser cannot show block displays.
+  # With the AlwiDisplayEntity extension in Geyser's extensions folder, a
+  # Bedrock player who runs /alwipack download gets the models too.
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║                      Pet Stats                           ║
+# ╚══════════════════════════════════════════════════════════╝
+#  Every pet rolls random stats from the pool when it is obtained, keeps them
+#  when it evolves and gains extra ones on top. A reroll item rolls a new set.
+#  A stat only works while its pet is equipped and alive.
+stats:
+  # How many stats a reroll item gives when it does not set its own amount
+  reroll-amount: 3
+  # How many stats a pet can hold at once, for every pet that does not set
+  # its own 'max-stats'
+  max-stats: 8
+  # What a rolled stat is worth at a given level. Potion effects and the heal
+  # never scale: level I stays level I.
+  #   '1 + (({level} - 1) * 0.05)'  ->  +5% per level, x2.0 at level 21
+  #   '1'                           ->  levels give no boost at all
+  level-scaling: '1 + (({level} - 1) * 0.05)'
+  # What the stat locks of one reroll cost in Stat Lock Charms, in total.
+  # '{locked}' is how many stats the attempt protects. Rounded up.
+  stat-lock-cost: '2 ^ ({locked} - 1)'
+  # The most stats one reroll may protect. 0 turns stat locks off.
+  max-stat-locks: 4
+  # A player is in combat for this many seconds after they hit or were hit
+  # by a mob or a player (Speed only works out of combat, AFK XP pauses)
+  combat-seconds: 10
+  # A player counts as mining for this many seconds after breaking a block
+  mining-seconds: 5
+  # How often the effects and the heal are checked, in ticks (40 = 2s)
+  effect-interval: 40
+  pool:
+    # kind: what the stat does, one of
+    #   ATTRIBUTE      changes a player attribute while the pet is out
+    #                  attribute: max_health, armor, attack_damage,
+    #                    movement_speed, knockback_resistance, luck,
+    #                    attack_speed (any Minecraft attribute name works)
+    #                  operation: ADD_NUMBER adds the value as it is,
+    #                    ADD_SCALAR adds it as a share of the base value
+    #                  percent: true divides the value by 100 first, so a
+    #                    stat can be shown as '+2%' and applied as 0.02
+    #   POTION_EFFECT  gives a potion effect, the value is the level
+    #                  potion-effect: the effect name (HASTE, SPEED, ...)
+    #                  condition: ALWAYS (default), MINING, HEALTH_BELOW,
+    #                    OUT_OF_COMBAT
+    #                  health-below: percent of max health, for HEALTH_BELOW
+    #                  duration-seconds: how long one refresh lasts
+    #   HEAL           heals 'value' health points every 'interval-seconds'
+    #                  while the player is below 'health-below' percent
+    #   PET_EXP        the pet gains more exp when it burns food, in percent
+    #   FOOD_SAVER     the pet gets hungry slower, in percent
+    # display: the stat line on the pet item, {value} is the scaled value
+    # min / max: the rolled range, decimals: digits kept
+    # weight: how likely the stat is compared to the others
+    # enabled: false switches a stat off without deleting it. Pets that rolled
+    #   it keep it stored, but it is hidden from the pet item and does nothing
+    #   until it is switched back on
+    # type: GOOD (default) or BAD. A full reroll lands one BAD stat when the
+    #   pool has any, so leave BAD stats out to keep rerolls clean.
+    max_health:
+      kind: ATTRIBUTE
+      attribute: max_health
+      operation: ADD_NUMBER
+      display: ' &8- &#FF5555+{value} &7Max Health'
+      min: 2
+      max: 2
+      decimals: 1
+      weight: 10
+    armor:
+      kind: ATTRIBUTE
+      attribute: armor
+      operation: ADD_NUMBER
+      display: ' &8- &#AAAAAA+{value} &7Armor'
+      min: 1
+      max: 1
+      decimals: 1
+      weight: 10
+    attack_damage:
+      kind: ATTRIBUTE
+      attribute: attack_damage
+      operation: ADD_NUMBER
+      display: ' &8- &#FF8855+{value} &7Attack Damage'
+      min: 0.5
+      max: 0.5
+      decimals: 2
+      weight: 10
+    movement_speed:
+      kind: ATTRIBUTE
+      attribute: movement_speed
+      operation: ADD_SCALAR
+      percent: true
+      display: ' &8- &#55FFFF+{value}% &7Movement Speed'
+      min: 2
+      max: 2
+      decimals: 1
+      weight: 10
+    knockback_resistance:
+      kind: ATTRIBUTE
+      attribute: knockback_resistance
+      # Its base value is 0, so a share of it would be nothing: a flat 0.05
+      operation: ADD_NUMBER
+      percent: true
+      display: ' &8- &#8888FF+{value}% &7Knockback Resistance'
+      min: 5
+      max: 5
+      decimals: 1
+      weight: 10
+    luck:
+      # Only loot tables with a quality use luck (fishing treasure, chest
+      # loot); normal mob drops do not change.
+      kind: ATTRIBUTE
+      attribute: luck
+      operation: ADD_NUMBER
+      display: ' &8- &#55FF55+{value} &7Luck'
+      min: 1
+      max: 1
+      decimals: 1
+      weight: 10
+    attack_speed:
+      kind: ATTRIBUTE
+      attribute: attack_speed
+      operation: ADD_SCALAR
+      percent: true
+      display: ' &8- &#FFFF55+{value}% &7Attack Speed'
+      min: 5
+      max: 5
+      decimals: 1
+      weight: 10
+    haste:
+      kind: POTION_EFFECT
+      potion-effect: HASTE
+      condition: MINING
+      duration-seconds: 5
+      display: ' &8- &#E7AC11Haste {value} &7while mining'
+      min: 1
+      max: 1
+      decimals: 0
+      weight: 8
+    regeneration:
+      kind: HEAL
+      interval-seconds: 8
+      health-below: 70
+      display: ' &8- &#FC75E8+{value} HP &7every 8s below 70% health'
+      min: 1
+      max: 1
+      decimals: 0
+      weight: 8
+    resistance:
+      kind: POTION_EFFECT
+      potion-effect: RESISTANCE
+      condition: HEALTH_BELOW
+      health-below: 30
+      duration-seconds: 3
+      display: ' &8- &#9999FFResistance {value} &7below 30% health'
+      min: 1
+      max: 1
+      decimals: 0
+      weight: 8
+    jump_boost:
+      kind: POTION_EFFECT
+      potion-effect: JUMP_BOOST
+      duration-seconds: 3
+      display: ' &8- &#88FF88Jump Boost {value}'
+      min: 1
+      max: 1
+      decimals: 0
+      weight: 8
+    night_vision:
+      kind: POTION_EFFECT
+      potion-effect: NIGHT_VISION
+      # Under 10 seconds the screen starts to flicker
+      duration-seconds: 15
+      display: ' &8- &#3333FFNight Vision'
+      min: 1
+      max: 1
+      decimals: 0
+      weight: 8
+    fire_resistance:
+      kind: POTION_EFFECT
+      potion-effect: FIRE_RESISTANCE
+      duration-seconds: 3
+      display: ' &8- &#FF9933Fire Resistance'
+      min: 1
+      max: 1
+      decimals: 0
+      weight: 8
+    water_breathing:
+      kind: POTION_EFFECT
+      potion-effect: WATER_BREATHING
+      duration-seconds: 3
+      display: ' &8- &#3399FFWater Breathing'
+      min: 1
+      max: 1
+      decimals: 0
+      weight: 8
+    speed:
+      kind: POTION_EFFECT
+      potion-effect: SPEED
+      condition: OUT_OF_COMBAT
+      duration-seconds: 3
+      display: ' &8- &#96FF72Speed {value} &7out of combat'
+      min: 1
+      max: 1
+      decimals: 0
+      weight: 8
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║                      Pet Items                           ║
+# ╚══════════════════════════════════════════════════════════╝
+#  Food and candy are the items used by hand: right clicking one opens the pet
+#  menu and the pet you click is the one it is used on, the item being taken
+#  only once it actually worked.
+#
+#  An admin can open a menu for a player with
+#    /slimefunpet petmenu <player> [type] [id]
+#  The player still needs the item when they click a pet.
+#
+#  Every item takes an optional 'whitelist-pets', the ids of the pets it may
+#  be used on. An item without one works on every pet.
+#
+#  What the player is told while a menu is open lives in 'gui-modes' below.
+#  Give them with: /slimefunpet givepetitem <player> <type> <id> [amount]
+items:
+  # Restores food and gives exp
+  food:
+    small_treat:
+      material: COOKIE
+      display-name: '#CB883E&lPet Treat'
+      lore:
+        - '&7Right click to feed one of your pets.'
+        - ''
+        - ' &8- &6+25 &7Food'
+        - '&7The pet earns EXP by burning'
+        - '&7that food while it is equipped.'
+      food: 25
+    large_feast:
+      material: PUMPKIN_PIE
+      display-name: '#FFF5A3&lPet Feast'
+      lore:
+        - '&7Right click to feed one of your pets.'
+        - ''
+        - ' &8- &6+150 &7Food'
+        - '&7The pet earns EXP by burning'
+        - '&7that food while it is equipped.'
+      food: 150
+  # Instantly levels a pet up
+  candy:
+    pet_candy:
+      material: SUGAR
+      display-name: '#FFA96E&lPet Candy'
+      lore:
+        - '&7Right click to instantly level'
+        - '&7one of your pets up by &f1&7.'
+      levels: 1
+    super_candy:
+      material: HONEYCOMB
+      display-name: '#FFD460&lSuper Pet Candy'
+      lore:
+        - '&7Right click to instantly level'
+        - '&7one of your pets up by &f5&7.'
+      levels: 5
+  # Evolves a pet into the next one of its chain
+  evolution:
+    evolution_stone:
+      material: HEART_OF_THE_SEA
+      display-name: '#31BCFF&lEvolution Stone'
+      lore:
+        - '&7Right click to evolve one of your pets.'
+        - ''
+        - '&c&lWARNING &7The evolution can fail'
+        - '&7and the stone will be lost.'
+      # Taken on use, 0 to disable
+      money-cost: 0
+      # Added to the success rate of the evolution, so a better stone makes the
+      # same evolution more likely to work. The total is capped at 100%
+      chance-bonus: 0
+      commands: []
+    blessed_evolution_stone:
+      material: NETHER_STAR
+      display-name: '#B184EF&lBlessed Evolution Stone'
+      lore:
+        - '&7Right click to evolve one of your pets.'
+        - ''
+        - '&d&l> &7Success rate: &a+25%'
+        - ''
+        - '&c&lWARNING &7The evolution can fail'
+        - '&7and the stone will be lost.'
+      money-cost: 0
+      chance-bonus: 25
+      commands: []
+  reroll:
+    reroll_token:
+      material: PAPER
+      display-name: '#88D7FD&lStat Reroll Token'
+      lore:
+        - '&7Right click to gamble the stats'
+        - '&7of one of your pets.'
+        - ''
+        - ' &8- &a50% &7Reroll every stat'
+        - ' &8- &c50% &7Burn one stat away'
+        - ''
+        - '&c&lWARNING &7This can leave the pet worse!'
+      # Rolled fresh on every use
+      outcomes:
+        reroll:
+          kind: REROLL
+          weight: 50
+          # 0 uses 'stats.reroll-amount'
+          amount: 0
+        burn:
+          kind: REMOVE
+          weight: 50
+          amount: 1
+    blessed_reroll_token:
+      material: BOOK
+      display-name: '#70FFBA&lBlessed Stat Reroll Token'
+      lore:
+        - '&7Right click to gamble the stats'
+        - '&7of one of your pets.'
+        - ''
+        - ' &8- &a90% &7Reroll every stat'
+        - ' &8- &c10% &7Burn one stat away'
+        - ''
+        - '&c&lWARNING &7This can leave the pet worse!'
+      # Rolled fresh on every use
+      outcomes:
+        reroll:
+          kind: REROLL
+          weight: 90
+          # 0 uses 'stats.reroll-amount'
+          amount: 0
+        burn:
+          kind: REMOVE
+          weight: 10
+          amount: 1
+      money-cost: 0
+    stat_shard:
+      material: AMETHYST_SHARD
+      display-name: '#DCA9FC&lStat Shard'
+      lore:
+        - '&7Right click to roll one extra stat'
+        - '&7onto one of your pets.'
+        - ''
+        - '&8- &a+1 &dExtra Stat&7, the ones it has are kept'
+        - ' &7Does nothing on a pet that is reached max &dStats'
+      stats: 1
+      money-cost: 0
+    stat_eraser:
+      material: FLINT
+      display-name: '#FF8BC3&lStat Eraser'
+      lore:
+        - '&7Right click to burn one random stat'
+        - '&7off one of your pets.'
+        - ''
+        - '&8- &c-1 &dStat&7, picked at random'
+      stats: -1
+      money-cost: 0
+      # Only usable on these pets, remove the list to allow every pet
+      whitelist-pets:
+        - legendary_pet
+        - mythic_pet
+        - celestial_pet
+  # Select a pet in the reroll menu, then open the stat lock menu from the
+  # confirmation screen and pick the stats to protect. One charm is spent per
+  # locked stat, and the protection lasts for that attempt only. Closing the
+  # menu spends nothing. Never used by right clicking on its own.
+  stat_lock:
+    stat_lock_charm:
+      material: NAME_TAG
+      display-name: '#C0F18F&lStat Lock Charm'
+      lore:
+        - '&7Select a pet in the reroll menu,'
+        - '&7then open the &bStat Locks &7menu'
+        - '&7and pick the stats to protect.'
+        - ''
+        - ' &8- &7One charm is spent per locked stat.'
+        - ' &8- &7Locking more than 2 stats cost more Stat lock!'
+      money-cost: 0
+  # Unlocks Auto-Feed on one pet: click the locked Auto-Feed button in the
+  # pet's options menu. Never used by right clicking on its own.
+  auto_feed_unlocker:
+    auto_feed_unlocker:
+      material: HAY_BLOCK
+      display-name: '#FFD45C&lAuto-Feed Unlocker'
+      lore:
+        - '&7Open a pet''s options and click'
+        - '&7the locked &eAuto-Feed &7button.'
+        - ''
+        - ' &8- &7The pet eats stored food on its own.'
+  # Raises the Auto-Feed of one pet a tier ('auto-feed.tiers'): it feeds
+  # earlier and opens more food slots. Clicked in the pet's Auto-Feed menu.
+  auto_feed_upgrade:
+    auto_feed_upgrade:
+      material: GOLDEN_CARROT
+      display-name: '#FFB717&lAuto-Feed Upgrade'
+      lore:
+        - '&7Open a pet''s Auto-Feed menu and'
+        - '&7click the upgrade button.'
+        - ''
+        - ' &8- &7Feeds earlier, stores more food.'
+  # Brings a dead pet back
+  revive:
+    revive_totem:
+      material: TOTEM_OF_UNDYING
+      display-name: '#FFE135&lPet Revival Totem'
+      lore:
+        - '&7Right click to bring one of your'
+        - '&7dead pets back to life.'
+        - ''
+        - ' &8- &6Restores 50 Food'
+      # How much food the pet wakes up with
+      food: 50
+      # Money taken per revive (needs Vault and an economy plugin). 0 = free.
+      money-cost: 0
+      commands: []
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║                     Pet Menu Modes                       ║
+# ╚══════════════════════════════════════════════════════════╝
+#  Right clicking a pet item opens the pet menu in one of these modes.
+#  Everything a player is told about what to do lives here.
+#
+#  title:               the menu title while the mode is open
+#  message:             sent in chat the moment the menu opens.
+#                       Bedrock players cannot hover an item to read its lore,
+#                       so this is the instruction they will actually see
+#  pet-suffix:          added to the name of every pet that can be clicked
+#  pet-lore:            added to the lore of every pet that can be clicked
+#  pet-suffix-unusable: used instead when the pet cannot be clicked
+#  pet-lore-unusable:   used instead when the pet cannot be clicked
+#
+#  A pet the item is not allowed on, because of its 'whitelist-pets', is shown
+#  with the unusable suffix and lore too.
+#
+#  Placeholders: {food} {exp} {levels} {stats} {cost}
+# --------------------------------------------------------------------------
+gui-modes:
+  food:
+    title: '&8Feed a Pet'
+    message:
+      - ''
+      - ' &e&lFEEDING &8- &7Click the pet you want to feed.'
+      - ' &7It will restore &6{food} &7food.'
+      - ' &7Keep it equipped to turn that food into EXP.'
+      - ''
+    pet-suffix: ' &8(&aCLICK TO FEED&8)'
+    pet-lore:
+      - '&7'
+      - '&a&l> &aClick this pet to feed it'
+      - ' &8- &6+{food} &7Food'
+    pet-suffix-unusable: ' &8(&cDEAD&8)'
+    pet-lore-unusable:
+      - '&7'
+      - '&c&l> &cThis pet is dead and cannot eat'
+      - '&7Revive it first with a revival totem.'
+
+  candy:
+    title: '&8Use a Candy'
+    message:
+      - ''
+      - ' &d&lCANDY &8- &7Click the pet you want to level up.'
+      - ' &7It will instantly gain &f{levels} &7level(s).'
+      - ''
+    pet-suffix: ' &8(&dCLICK TO LEVEL UP&8)'
+    pet-lore:
+      - '&7'
+      - '&d&l> &dClick this pet to level it up'
+      - ' &8- &f+{levels} &7Level(s)'
+    pet-suffix-unusable: ' &8(&cDEAD&8)'
+    pet-lore-unusable:
+      - '&7'
+      - '&c&l> &cThis pet is dead'
+      - '&7Revive it first with a revival totem.'
+
+  evolution:
+    title: '&8Evolve a Pet'
+    message:
+      - ''
+      - ' &b&lEVOLUTION &8- &7Click the pet you want to evolve.'
+      - ' &7This stone is worth &a+{chance_bonus}% &7success rate.'
+      - ' &c&lWARNING &7The evolution can fail and the stone is lost.'
+      - ''
+    pet-suffix: ' &8(&bCLICK TO EVOLVE&8)'
+    # Placeholders: {chance} the real odds with the stone in hand
+    #               {base_chance} the odds without it, {chance_bonus} the stone
+    #               {into} what it becomes, {required_level} the level it needs
+    #               {requirements} one line per thing the evolution asks for,
+    #                              each marked as met or not
+    pet-lore:
+      - '&7'
+      - '&b&l> &bClick this pet to evolve it'
+      - ' &8- &7Becomes: &f{into}'
+      - ' &8- &7Success rate: &a{chance}% &8(&7{base_chance}% &a+{chance_bonus}%&8)'
+      - '&7'
+      - '&e&lREQUIREMENTS'
+      - '{requirements}'
+    pet-suffix-unusable: ' &8(&cDEAD&8)'
+    pet-lore-unusable:
+      - '&7'
+      - '&c&l> &cThis pet is dead and cannot evolve'
+      - '&7Revive it first with a revival totem.'
+
+  reroll:
+    title: '&8Reroll Pet Stats'
+    message:
+      - ''
+      - ' &a&lREROLL &8- &7Click the pet you want to gamble on.'
+      - ' &7Add an optional Stat Lock Charm, then confirm:'
+      - ' &7What this does is rolled when you click:'
+      - ' &7it can reroll every stat or burn one away.'
+      - ' &c&lWARNING &7The pet can come out worse!'
+      - ''
+    pet-suffix: ' &8(&aSELECT TO REROLL&8)'
+    pet-lore:
+      - '&7'
+      - '&a&l> &aClick to open reroll confirmation'
+      - '&7Add an optional Stat Lock Charm before confirming.'
+      - '&a&l> &aClick this pet to gamble its stats'
+      - ' &8- &f{stats} &7stats on a reroll'
+      - '&c&lWARNING &7This can replace or burn the stats above!'
+    pet-suffix-unusable: ' &8(&cDEAD&8)'
+    pet-lore-unusable:
+      - '&7'
+      - '&c&l> &cThis pet is dead'
+      - '&7Revive it first with a revival totem.'
+
+  revive:
+    title: '&8Revive a Pet'
+    message:
+      - ''
+      - ' &c&lREVIVE &8- &7Click the dead pet you want to bring back.'
+      - ' &7It will wake up with &6{food} &7food and cost &e${cost}&7.'
+      - ''
+    pet-suffix: ' &8(&cCLICK TO REVIVE&8)'
+    pet-lore:
+      - '&7'
+      - '&c&l> &cClick this pet to revive it'
+      - ' &8- &6Restores {food} &7Food'
+      - ' &8- &cCosts ${cost}'
+    pet-suffix-unusable: ' &8(&aALIVE&8)'
+    pet-lore-unusable:
+      - '&7'
+      - '&7This pet is still alive and does'
+      - '&7not need to be revived.'
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║            Placeholder inside the Pets                   ║
+# ╚══════════════════════════════════════════════════════════╝
+# ╔══════════════════════════════════════════════════════════╗
+# ║                      Pet Skins                           ║
+# ╚══════════════════════════════════════════════════════════╝
+#  A pet without a model of its own can be dressed in any model from
+#  plugins/ModernSlimefunPet/models the player has the permission for:
+#      modernslimefunpet.skin.<file name>      (modernslimefunpet.skin.redpanda)
+#  Picked in the pet menu: click a pet, then Skins. Each entry is named after
+#  the model file and sets how the skin is shown in the menu and how it is
+#  drawn, with the same keys as a pet's 'model' section (the file is the
+#  entry's name, so there is no 'file'). Every key is optional; a model with
+#  no entry at all is named after its file ('cubee-ebony_cat' reads
+#  'Cubee Ebony Cat'), gets an armor stand icon and the default drawing.
+skins:
+  redpanda:
+    display-name: '&cRed Panda'  # name in the skins menu
+    material: ORANGE_TERRACOTTA   # icon in the skins menu
+    scale: 0.6                    # 1.0 = Blockbench size
+    y-offset: 0                   # blocks above your feet, 0 is on the ground
+    detail: 40                    # face details drawn on top, 0 to 128
+    facing: north                 # where the model's front points in Blockbench
+    # blocks:                     # optional, same keys as a pet's model.blocks
+    #   tail: orange_terracotta   # (cube name, group name, group.cube, group.*)
+    # particles:                  # optional, same keys as a pet's model.particles
+    #   particle_tail: flame
+
+placeholders:
+  max-level: '&c&lMAX LEVEL'
+  alive: '&a&lALIVE'
+  dead: '&c&lDEAD'
+  no-stats: '&8- &7None'
+  # How a guaranteed stat is shown in the '{stats}' lore, {stat} being its display
+  guaranteed-stat: '{stat} &6✦'
+  no-evolution: '&7None'
+  # How one evolution requirement is written out in the menu, used by the
+  # '{requirements}' line of 'gui-modes.evolution'
+  requirement-met: ' &a✔ &7{requirement}'
+  requirement-unmet: ' &c✘ &7{requirement}'
+  requirement-level: '&fLevel {required_level} &8(now {level})'
+  requirement-item: '&f{item_name} &7x{required_items} &8(have {current_items})'
+  requirement-money: '&f${cost} &8(have ${balance})'
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║                       Messages                           ║
+# ╚══════════════════════════════════════════════════════════╝
+messages:
+  no-pets: ' #FF4D00&lAlwiNation &8» &cYou do not own any pets!'
+  pet-slots-full: ' #FF4D00&lAlwiNation &8» &cYou can only equip &e{max} &cpets at once!'
+  pet-slots-lost: ' #FF4D00&lAlwiNation &8» &cYou lost pet slots, &e{amount} &cpets were unequipped! &7(max: {max})'
+  equip-pet: ' #FF4D00&lAlwiNation &8» &aYou have equipped {pet} &7(Level {level})'
+  pet-skin-set: ' #FF4D00&lAlwiNation &8» &a{pet} &anow wears the &e{skin} &askin!'
+  pet-skin-removed: ' #FF4D00&lAlwiNation &8» &f{pet} &fis back to its own look.'
+  pet-skin-no-permission: ' #FF4D00&lAlwiNation &8» &cYou do not own the &e{skin} &cskin!'
+  pet-skin-not-supported: ' #FF4D00&lAlwiNation &8» &cThat pet already has a look of its own!'
+  pet-hidden: ' #FF4D00&lAlwiNation &8» &fYou have hidden your pets'
+  pet-shown: ' #FF4D00&lAlwiNation &8» &fYou have unhidden your pets'
+  # Food
+  pet-fed: ' #FF4D00&lAlwiNation &8» &aYou fed {pet}&a! &7(+{restored} food, now {food}/{max_food})'
+  pet-not-hungry: ' #FF4D00&lAlwiNation &8» &cThat pet is already full!'
+  pet-starved: ' #FF4D00&lAlwiNation &8» &c{pet} &chas starved to death! Revive it to use it again.'
+  pet-dead: ' #FF4D00&lAlwiNation &8» &cThat pet is dead, revive it first!'
+  pet-not-dead: ' #FF4D00&lAlwiNation &8» &cThat pet is not dead!'
+  pet-revived: ' #FF4D00&lAlwiNation &8» &aYou revived {pet}&a! &7(Food: {food})'
+  # Level
+  pet-level-up: ' #FF4D00&lAlwiNation &8» &a{pet} &areached level &e{level}&a!'
+  pet-max-level: ' #FF4D00&lAlwiNation &8» &cThat pet is already at max level!'
+  # Evolution
+  pet-evolved: ' #FF4D00&lAlwiNation &8» &a{pet} &aevolved into {new_pet}&a!'
+  pet-evolution-failed: ' #FF4D00&lAlwiNation &8» &cThe evolution of {pet} &cfailed! &7({chance}% chance)'
+  pet-evolution-level: ' #FF4D00&lAlwiNation &8» &cThat pet has to be level &e{level} &cto evolve!'
+  pet-no-evolution: ' #FF4D00&lAlwiNation &8» &cThat pet cannot evolve any further!'
+  pet-wrong-evolution-item: ' #FF4D00&lAlwiNation &8» &cThat is not the right evolution item for this pet!'
+  pet-evolution-need-items: ' #FF4D00&lAlwiNation &8» &cYou need &e{required_items}x {item_name} &cto evolve that pet! &7(have {current_items})'
+  pet-evolution-stone-gone: ' #FF4D00&lAlwiNation &8» &cYou are no longer holding the evolution stone!'
+  pet-item-menu-usage: ' #FF4D00&lAlwiNation &8» &cThis item is used from a pet menu, open /pets!'
+  pet-auto-feed-usage: ' #FF4D00&lAlwiNation &8» &cOpen a pet''s options with /pets to use this!'
+  pet-auto-feed-needs-unlocker: ' #FF4D00&lAlwiNation &8» &cYou need an &eAuto-Feed Unlocker &cto unlock Auto-Feed!'
+  pet-auto-feed-unlocked: ' #FF4D00&lAlwiNation &8» &aAuto-Feed unlocked! Store some pet food in it.'
+  pet-auto-feed-needs-upgrade: ' #FF4D00&lAlwiNation &8» &cYou need an &eAuto-Feed Upgrade &cto upgrade Auto-Feed!'
+  pet-auto-feed-upgraded: ' #FF4D00&lAlwiNation &8» &aAuto-Feed upgraded! It now feeds at &f{threshold}% &awith &f{slots} &afood slots.'
+  pet-auto-feed-max-tier: ' #FF4D00&lAlwiNation &8» &cThis Auto-Feed is already at its max tier!'
+  pet-auto-feed-on: ' #FF4D00&lAlwiNation &8» &aAuto-Feed turned on.'
+  pet-auto-feed-off: ' #FF4D00&lAlwiNation &8» &cAuto-Feed turned off. Stored food is kept.'
+  pet-auto-feed-not-food: ' #FF4D00&lAlwiNation &8» &cOnly pet food can be stored in Auto-Feed!'
+  pet-auto-feed-not-allowed: ' #FF4D00&lAlwiNation &8» &cThat food cannot be fed to this pet!'
+  pet-auto-feed-slot-locked: ' #FF4D00&lAlwiNation &8» &cUpgrade Auto-Feed to open this slot!'
+  pet-auto-feed-slot-taken: ' #FF4D00&lAlwiNation &8» &cThat slot is full or holds another food!'
+  pet-auto-feed-full: ' #FF4D00&lAlwiNation &8» &cThere is no room left for that food!'
+  pet-auto-feed-unknown-food: ' #FF4D00&lAlwiNation &8» &cThat food no longer exists and cannot be taken back.'
+  pet-auto-feed-empty: ' #FF4D00&lAlwiNation &8» &e{pet}&c''s Auto-Feed ran out of food!'
+  pet-stat-lock-usage: ' #FF4D00&lAlwiNation &8» &eSelect a pet in the reroll menu, then open the Stat Locks menu and pick the stats to protect!'
+  # Shown in the stat lock menu when there is nothing left to lock with
+  pet-stat-lock-no-charms: ' #FF4D00&lAlwiNation &8» &cYou have no Stat Lock Charms left to protect another stat with!'
+  # Already protecting 'stats.max-stat-locks' stats in this reroll
+  pet-stat-lock-max: ' #FF4D00&lAlwiNation &8» &cA reroll can protect at most &e{max} &cstats!'
+  pet-stat-lock-gone: ' #FF4D00&lAlwiNation &8» &cYou are no longer holding enough Stat Lock Charms!'
+  pet-item-command-only: ' #FF4D00&lAlwiNation &8» &cThis cannot be used by hand, open the menu from the pet NPC instead!'
+  invalid-pet-gui: ' #FF4D00&lAlwiNation &8» &cUnknown menu (&e{gui}&c)! Valid: &7{guis}'
+  no-pets-target: ' #FF4D00&lAlwiNation &8» &e{player} &cdoes not own any pets!'
+  # Stats
+  # Placeholders: {amount} how many stats the item rolled, added or burned,
+  #               {stats} how many the pet has now, {max} how many it can hold
+  pet-rerolled: ' #FF4D00&lAlwiNation &8» &aYou rerolled the stats of {pet}&a! &7({amount} stats)'
+  pet-stats-added: ' #FF4D00&lAlwiNation &8» &aYou added &e{amount} &anew stat(s) to {pet}&a! &7({stats}/{max})'
+  pet-stats-removed: ' #FF4D00&lAlwiNation &8» &cYou burned &e{amount} &cstat(s) off {pet}&c! &7({stats}/{max})'
+  pet-no-stats: ' #FF4D00&lAlwiNation &8» &c{pet} &chas no stats left to burn!'
+  pet-stats-full: ' #FF4D00&lAlwiNation &8» &c{pet} &calready holds all &e{max} &cstats it can!'
+  # Misc
+  pet-item-not-allowed: ' #FF4D00&lAlwiNation &8» &cThat item cannot be used on {pet}&c!'
+  pet-not-enough-money: ' #FF4D00&lAlwiNation &8» &cYou need &e${cost} &cto do that!'
+  give-pet-item: ' #FF4D00&lAlwiNation &8» &aGave &e{amount}x {type} &a(&e{id}&a) to &e{player}'
+  invalid-pet-item-type: ' #FF4D00&lAlwiNation &8» &cUnknown pet item type (&e{type}&c)! Valid: &7{types}'
+  invalid-pet-item: ' #FF4D00&lAlwiNation &8» &cUnknown pet item (&e{id}&c)! Valid: &7{ids}'
+  # Keys ModernMineGens used without shipping them (handoff section 10)
+  pet-item-gone: ' #FF4D00&lAlwiNation &8» &cYou are no longer holding that item!'
+  no-pet-item-target: ' #FF4D00&lAlwiNation &8» &cThat player has no pet this item can be used on!'
+  pet-evolution-levels-lost: ' #FF4D00&lAlwiNation &8» &c{pet} &cwent back to level &e1&c.'
+  no-permission: ' #FF4D00&lAlwiNation &8» &cYou do not have permission to do that.'
+  # A reroll always keeps at least one stat it may change, so the last one cannot be locked
+  pet-stat-lock-needs-one: ' #FF4D00&lAlwiNation &8» &cAt least one stat has to stay unlocked for the reroll!'
+  # Admin
+  invalid-pet: ' #FF4D00&lAlwiNation &8» &cThat pet does not exist!'
+  give-pet: ' #FF4D00&lAlwiNation &8» &aGave {pet} &7(Level {level}) &ato &e{player}'
+  receive-pet: ' #FF4D00&lAlwiNation &8» &aYou received {pet} &7(Level {level})&a! Open &e/pets &ato equip it.'
+  reloaded: ' #FF4D00&lAlwiNation &8» &aModernSlimefunPet reloaded.'
+
+# ╔══════════════════════════════════════════════════════════╗
+# ║                       Pets                               ║
+# ╚══════════════════════════════════════════════════════════╝
+#  max-level:             highest level this pet can reach
+#  level-cost:            exp needed to go from {level} to the next one. This
+#                         is a formula, so the levels can be made to cost more
+#                         as the pet climbs:
+#                           1500                          every level costs the same
+#                           1500 * 1.15 ^ ({level} - 1)   +15% per level
+#                           1500 * {level}                1500, 3000, 4500, ...
+#                           1500 + ({level} ^ 2 * 50)     slow start, steep end
+#  food-decay-multiplier: 2.0 makes this pet get hungry twice as fast
+#  exp-per-food:          the exp this pet earns per 1 food it burns. Also
+#                         takes {level} as a formula. Remove the key to follow
+#                         the global 'food.exp-per-food'.
+#                         This is a flat amount, so raising 'level-cost' is
+#                         what makes the higher levels take longer
+#  starting-stats:        how many random stats it rolls when obtained
+#  max-stats:             how many stats this pet can hold at once. Remove the
+#                         key to follow the global 'stats.max-stats'.
+#                         This is a hard ceiling: the starting stats, the extra
+#                         ones an evolution rolls and every reroll item all
+#                         stop here, so a pet with 3 ends up with 3 or less
+#  stat-pool:             which stats out of 'stats.pool' this pet is allowed
+#                         to roll. Remove the key to let it roll anything.
+#                         As a list every stat keeps its global weight:
+#                           stat-pool:
+#                             - max_health
+#                             - haste
+#                         As a section each one can be made rarer or more
+#                         common for this pet alone, the number being the
+#                         weight against the others in the same pool:
+#                           stat-pool:
+#                             max_health: 40
+#                             haste: 5
+#                         This decides the starting stats, the extra stats an
+#                         evolution rolls and what a reroll can land on. Stats
+#                         a pet already owns are kept even if a later evolution
+#                         no longer lists them
+#  guaranteed-stats:      stats every pet of this id always has, at the exact
+#                         value given (its level 1 value, scaled by level like
+#                         a rolled one). They sit on top of the rolled stats:
+#                         not counted in 'max-stats', never rerolled, burned or
+#                         lockable, and a reroll can still roll the same stat
+#                         again as a normal one, both then count.
+#                         Read from here, not saved on the pet, so editing it
+#                         changes every existing pet, and an evolved pet gets
+#                         the guaranteed stats of what it became.
+#                           guaranteed-stats:
+#                             armor: 1
+#                             luck: 1
+#  evolution:             what it turns into, remove it to end the chain
+#    into:                the pet id it becomes
+#    required-level:      the level it has to reach first
+#    item:                the id of the evolution item it needs. Can also be a
+#                         list, so several stones open the same evolution.
+#                         Leave it out to take any evolution item
+#    chance:              base success rate in percent. A stone with a
+#                         'chance-bonus' adds to this, capped at 100
+#    bonus-stats:         extra stats rolled on a successful evolution, never
+#                         taking the pet past the 'max-stats' it becomes
+#    keep-level:          keep the level instead of resetting it to 1
+#    lose-item-on-fail:   consume the item even when the evolution fails
+#    money-cost:          money taken for the attempt, on top of whatever the
+#                         stone itself costs. 0 to disable
+#    item-requirement:    an item the player has to hand over
+#                         (material/material-name, display-name, amount). Use 'item-requirements' with a key per entry
+#                         to ask for several different items
+#
+#    Everything above is shown to the player, marked met or unmet, through the
+#    '{requirements}' line of 'gui-modes.evolution.pet-lore'.
+#    The money and the items are taken when the attempt is made, win or lose,
+#    the same way the money cost of the stone already was.
+#
+#    evolution:
+#      into: uncommon_speed_pet
+#      required-level: 21
+#      item:
+#        - evolution_stone
+#        - blessed_evolution_stone
+#      chance: 75.0
+#      money-cost: 250000
+#      item-requirement:
+#        material-name: DIAMOND
+#        display-name: '&bPure Diamond'
+#        amount: 16
+#      item-requirements:
+#        shards:
+#          material-name: PRISMARINE_SHARD
+#          display-name: '&bPet Shard'
+#          amount: 32
+#        essence:
+#          material-name: GHAST_TEAR
+#          display-name: '&fBeast Essence'
+#          amount: 4
+# --------------------------------------------------------------------------
+# A sample chain to start from: common -> rare -> epic. Rename, add or remove
+# pets freely; every key is explained above.
+pets:
+  common_pet:
+    max-level: 10
+    level-cost: '1000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: 30
+    starting-stats: 3
+    max-stats: 8
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzMxZTdlMWM2MTQ2MzliYmM5NWEwZDgxZmY3ZTVmN2Y2MDZkOWIzMzExNWNmMmJmMmE0MGNkY2JiYjUzMTMyNCJ9fX0="
+    item-display-name: "&f&l[I] &7Common Pet"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: rare_pet
+      display-name: "&9&lRare Pet"
+      required-level: 10
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 50.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+
+  rare_pet:
+    max-level: 15
+    level-cost: '2000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: 30
+    starting-stats: 3
+    max-stats: 8
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzgyZmMzZjcxYjQxNzY5Mzc2YTllOTJmZTNhZGJhYWMzNzcyYjk5OWIyMTljOWQ2YjQ2ODBiYTk5ODNlNTI3In19fQ=="
+    item-display-name: "&9&l[II] &9Rare Pet"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: epic_pet
+      display-name: "&5&lEpic Pet"
+      required-level: 15
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 50.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+
+  epic_pet:
+    max-level: 20
+    level-cost: '4000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: 30
+    starting-stats: 3
+    max-stats: 8
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzgyZmMzZjcxYjQxNzY5Mzc2YTllOTJmZTNhZGJhYWMzNzcyYjk5OWIyMTljOWQ2YjQ2ODBiYTk5ODNlNTI3In19fQ=="
+    item-display-name: "&5&l[III] &5Epic Pet"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"

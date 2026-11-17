@@ -1,0 +1,124 @@
+# --------------------------------------------------------------------------
+#  Pet Options
+# --------------------------------------------------------------------------
+#  Opened by clicking a pet in the pet menu (pet_gui.yml). One big button per
+#  thing that can be done with the pet, named on the button itself so nothing
+#  has to be hovered, which keeps it usable on Bedrock.
+#
+#  Slots: pet 4, skins 10, equip 12, unequip 14, auto-feed 16, back 22.
+#
+#  Placeholders: {pet} {level} {skin}
+# --------------------------------------------------------------------------
+
+title: '&#43BBC6&nPet Options'
+
+filler:
+  material: BLACK_STAINED_GLASS_PANE
+  display-name: ' '
+
+# The pet itself is shown at slot 4, as it is in the pet menu
+
+# What {skin} reads while the pet wears none
+skin-none: '&7None'
+
+skin:
+  material: ARMOR_STAND
+  display-name: '&#79E4FF&lSkins'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Dress this pet in a look you own.'
+    - ''
+    - ' &8◊ &7Wearing: &f{skin}'
+    - ''
+    - '&#83ca16→ &#70e510Click to Choose a Skin'
+
+# Shown in place of 'skin' when the pet has a model of its own, which a skin
+# never replaces
+skin-blocked:
+  material: BARRIER
+  display-name: '&#d92625&lSkins'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7This pet already has a look of its own.'
+    - ''
+    - '&#d92625→ Skins Unavailable'
+
+equip:
+  material: LIME_DYE
+  display-name: '&#8FF384&lEquip'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Take this pet out with you.'
+    - ''
+    - ' &8◊ &7Level: &f{level}'
+    - ''
+    - '&#83ca16→ &#70e510Click to Equip'
+
+# Shown in place of 'equip' while the pet is already out
+equipped:
+  material: LIME_STAINED_GLASS_PANE
+  display-name: '&#8FF384&lEquipped'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7This pet is out with you now.'
+    - ''
+    - '&#8FF384✔ Already Equipped'
+
+unequip:
+  material: RED_DYE
+  display-name: '&#d92625&lUnequip'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Put this pet away.'
+    - ''
+    - '&#83ca16→ &#70e510Click to Unequip'
+
+back:
+  material: BARRIER
+  display-name: '&c&lGo Back'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Return to &#43BBC6Your Pets&7.'
+    - ''
+    - '&#83ca16→ &#70e510Click to Go Back'
+
+# Auto-Feed, once the pet's has been unlocked: opens its menu (pet_auto_feed_gui.yml).
+# Placeholders: {status} {threshold}
+auto-feed:
+  material: HAY_BLOCK
+  display-name: '&#FFD45C&lAuto-Feed'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Your pet eats stored food on'
+    - '&7its own when it gets hungry.'
+    - ''
+    - ' &8◊ &7Status: {status}'
+    - ' &8◊ &7Feeds at: &f{threshold}%'
+    - ''
+    - '&#83ca16→ &#70e510Click to Open'
+
+# What {status} reads
+auto-feed-on: '&#8FF384On'
+auto-feed-off: '&7Off'
+
+# Shown in place of 'auto-feed' until the pet's Auto-Feed is unlocked. Clicking
+# it uses up one Auto-Feed Unlocker ('items.auto_feed_unlocker' in pets.yml).
+auto-feed-locked:
+  material: GRAY_DYE
+  display-name: '&#d92625&lAuto-Feed Locked'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Let this pet feed itself from'
+    - '&7food you store for it.'
+    - ''
+    - ' &8◊ &7Needs: &#FFD45CAuto-Feed Unlocker'
+    - ''
+    - '&#83ca16→ &#70e510Click to Unlock'

@@ -1,0 +1,134 @@
+# Open the stat lock menu to pick which stats this reroll has to spare.
+# Nothing is taken until you confirm: one reroll item, plus the Stat Lock
+# Charms the locks cost, which is set by 'stats.stat-lock-cost' in pets.yml.
+# Slots: pet 13, stat locks 22, cancel 29, information 31, confirm 33.
+# Placeholders: {pet} {locked} {stats} {charms}
+#               {cost} charms the locked stats cost in total
+# Stat placeholders, each one has to be on a lore line of its own and turns
+# into one line per stat, written with 'stat-lines' below:
+#               {stat_list}      every stat, locked or not
+#               {locked_stats}   only the stats this reroll will keep
+#               {unlocked_stats} only the stats this reroll can change
+title: '&8Confirm Pet Reroll'
+# How one stat is written in the stat placeholders, {stat} being the stat as
+# it reads on the pet itself
+stat-lines:
+  locked: '&a✔{stat}'
+  unlocked: '&c✘{stat}'
+  # Shown instead when there is no stat to list, such as {locked_stats} with
+  # nothing locked yet
+  none: ' &8- &7None'
+filler:
+  material: GRAY_STAINED_GLASS_PANE
+  display-name: ' '
+stat-lock:
+  material: NAME_TAG
+  display-name: '&b&lStat Locks &7({locked}&7/&b{stats}&7)'
+  lore:
+    - '&7Click to pick which stats this'
+    - '&7reroll has to leave alone.'
+    - ''
+    - ' &8- &7Locked: &b{locked}'
+    - ' &8- &7Charms this costs: &b{cost}'
+    - ' &8- &7Charms owned: &b{charms}'
+    - ' &8- &7Locking more stats at once costs more.'
+    - ''
+    - '&7Stats &8(&a✔ &7locked, &c✘ &7can change&8)'
+    - '{stat_list}'
+cancel:
+  material: RED_STAINED_GLASS_PANE
+  display-name: '&cCancel'
+  lore:
+    - '&7Close without spending anything.'
+info:
+  material: PAPER
+  display-name: '&eReroll Attempt'
+  lore:
+    - '&7Lock the stats you want to keep,'
+    - '&7then confirm.'
+    - '&7Items stay in your inventory until used.'
+    - '&cThe outcome can reroll or burn stats!'
+confirm:
+  material: LIME_STAINED_GLASS_PANE
+  display-name: '&a&lConfirm Reroll'
+  lore:
+    - '&7Spend one reroll item and &b{cost} &7charm(s)'
+    - '&7for the &b{locked} &7locked stat(s).'
+    - '&7Protection lasts for this attempt only.'
+    - ''
+    - '&aKept:'
+    - '{locked_stats}'
+    - '&cCan change:'
+    - '{unlocked_stats}'
+# Plays in this menu right after a reroll went through. The new stats are
+# already saved by then. Pressing Esc during it reopens the menu, it can only
+# be closed with the Done button once every stat is shown. A disconnect,
+# death or teleport still ends it, losing nothing.
+# Times are in ticks (20 = 1 second). Sounds take any Bukkit Sound name.
+animation:
+  enabled: true
+  # How long the colours spin before the first stat shows up
+  spin-ticks: 20
+  # The wait between one stat and the next
+  reveal-delay-ticks: 10
+  # Ticks during the spin, its pitch rising towards the first reveal
+  spin-sound:
+    name: BLOCK_NOTE_BLOCK_HAT
+    volume: 0.6
+    pitch: 1.0
+  # Played once per stat, a little higher for every stat after the first.
+  # Other dragon sounds: ENTITY_DRAGON_FIREBALL_EXPLODE, ITEM_BOTTLE_FILL_DRAGONBREATH
+  reveal-sound:
+    name: ENTITY_ENDER_DRAGON_SHOOT
+    volume: 0.7
+    pitch: 1.0
+  finish-sound:
+    name: UI_TOAST_CHALLENGE_COMPLETE
+    volume: 0.8
+    pitch: 1.0
+  # The border flickers through these at random, any item name works
+  spin-items:
+    - LIME_STAINED_GLASS_PANE
+    - LIGHT_BLUE_STAINED_GLASS_PANE
+    - MAGENTA_STAINED_GLASS_PANE
+    - YELLOW_STAINED_GLASS_PANE
+    - ORANGE_STAINED_GLASS_PANE
+    - PINK_STAINED_GLASS_PANE
+    - PURPLE_STAINED_GLASS_PANE
+    - CYAN_STAINED_GLASS_PANE
+  # Where a stat is about to land, while the colours spin. Each slot cycles
+  # through 'rolling-items' at random like a slot machine, every one of them
+  # shown with this name and lore. List a single item for a still '???' slot.
+  rolling:
+    material: BLACK_STAINED_GLASS_PANE
+    display-name: '&8&l???'
+  rolling-items:
+    - EMERALD
+    - DIAMOND
+    - GOLD_INGOT
+    - AMETHYST_SHARD
+    - REDSTONE
+    - LAPIS_LAZULI
+  # One item per stat, {stat} being the stat as it reads on the pet
+  stat-good:
+    material: EMERALD
+    display-name: '{stat}'
+    lore:
+      - '&aNew stat'
+  stat-bad:
+    material: REDSTONE
+    display-name: '{stat}'
+    lore:
+      - '&cCursed stat'
+  # A stat a stat lock protected, so it stayed as it was
+  stat-kept:
+    material: NAME_TAG
+    display-name: '{stat}'
+    lore:
+      - '&bKept by a stat lock'
+  # Slot 40, closes the menu once every stat is shown
+  done:
+    material: LIME_STAINED_GLASS_PANE
+    display-name: '&a&lDone'
+    lore:
+      - '&7Click to close.'

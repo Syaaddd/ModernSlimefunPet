@@ -1,0 +1,13 @@
+name: ModernSlimefunPet
+version: '${project.version}'
+main: id.alwination.slimefunpet.ModernSlimefunPet
+api-version: '26.3'
+authors: [Syaaddd]
+description: '${project.description}'
+depend: [packetevents]
+softdepend: [Slimefun, Vault, PlaceholderAPI]
+
+permissions:
+  modernslimefunpet.admin:
+    description: Admin commands.
+    default: op

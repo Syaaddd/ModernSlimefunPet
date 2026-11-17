@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ruleset name="mc-plugin-kit"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+    <description>Bug-oriented PMD 7 rules for Paper/Bukkit plugins. No style rules.</description>
+
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="AvoidLiteralsInIfCondition"/>
+        <exclude name="AvoidDuplicateLiterals"/>
+        <exclude name="AvoidFieldNameMatchingMethodName"/>
+        <exclude name="AvoidFieldNameMatchingTypeName"/>
+        <exclude name="NullAssignment"/>
+        <exclude name="ReturnEmptyCollectionRatherThanNull"/>
+    </rule>
+    <rule ref="category/java/multithreading.xml">
+        <!-- Bukkit is single-threaded by design; these flag ordinary main-thread code. -->
+        <exclude name="UseConcurrentHashMap"/>
+        <exclude name="DoNotUseThreads"/>
+        <exclude name="AvoidSynchronizedAtMethodLevel"/>
+        <exclude name="AvoidSynchronizedStatement"/>
+    </rule>
+    <rule ref="category/java/bestpractices.xml/AvoidPrintStackTrace"/>
+    <rule ref="category/java/bestpractices.xml/SystemPrintln"/>
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateField"/>
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod"/>
+    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable"/>
+    <rule ref="category/java/bestpractices.xml/UnusedAssignment"/>
+    <rule ref="category/java/bestpractices.xml/PreserveStackTrace"/>
+    <rule ref="category/java/bestpractices.xml/ForLoopCanBeForeach"/>
+    <rule ref="category/java/bestpractices.xml/MissingOverride"/>
+    <rule ref="category/java/bestpractices.xml/SimplifiableTestAssertion"/>
+    <rule ref="category/java/performance.xml/UseStringBufferForStringAppends"/>
+</ruleset>

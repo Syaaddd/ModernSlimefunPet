@@ -1,0 +1,16 @@
+# ModernSlimefunPet main settings.
+
+database:
+  # sqlite keeps everything in plugins/ModernSlimefunPet/data.db. mysql uses the section below.
+  # To move to MySQL: fill in the mysql section, set type: mysql and restart. If the MySQL tables
+  # are empty, data.db is copied in once at startup and renamed to data.db.migrated (a backup that
+  # is never deleted). If the copy fails the plugin refuses to start and data.db stays untouched.
+  type: sqlite
+  mysql:
+    host: localhost
+    port: 3306
+    database: modernslimefunpet
+    username: root
+    password: ""
+    use-ssl: false
+    pool-size: 10

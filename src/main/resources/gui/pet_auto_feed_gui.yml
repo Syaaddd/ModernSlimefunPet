@@ -1,0 +1,120 @@
+# --------------------------------------------------------------------------
+#  Pet Auto-Feed
+# --------------------------------------------------------------------------
+#  Opened from the Auto-Feed button of a pet's options menu, once the pet's
+#  Auto-Feed has been unlocked. One row:
+#
+#    0 back   1 upgrade   2-6 food slots   7 filler   8 on/off
+#
+#  The food slots hold the pet food ('items.food' in pets.yml) the pet eats on
+#  its own whenever its food bar drops to the threshold of its tier. Click a
+#  slot with food to store it (right click stores one), click a stored food to
+#  take it back, or shift click food in your inventory. A slot holds one kind
+#  of food, up to a stack. The tiers live in 'auto-feed' in pets.yml.
+#
+#  Placeholders: {pet} {tier} {max_tier} {threshold} {slots}
+#                {next_threshold} {next_slots}
+# --------------------------------------------------------------------------
+
+title: '&#43BBC6&nAuto-Feed'
+
+filler:
+  material: BLACK_STAINED_GLASS_PANE
+  display-name: ' '
+
+back:
+  material: BARRIER
+  display-name: '&c&lGo Back'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Return to &#43BBC6Pet Options&7.'
+    - ''
+    - '&#83ca16→ &#70e510Click to Go Back'
+
+upgrade:
+  material: EXPERIENCE_BOTTLE
+  display-name: '&#FFD45C&lUpgrade Auto-Feed'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Feed earlier and store more food.'
+    - '&7Uses one &#FFD45CAuto-Feed Upgrade&7.'
+    - ''
+    - ' &8◊ &7Tier: &f{tier}&8/&f{max_tier}'
+    - ' &8◊ &7Feeds at: &f{threshold}% &8→ &f{next_threshold}%'
+    - ' &8◊ &7Food slots: &f{slots} &8→ &f{next_slots}'
+    - ''
+    - '&#83ca16→ &#70e510Click to Upgrade'
+
+# Shown in place of 'upgrade' on the last tier
+upgrade-max:
+  material: EXPERIENCE_BOTTLE
+  display-name: '&#FFB717&lMax Tier'
+  lore:
+    - '&8Upgrade'
+    - ''
+    - '&7This Auto-Feed cannot be'
+    - '&7upgraded any further.'
+    - ''
+    - ' &8◊ &7Feeds at: &f{threshold}%'
+    - ' &8◊ &7Food slots: &f{slots}'
+
+empty-slot:
+  material: LIGHT_GRAY_STAINED_GLASS_PANE
+  display-name: '&#79E4FF&lFood Slot'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Pet food placed here is eaten'
+    - '&7when the food bar reaches &f{threshold}%&7.'
+    - ''
+    - '&#83ca16→ &#70e510Click with Pet Food to Store'
+
+# A slot this tier has not opened yet
+locked-slot:
+  material: GRAY_STAINED_GLASS_PANE
+  display-name: '&#d92625&lLocked Slot'
+  lore:
+    - '&8Upgrade'
+    - ''
+    - '&7Upgrade Auto-Feed to open'
+    - '&7more food slots.'
+
+# A stored food whose item was removed from pets.yml
+unknown-food:
+  material: BARRIER
+  display-name: '&#d92625&lUnknown Food'
+  lore:
+    - '&8Upgrade'
+    - ''
+    - '&7This food no longer exists.'
+
+# Added under a stored food. Placeholder: {amount}
+stored-lore:
+  - ''
+  - ' &8◊ &7Stored: &f{amount}'
+  - ''
+  - '&#83ca16→ &#70e510Click to Take Back'
+
+enabled:
+  material: LIME_DYE
+  display-name: '&#8FF384&lAuto-Feed: On'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Eats stored food when the bar'
+    - '&7reaches &f{threshold}%&7.'
+    - ''
+    - '&#83ca16→ &#70e510Click to Turn Off'
+
+disabled:
+  material: GRAY_DYE
+  display-name: '&7&lAuto-Feed: Off'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Stored food is kept, but never'
+    - '&7eaten until this is turned on.'
+    - ''
+    - '&#83ca16→ &#70e510Click to Turn On'

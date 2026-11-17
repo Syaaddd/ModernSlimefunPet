@@ -1,0 +1,52 @@
+# --------------------------------------------------------------------------
+#  Feed a Pet
+# --------------------------------------------------------------------------
+#  Opened by right clicking a food item ('items.food' in pets.yml), or with
+#  '/slimefunpet petmenu <player> food'. Clicking a pet feeds it and takes one food
+#  off the player, but only once it actually worked.
+#
+#  What is written on the pets themselves lives in 'gui-modes.food' in
+#  pets.yml, this file is only the layout around them.
+#
+#  Item types: NEXT_PAGE, PREVIOUS_PAGE, DUMMY
+# --------------------------------------------------------------------------
+
+option:
+  title: '&8Feed a Pet'
+  size: 54
+
+# Where the pets are drawn
+pet-slots: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44 ]
+
+items:
+  next_page:
+    type: NEXT_PAGE
+    material: ARROW
+    display-name: '&aNext Page -->'
+    slot: [ 51 ]
+    lore: [ ]
+  previous_page:
+    type: PREVIOUS_PAGE
+    material: ARROW
+    display-name: '&c<-- Previous Page'
+    slot: [ 47 ]
+    lore: [ ]
+  info:
+    type: DUMMY
+    material: COOKIE
+    display-name: '&e&lFEEDING'
+    slot: [ 49 ]
+    lore:
+      - '&7'
+      - '&7Click a pet to feed it.'
+      - '&7A fed pet earns EXP by burning'
+      - '&7that food while it is equipped.'
+      - '&7'
+      - '&8The food is only taken once it'
+      - '&8has actually been eaten.'
+  filler:
+    type: DUMMY
+    material: BLACK_STAINED_GLASS_PANE
+    display-name: '&7'
+    slot: [ 45, 46, 48, 50, 52, 53 ]
+    lore: [ ]

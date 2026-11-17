@@ -1,0 +1,84 @@
+# --------------------------------------------------------------------------
+#  Pet Evolution Menu
+# --------------------------------------------------------------------------
+#  Opened when a player uses an evolution stone on one of their pets.
+#
+#  No slot of this menu ever holds anything belonging to the player, so nothing
+#  in it can be taken out with a click, a drag or a hand written packet.
+#
+#  Placeholders usable in every display-name and lore below:
+#    {pet}            the pet being evolved
+#    {into}           what it turns into
+#    {level}          the level the pet is on
+#    {required_level} the level it needs
+#    {base_chance}    the chance of the evolution on its own
+#    {base_fail_chance} the other side of it, again without any bonus
+#    {stone_bonus}    what the stone in hand adds
+#    {chance}         the real success rate, all of the above together
+#    {success_chance} the same thing, spelled out
+#    {fail_chance}    how likely the attempt is to fail, 100 minus the above
+#    {level_on_fail}  the level the pet is left on if the attempt fails
+#    {requirements}   one line per requirement, each marked met or unmet
+# --------------------------------------------------------------------------
+
+option:
+  size: 45
+  title: '&8Evolving &f{pet}'
+
+animation:
+  # The border that blinks while the evolution is rolled and then turns into
+  # the result
+  slots: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 36, 37, 38, 39, 40, 41, 42, 43, 44 ]
+  filler-material: GRAY_STAINED_GLASS_PANE
+  # Cycled while the roll is being suspenseful
+  blink-materials:
+    - YELLOW_STAINED_GLASS_PANE
+    - ORANGE_STAINED_GLASS_PANE
+  # How many times it blinks, and how many ticks each blink lasts
+  blinks: 8
+  interval: 3
+  success-material: LIME_STAINED_GLASS_PANE
+  success-name: '&a&lEVOLVED!'
+  fail-material: RED_STAINED_GLASS_PANE
+  fail-name: '&c&lFAILED!'
+  # How long the result is left on screen before the menu closes, in ticks
+  result-time: 50
+
+items:
+  # The pet being evolved, its item is drawn by the plugin
+  pet:
+    type: PET
+    slot: 13
+
+  info:
+    type: DUMMY
+    slot: 11
+    material: PAPER
+    display-name: '&e&lEVOLUTION'
+    lore:
+      - '&7'
+      - '&7Turning &f{pet} &7into'
+      - '&f{into}&7.'
+      - '&7'
+      - '&e&lREQUIREMENTS'
+      - '{requirements}'
+
+  confirm:
+    type: CONFIRM
+    slot: 15
+    material: ANVIL
+    display-name: '&a&lEVOLVE'
+    lore:
+      - '&7'
+      - '&7Success rate: &a{success_chance}%'
+      - ' &8- &7Base: &f{base_chance}%'
+      - ' &8- &7Stone: &a+{stone_bonus}%'
+      - '&7'
+      - '&7Fail rate: &c{fail_chance}%'
+      - '&7'
+      - '&c&lWARNING &7The stone is spent'
+      - '&7whether it works or not,'
+      - '&7and a failure drops &f{pet} &7back'
+      - '&7to level &f{level_on_fail}&7.'
+      - '&7'
+      - '&a&o(( Click to evolve! ))'

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<!-- mc-plugin-kit: bug-finding subset only. Formatting is not linted. -->
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+    <property name="severity" value="error"/>
+    <module name="TreeWalker">
+        <module name="EqualsHashCode"/>
+        <module name="StringLiteralEquality"/>
+        <module name="FallThrough"/>
+        <module name="MissingSwitchDefault"/>
+        <module name="ModifiedControlVariable"/>
+        <module name="InnerAssignment"/>
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected|ignored"/>
+        </module>
+        <module name="EmptyStatement"/>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="UnusedLocalVariable"/>
+        <module name="CovariantEquals"/>
+        <module name="SuperClone"/>
+        <module name="NoFinalizer"/>
+        <module name="IllegalInstantiation">
+            <property name="classes" value="java.lang.Boolean, java.lang.Integer, java.lang.Long"/>
+        </module>
+        <!-- Minecraft: Paper stopped relocating CraftBukkit to org.bukkit.craftbukkit.<version> in
+             1.20.5 (https://docs.papermc.io/paper/dev/internals/). Any import of a versioned
+             vX_Y_RZ package (CraftBukkit or old-style NMS) is locked to one server version. -->
+        <module name="IllegalImport">
+            <property name="regexp" value="true"/>
+            <property name="illegalPkgs"
+                      value="^org\.bukkit\.craftbukkit\.v\d+_\d+_R\d+.*, ^net\.minecraft\.server\.v\d+_\d+_R\d+.*, ^sun\..*"/>
+        </module>
+    </module>
+</module>

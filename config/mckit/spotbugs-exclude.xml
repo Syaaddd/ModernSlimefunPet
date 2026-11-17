@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter xmlns="https://github.com/spotbugs/filter/3.0.0">
+    <!-- Bukkit's design passes the JavaPlugin and mutable Bukkit objects (Location, ItemStack)
+         between managers everywhere; EI_EXPOSE_REP* is pure noise for plugins. -->
+    <Match><Bug pattern="EI_EXPOSE_REP"/></Match>
+    <Match><Bug pattern="EI_EXPOSE_REP2"/></Match>
+    <Match><Bug pattern="EI_EXPOSE_STATIC_REP2"/></Match>
+    <!-- CT_CONSTRUCTOR_THROW guards against finalizer attacks on partly built objects. Plugins are
+         not exposed to untrusted subclassing and finalization is deprecated for removal (JEP 421),
+         while fail-fast constructors (Objects.requireNonNull on dependencies) are idiomatic. -->
+    <Match><Bug pattern="CT_CONSTRUCTOR_THROW"/></Match>
+    <!-- Every statement in the database package is built from constant table and column names
+         (PetStorage) and DatabaseType.upsert over those constants. No player or config input is
+         concatenated into SQL; every value is bound with setObject. -->
+    <Match>
+        <Package name="id.alwination.slimefunpet.database"/>
+        <Bug pattern="SQL_INJECTION_JDBC"/>
+    </Match>
+    <!-- Game randomness only (particle jitter, packet entity ids, pet rolls). No token, key or
+         secret is ever derived from these generators. -->
+    <Match><Bug pattern="PREDICTABLE_RANDOM"/></Match>
+    <!-- Ported pet-display baseline: every flagged call is ConfigurationSection.getString(path, default)
+         or getConfigurationSection followed by a null check. Bukkit marks those getters @Nullable and
+         SpotBugs ignores their @Contract("_, !null -> !null"); NullAway (JSpecify mode) is the null
+         checker for this code and passes. New code outside this package gets no such exclusion. -->
+    <Match>
+        <Package name="id.alwination.slimefunpet.packet.display"/>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <!-- ModernMineGens' pattern, kept so the ported pet code reads the same: the main class holds
+         the configs, PDC keys and its instance in public static fields set once in onEnable.
+         PA_PUBLIC_PRIMITIVE_ATTRIBUTE is also reported in every class that reads those fields. -->
+    <Match>
+        <Class name="id.alwination.slimefunpet.ModernSlimefunPet"/>
+        <Bug pattern="MS_CANNOT_BE_FINAL,MS_EXPOSE_REP,ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
+    </Match>
+    <Match><Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE"/></Match>
+    <!-- ItemStack#setItemMeta does change the stack; SpotBugs wrongly treats it as side-effect free. -->
+    <Match><Bug pattern="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT"/></Match>
+    <!-- Ported ModernMineGens pet code baseline (menus, item and stat registries, PetManager): the
+         flagged calls are Bukkit config getters (getString(path, default), getConfigurationSection)
+         that SpotBugs reads as nullable. These packages are on the NullAway ratchet in MILESTONES.md;
+         drop this match once they are back on NullAway ERROR. -->
+    <Match>
+        <Or>
+            <Package name="id.alwination.slimefunpet.pets.gui"/>
+            <Package name="id.alwination.slimefunpet.pets.items"/>
+            <Package name="id.alwination.slimefunpet.pets.managers"/>
+            <Package name="id.alwination.slimefunpet.pets.stats"/>
+        </Or>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+    <!-- Tests: MockBukkit fixtures. -->
+    <Match><Class name="~.*Test(s)?(\$.*)?"/></Match>
+</FindBugsFilter>
