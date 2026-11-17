@@ -287,3 +287,80 @@ Guards (all cheap, all in our plugin):
 - Dropped entities picked up by Network Vacuum (NetworkVacuum.java:99) or Butcher Android (ButcherAndroidListener
   .java:55) unless the no_pickup marker is applied to every spawn of our item.
 - Admin/creative duplication (middle-click, /give). Ledger again.
+
+## 7. Shipped item materials (owner answers)
+
+Owner decisions: items may sit in vanilla chests (so Cargo, the Vanilla Grabber and the Vanilla Auto Crafter reach
+them), no id ledger, no resource-pack models. Material is the only defence on the event-less paths.
+How each material was checked (all read-only):
+- R: role as an ingredient in the 2044 vanilla 26.3 recipe JSONs, tags expanded. The Vanilla Auto Crafter only takes
+  crafting_shaped/shapeless (VanillaAutoCrafter.java:184-187).
+- P: vanilla item properties from javap of net.minecraft.world.item.Items in paper-26.3.jar (food, compostable,
+  BLOCK = placeable, durability, cookingFuel/brewingFuel, DEATH_PROTECTION).
+- T: every mention in the 5 trees, read by role. Type-only inputs: Infinity Machines.java:220-363, Singularity,
+  Stoneworks, growers Machines.java:141+; Supreme Aquarium/Garden/MobCollector first argument; Auto Anvil (damage),
+  Auto Brewer potion slot, Auto Disenchanter BOOK slot, Book Binder and Auto Enchanter ENCHANTED_BOOK slot.
+- V: vanilla blocks Cargo can fill without an event (furnace, brewing stand, Crafter, which is an
+  org.bukkit.block.Container). Their processing does fire cancellable events (FurnaceSmeltEvent/FurnaceBurnEvent,
+  BrewEvent, CrafterCraftEvent). The composter is not an InventoryHolder, so only hoppers/players reach it
+  (CompostItemEvent, EntityCompostItemEvent and InventoryMoveItemEvent exist; which of them a hopper fires is UNVERIFIED).
+Shared mitigation for the residual vanilla uses: Paper 26.3 has ItemStack#unsetData and DataComponentTypes FOOD,
+CONSUMABLE and DEATH_PROTECTION, so edibility and totem resurrection can be stripped from our stacks (runtime
+effect UNVERIFIED). Compostable is not exposed (no COMPOSTABLE type), so composting needs the events above.
+
+SAFE (no type-only consumer; only event-guardable vanilla uses):
+- food/small_treat COOKIE. R none. T only Slimefun recipes matched by isItemSimilar (SlimefunItemSetup.java:258,263,
+  1452). Networks/FastMachines are strict. P food, compostable (MEDIUM_HIGH), not placeable.
+- food/large_feast PUMPKIN_PIE. R none. T only Slimefun's own item definitions. P food, compostable, not placeable.
+- stat_lock/stat_lock_charm NAME_TAG. R none (recipe result only). T GUI icons only (HologramProjector.java:105,
+  ElevatorPlate.java:210, AbstractGrid.java:74, TechMutation.java:277) and android loot. Vanilla: renames a mob on
+  right-click and is consumed (PlayerInteractEntityEvent).
+- auto_feed_upgrade GOLDEN_CARROT. R brewing reagent only (3 night-vision recipes). The Auto Brewer ingredient slot
+  rejects items with meta (AutoBrewer.java:80-82). Cargo can drop it into a vanilla brewing stand
+  (CargoUtils.java:91-101), and BrewEvent can cancel that. P food. Horse food.
+- revive/revive_totem TOTEM_OF_UNDYING. R none. T only Supreme MobCollector OUTPUTS (MobCollector.java:222,291,
+  second argument). P DEATH_PROTECTION, so it saves the player on death from hand or off-hand: cancel
+  EntityResurrectEvent or unset DEATH_PROTECTION. Stacks to 1.
+
+UNSAFE (Vanilla Auto Crafter ingredient; no event can stop it), with replacements:
+- candy/pet_candy SUGAR: cake (shaped), pumpkin_pie and fermented_spider_eye (shapeless), plus 6 brewing recipes.
+  -> GLOW_BERRIES. R none. T only Juicer recipe SlimefunItemSetup.java:2677 (isItemSimilar) and BioGenerator.java:77
+  fuel (MachineFuel isItemSimilar). P food, compostable, fox food; placeable as cave vines (vanilla knowledge).
+  -> or FIREWORK_STAR (non-edible). R only special firework recipes the auto crafter ignores. P none. T only
+  Slimefun's own ColoredFireworkStar items. Tint with FireworkEffectMeta.
+- candy/super_candy HONEYCOMB: beehive, candle, honeycomb_block (shaped) and 60 waxed_*_from_honeycomb (shapeless).
+  -> GOLDEN_APPLE. R none. T Juicer recipe SlimefunItemSetup.java:1310 and a Supreme icon. P food. Tags horse_food,
+  piglin_loved (piglins pick it up: EntityPickupItemEvent). Not ENCHANTED_GOLDEN_APPLE, which is an ingredient
+  of mojang_banner_pattern (shapeless). -> or FIREWORK_STAR with glint.
+- evolution/evolution_stone HEART_OF_THE_SEA: conduit (shaped).
+  -> AMETHYST_CLUSTER. R none, no tags, T none. P BLOCK: cancel BlockPlaceEvent and BlockPlacerPlaceEvent.
+  -> or FIREWORK_STAR tinted.
+- evolution/blessed_evolution_stone NETHER_STAR: beacon (shaped). The NetherStarReactor fuel check is isItemSimilar,
+  which is safe on its own.
+  -> FIREWORK_STAR + setEnchantmentGlintOverride. -> or CONDUIT: R none; T only FastMachines' own item materials
+  (FMItems.java:40,103); P BLOCK, so guard placing.
+- reroll/reroll_token PAPER: book (shapeless); map, cartography_table, name_tag (shaped); banner-pattern and
+  firework_rocket_simple (shapeless).
+  -> GLOBE_BANNER_PATTERN or FLOWER_BANNER_PATTERN (paper-sheet texture). R none. Only tag loom_patterns. T none.
+  P not food, not a block. Stacks to 1 (raise it with setMaxStackSize). The loom does not consume patterns
+  (vanilla knowledge, UNVERIFIED).
+- reroll/blessed_reroll_token BOOK: bookshelf, enchanting_table (shaped), writable_book (shapeless). Also the Auto
+  Disenchanter takes any BOOK by type (AutoDisenchanter.java:81) while AutoDisenchantEvent only exposes the other item.
+  -> KNOWLEDGE_BOOK. R none. T GUI icons only (AddonCatalog.java:136, SurvivalSlimefunGuide.java:668). Tag
+  bookshelf_books (storage only). Vanilla right-click may consume it (UNVERIFIED): cancel PlayerInteractEvent.
+  -> or WRITTEN_BOOK: R only crafting_special_bookcloning; T only a Cargo GUI icon (CargoInputNode.java:75).
+  Avoid ENCHANTED_BOOK: matched by type in AutoEnchanter.java:80, BookBinder.java:106, AdvancedAnvil.java:116.
+- reroll/stat_shard AMETHYST_SHARD: amethyst_block, spyglass, tinted_glass, calibrated_sculk_sensor (shaped).
+  -> PRIZE_POTTERY_SHERD (any sherd). R only crafting_decorated_pot (special, ignored by the auto crafter; a vanilla
+  table/Crafter fires CraftItemEvent/CrafterCraftEvent). T none. P not food, not a block.
+  -> or LARGE_AMETHYST_BUD (R/T none, BLOCK). Avoid ECHO_SHARD (recovery_compass, shaped).
+- reroll/stat_eraser FLINT: arrow, fletching_table (shaped), flint_and_steel (shapeless).
+  -> WIND_CHARGE. R none, no tags. T only ExplosionsListener.java:64-102 (the explosion entity). Thrown on
+  right-click or from a dispenser: PlayerInteractEvent / BlockDispenseEvent.
+  -> or PHANTOM_MEMBRANE: R brewing only (BrewEvent). T AutoBrewer.java:53 (meta rejected) and a Supreme output.
+- auto_feed_unlocker HAY_BLOCK: wheat (shapeless), target and straw_bed (shaped). Also placeable and compostable.
+  -> BEETROOT_SOUP. R none, no tags, T none. P food, stacks to 1, returns a bowl; not compostable, not placeable.
+  -> or RABBIT_STEW (tag wolf_food). Avoid MUSHROOM_STEW (ProduceCollector.java:80,131).
+Residual: nothing fitting the "food" and "candy" themes is both non-edible and SAFE except FIREWORK_STAR. Edible picks
+rely on the FOOD/CONSUMABLE strip or PlayerItemConsumeEvent. Placeable picks rely on BlockPlaceEvent. A vanilla
+Crafter filled by Cargo with sherds or written books relies on CrafterCraftEvent.

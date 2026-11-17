@@ -427,6 +427,10 @@ stats:
 #  What the player is told while a menu is open lives in 'gui-modes' below.
 #  Give them with: /slimefunpet givepetitem <player> <type> <id> [amount]
 items:
+  # Materials: none of these is a vanilla crafting ingredient or a Slimefun
+  # machine input, so Cargo or a Vanilla Auto Crafter cannot use them
+  # (SLIMEFUN-VECTORS.md section 7). Check that list before changing one.
+  # 'glint: true' makes an item shine without a real enchantment.
   # Restores food and gives exp
   food:
     small_treat:
@@ -452,14 +456,14 @@ items:
   # Instantly levels a pet up
   candy:
     pet_candy:
-      material: SUGAR
+      material: GLOW_BERRIES
       display-name: '#FFA96E&lPet Candy'
       lore:
         - '&7Right click to instantly level'
         - '&7one of your pets up by &f1&7.'
       levels: 1
     super_candy:
-      material: HONEYCOMB
+      material: GOLDEN_APPLE
       display-name: '#FFD460&lSuper Pet Candy'
       lore:
         - '&7Right click to instantly level'
@@ -468,7 +472,7 @@ items:
   # Evolves a pet into the next one of its chain
   evolution:
     evolution_stone:
-      material: HEART_OF_THE_SEA
+      material: AMETHYST_CLUSTER
       display-name: '#31BCFF&lEvolution Stone'
       lore:
         - '&7Right click to evolve one of your pets.'
@@ -482,7 +486,8 @@ items:
       chance-bonus: 0
       commands: []
     blessed_evolution_stone:
-      material: NETHER_STAR
+      material: FIREWORK_STAR
+      glint: true
       display-name: '#B184EF&lBlessed Evolution Stone'
       lore:
         - '&7Right click to evolve one of your pets.'
@@ -496,7 +501,7 @@ items:
       commands: []
   reroll:
     reroll_token:
-      material: PAPER
+      material: GLOBE_BANNER_PATTERN
       display-name: '#88D7FD&lStat Reroll Token'
       lore:
         - '&7Right click to gamble the stats'
@@ -518,7 +523,7 @@ items:
           weight: 50
           amount: 1
     blessed_reroll_token:
-      material: BOOK
+      material: KNOWLEDGE_BOOK
       display-name: '#70FFBA&lBlessed Stat Reroll Token'
       lore:
         - '&7Right click to gamble the stats'
@@ -541,7 +546,7 @@ items:
           amount: 1
       money-cost: 0
     stat_shard:
-      material: AMETHYST_SHARD
+      material: LARGE_AMETHYST_BUD
       display-name: '#DCA9FC&lStat Shard'
       lore:
         - '&7Right click to roll one extra stat'
@@ -552,7 +557,7 @@ items:
       stats: 1
       money-cost: 0
     stat_eraser:
-      material: FLINT
+      material: WIND_CHARGE
       display-name: '#FF8BC3&lStat Eraser'
       lore:
         - '&7Right click to burn one random stat'
@@ -586,7 +591,7 @@ items:
   # pet's options menu. Never used by right clicking on its own.
   auto_feed_unlocker:
     auto_feed_unlocker:
-      material: HAY_BLOCK
+      material: BEETROOT_SOUP
       display-name: '#FFD45C&lAuto-Feed Unlocker'
       lore:
         - '&7Open a pet''s options and click'

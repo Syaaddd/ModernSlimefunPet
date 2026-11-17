@@ -2,7 +2,7 @@
 
 Nothing below has been run. The build server has no game client. Do these on a test server with
 Paper 26.3, Java 25, PacketEvents and (for money costs) Vault plus an economy plugin.
-Do NOT put this jar on the live server before the Slimefun guards (M7) exist.
+M7 guards are in, but none of this has been run: test here before the live server.
 
 ## Setup
 - `/slimefunpet givepet <you> common_pet`
@@ -44,6 +44,16 @@ Do NOT put this jar on the live server before the Slimefun guards (M7) exist.
 26. Feed the pet below 60% food: paused (not Happy).
 27. Reach the daily cap: "Daily AFK XP limit reached"; change the server date past midnight: it pays again.
 28. Stay button in the pet options: the pet stays put; walk 20 blocks away: AFK XP pauses; relog: the pet follows again.
+
+## Slimefun guards (M7), with Slimefun on the test server
+29. Open a Slimefun machine: shift-clicking, number-keying or placing a pet item into it is refused; a pet item already inside can be taken out.
+30. Open a backpack: pet items cannot go in.
+31. Put a pet item in a chest next to a Cargo input node feeding an Enhanced Crafting Table / Vanilla Auto Crafter: nothing is crafted from it.
+32. Drop a pet item near a Network Vacuum or Infused Magnet: it is not taken. Walk over it: you pick it up.
+33. Drop a pet item, leave the area until the chunk unloads, come back: the vacuum still ignores it.
+34. Right-click a Slimefun Composter / Ancient Pedestal with a pet item: nothing happens to the item.
+35. Hold the revive totem and die: you are not saved by it, and it is not used up.
+36. Off hand: a wind charge (stat eraser) is not thrown, the knowledge book is not read, glow berries are not eaten or placed.
 
 ## Saving
 23. Feed a pet, then kill the server process (not /stop) within a second: after restart the feed and the taken food both stuck, or neither did.

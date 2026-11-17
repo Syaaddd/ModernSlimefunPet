@@ -175,6 +175,21 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- The server's own Slimefun fork, for its events only (provided by the server, softdepend).
+             Not on any repository: install the fork's jar into the local Maven repo first, see
+             MILESTONES.md "Building". -->
+        <dependency>
+            <groupId>io.github.thebusybiscuit</groupId>
+            <artifactId>slimefun5-ae</artifactId>
+            <version>5.0.0-UNOFFICIAL</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- Crunch: the level-cost and exp-per-food formulas in pets.yml (shaded and relocated). -->
         <dependency>
             <groupId>com.github.Redempt</groupId>

@@ -7,6 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -133,11 +134,18 @@ public final class PetItemRegistry {
                 .getConfigurationSection(type.getConfigSection() + "." + id);
         if (section == null) return null;
 
-        return ItemBuilder.fromConfig(section)
+        ItemStack stack = ItemBuilder.fromConfig(section)
                 .amount(Math.max(1, amount))
                 .pdc(ModernSlimefunPet.pet_item_type, type.name())
                 .pdc(ModernSlimefunPet.pet_item_id, id)
                 .build();
+        // 'glint: true' shines without a real enchantment (the Auto Disenchanter would take one off)
+        if (section.getBoolean("glint")) {
+            ItemMeta meta = stack.getItemMeta();
+            meta.setEnchantmentGlintOverride(true);
+            stack.setItemMeta(meta);
+        }
+        return stack;
     }
 
     /**
@@ -166,6 +174,15 @@ public final class PetItemRegistry {
      * Read the pet item a stack represents, or null when it is not one.
      */
     @Nullable
+    /**
+     * Whether a stack is any item this plugin issued, registered or not (an item whose section was
+     * removed from pets.yml still counts). Reads the PDC only, so it is safe in async Slimefun events.
+     */
+    public static boolean isPetItem(@Nullable ItemStack stack) {
+        return stack != null && !stack.isEmpty()
+                && stack.getPersistentDataContainer().has(ModernSlimefunPet.pet_item_type, PersistentDataType.STRING);
+    }
+
     public static PetItem fromItemStack(@Nullable ItemStack stack) {
         if (stack == null || !stack.hasItemMeta()) return null;
 

@@ -16,7 +16,9 @@ import id.alwination.slimefunpet.database.SqliteImporter;
 import id.alwination.slimefunpet.pets.PetPlayer;
 import id.alwination.slimefunpet.pets.PlayerProfile;
 import id.alwination.slimefunpet.pets.items.PetItemType;
+import id.alwination.slimefunpet.hooks.slimefun.SlimefunPetItemGuard;
 import id.alwination.slimefunpet.pets.listeners.PetActivityListener;
+import id.alwination.slimefunpet.pets.listeners.PetItemGuardListener;
 import id.alwination.slimefunpet.pets.listeners.PetItemListener;
 import id.alwination.slimefunpet.pets.listeners.PetPlayerListener;
 import id.alwination.slimefunpet.pets.managers.PetManager;
@@ -124,6 +126,14 @@ public final class ModernSlimefunPet extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PetPlayerListener(this.profileManager, this.petTask, this.petEffectTask), this);
         this.getServer().getPluginManager().registerEvents(this.activityListener, this);
         this.getServer().getPluginManager().registerEvents(this.afkXpTask, this);
+        this.getServer().getPluginManager().registerEvents(new PetItemGuardListener(this), this);
+        // The Slimefun hook loads Slimefun classes, so it is only touched when Slimefun is there
+        if (this.getServer().getPluginManager().isPluginEnabled("Slimefun")) {
+            this.getServer().getPluginManager().registerEvents(new SlimefunPetItemGuard(), this);
+            this.getLogger().info("Slimefun found: pet items are guarded against Slimefun machines and menus.");
+        } else {
+            this.getLogger().info("Slimefun not found: only the menu, drop and vanilla guards are active.");
+        }
         MDLib.getCommandRegistry().register(new PetCommand(this.petManager, this.petTask));
         MDLib.getCommandRegistry().register(new SlimefunPetCommand(this.petManager, this.petTask));
 

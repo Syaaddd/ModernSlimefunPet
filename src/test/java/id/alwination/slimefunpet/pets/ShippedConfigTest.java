@@ -88,4 +88,18 @@ class ShippedConfigTest {
             }
         }
     }
+
+    /** SLIMEFUN-VECTORS.md section 7: vanilla crafting ingredients a Vanilla Auto Crafter can eat. */
+    @Test
+    void noPetItemUsesAMaterialSlimefunCanConsume() throws Exception {
+        Set<String> unsafe = Set.of("SUGAR", "HONEYCOMB", "HEART_OF_THE_SEA", "NETHER_STAR", "PAPER", "BOOK",
+                "AMETHYST_SHARD", "FLINT", "HAY_BLOCK", "PLAYER_HEAD");
+        ConfigurationSection items = section(load("pets.yml"), "items");
+        for (String type : items.getKeys(false)) {
+            ConfigurationSection kind = section(items, type);
+            for (String id : kind.getKeys(false)) {
+                assertThat(kind.getString(id + ".material", "")).as(type + "." + id).isNotIn(unsafe);
+            }
+        }
+    }
 }

@@ -15,7 +15,7 @@ Build and gate need `MCKIT_JAVA_HOME=$HOME/jdks/jdk25`. The MCP `gate` tool pick
 | M4 | Evolution without boosters (handoff section 9 applied) | done, untested in game |
 | M5 | Stats: owner's list as the pool; new kinds ATTRIBUTE (transient modifiers) and HEAL; POTION_EFFECT conditions ALWAYS/MINING/HEALTH_BELOW/OUT_OF_COMBAT; reroll and stat lock kept | done, untested in game |
 | M6 | AFK XP (hand-rolled idle tracker, 30 XP points/hour, daily cap 240 saved per profile, async payout log, action bar), mood from food (Happy >= 60%), Stay (options menu button; spot in memory, ends on quit) | done, untested in game |
-| M7 | Slimefun guards (SLIMEFUN-VECTORS.md "Recommended item form and guard set"), cold review | waiting on owner decisions |
+| M7 | Slimefun guards per the owner's answers: holder-less chest menu click guard (HIGHEST), no_pickup marker on dropped pet items (players can still pick up), Slimefun event hooks (multiblock, auto (dis)enchanter, right-click block, block placer), vanilla guards (craft, eat, place, off-hand use, entity interact, totem resurrect, brew), 9 item materials swapped to non-ingredients | done, untested in game; cold review not run yet |
 
 ## Owner answers for M7 (2026-11-17)
 
@@ -58,6 +58,23 @@ New code is checked at ERROR. The 30 classes ported unchanged from ModernMineGen
 - A join is not activity, so the saved partial hour carries on after a relog once the player idles again.
 - Action bar every second while AFK: countdown, "paused", or "daily limit reached".
 - Mood is not shown on the pet item yet.
+
+## M7 material swaps (SLIMEFUN-VECTORS.md section 7)
+
+pet_candy SUGAR -> GLOW_BERRIES; super_candy HONEYCOMB -> GOLDEN_APPLE; evolution_stone HEART_OF_THE_SEA -> AMETHYST_CLUSTER; blessed_evolution_stone NETHER_STAR -> FIREWORK_STAR (glint); reroll_token PAPER -> GLOBE_BANNER_PATTERN; blessed_reroll_token BOOK -> KNOWLEDGE_BOOK; stat_shard AMETHYST_SHARD -> LARGE_AMETHYST_BUD; stat_eraser FLINT -> WIND_CHARGE; auto_feed_unlocker HAY_BLOCK -> BEETROOT_SOUP. Kept: COOKIE, PUMPKIN_PIE, NAME_TAG, GOLDEN_CARROT, TOTEM_OF_UNDYING. `ShippedConfigTest` fails if an unsafe material comes back.
+
+## Residual risk (cannot be closed from this plugin, owner chose to allow chests)
+
+- Cargo nodes, the Networks Vanilla Grabber and the Vanilla Auto Crafter read vanilla chests with no event: they can move a pet item into Slimefun storage (Networks quantum, Infinity storage units) or a Trash Can can void it. The materials stop any machine from using it as an ingredient.
+- Quantum/Infinity storage keep one template and hand out clones (PDC kept); with no ledger a clone is a real pet item.
+- Hoppers cannot collect dropped pet items (Slimefun cancels hopper pickup of no_pickup items).
+- Any other plugin's chest menu without a holder blocks pet items while open (accepted).
+
+## Building
+
+The Slimefun fork is not on any Maven repository. Install the server's jar once before building:
+`mvn install:install-file -Dfile=Slimefun-5.0.0-UNOFFICIAL.jar -DgroupId=io.github.thebusybiscuit -DartifactId=slimefun5-ae -Dversion=5.0.0-UNOFFICIAL -Dpackaging=jar`
+(installed here from `_local-test-server/plugins`, build of 2026-11-01). Build and gate with `MCKIT_JAVA_HOME=$HOME/jdks/jdk25`.
 
 ## Open (small)
 

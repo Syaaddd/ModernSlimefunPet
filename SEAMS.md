@@ -19,4 +19,7 @@ Seam ids come from the mc-plugin-kit seam catalog. No MockBukkit. Glue stays thi
 | Shipped pets.yml and menus | S6 | `ShippedConfigTest` | M2-M5 |
 | Every `messages.*` key sent from code exists in pets.yml | S6 | `MessageKeysTest` | M2-M5 |
 | AFK idle rule, daily rollover and cap, payout amount, time left, mood | S1 | `AfkXpTaskTest` | M6 |
+| Click rule while a holder-less chest menu is open | S1 | `PetItemGuardListenerTest` | M7 |
+| No unsafe item material shipped | S6 | `ShippedConfigTest` | M7 |
+| Boot with and without the Slimefun fork on 26.3 (hooks register / skipped) | S11 | headless boot | M7 |
 | Menus, clicks, equip, feeding, evolution, reroll, attributes on a real player | in-game check | LIVE-CHECKS.md, not run | M2-M5 |
