@@ -38,5 +38,12 @@ Do NOT put this jar on the live server before the Slimefun guards (M7) exist.
 21. Die and respawn with the pet equipped: the attributes come back within 2 s.
 22. A beacon's Haste II is not replaced by the pet's Haste I.
 
+## AFK XP and Stay (M6)
+24. Set `afk-xp.interval-minutes: 1` and `idle-minutes: 1` on the test server. Stand still with a Happy pet out: after 1 minute the action bar counts down, after 2 minutes you get 30 XP points and a line appears in afk-payouts.log.
+25. Move a little: the countdown resets. Get hit by a mob or stand in water: it shows "paused" and does not reset.
+26. Feed the pet below 60% food: paused (not Happy).
+27. Reach the daily cap: "Daily AFK XP limit reached"; change the server date past midnight: it pays again.
+28. Stay button in the pet options: the pet stays put; walk 20 blocks away: AFK XP pauses; relog: the pet follows again.
+
 ## Saving
 23. Feed a pet, then kill the server process (not /stop) within a second: after restart the feed and the taken food both stuck, or neither did.

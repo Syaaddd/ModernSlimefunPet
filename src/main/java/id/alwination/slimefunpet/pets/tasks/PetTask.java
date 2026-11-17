@@ -17,6 +17,7 @@ import id.alwination.slimefunpet.pets.PetSettings;
 import id.alwination.slimefunpet.pets.PlayerProfile;
 import id.alwination.slimefunpet.pets.managers.PetManager;
 import id.alwination.slimefunpet.utils.ColorUtil;
+import id.alwination.slimefunpet.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.Nullable;
@@ -42,6 +44,8 @@ public class PetTask {
 
     private final Map<UUID, List<PetDisplay>> activeSessions = new HashMap<>();
     private final Set<UUID> hiddenPlayers = new HashSet<>();
+    /** Where each pet on Stay waits, by pet UUID. Memory only: Stay ends when the owner quits. */
+    private final Map<UUID, Location> stayLocations = new HashMap<>();
     private @Nullable HandleTask bukkitTask;
 
     public void start() {
@@ -110,6 +114,10 @@ public class PetTask {
             }
             PetDisplay display = new PetDisplay(owner, new ItemBuilder(Material.PLAYER_HEAD).skull(pet.getSkull()).build(),
                     model, () -> hologramText(owner, pet, petPlayer), i, toShow.size(), settings);
+            Location stay = this.stayLocations.get(petPlayer.getUniqueId());
+            if (petPlayer.isStay() && stay != null && owner.getWorld().equals(stay.getWorld())) {
+                display.setStayAt(stay);
+            }
             display.spawn();
             sessions.add(display);
         }
@@ -205,10 +213,33 @@ public class PetTask {
         }
     }
 
-    /** Drops everything kept for a player who quit. */
+    /** Drops everything kept for a player who quit; their pets stop staying. */
     public void clearRuntimeState(Player player) {
         this.hideFor(player);
         this.hiddenPlayers.remove(player.getUniqueId());
+        for (PetPlayer petPlayer : ModernSlimefunPet.getInstance().getPetManager().getPetPlayers(player.getUniqueId())) {
+            if (petPlayer.isStay() || this.stayLocations.containsKey(petPlayer.getUniqueId())) {
+                petPlayer.setStay(false);
+                this.stayLocations.remove(petPlayer.getUniqueId());
+                DatabaseQueueHandler.addObjectToSave(petPlayer);
+            }
+        }
+    }
+
+    /** Stay on: the pet waits where its owner stands now. Stay off: it follows again. */
+    public void setStay(Player owner, PetPlayer petPlayer, boolean stay) {
+        petPlayer.setStay(stay);
+        if (stay) {
+            this.stayLocations.put(petPlayer.getUniqueId(), Utils.locationOf(owner).clone());
+        } else {
+            this.stayLocations.remove(petPlayer.getUniqueId());
+        }
+        DatabaseQueueHandler.addObjectToSave(petPlayer);
+        this.refreshFor(owner);
+    }
+
+    public @Nullable Location getStayLocation(UUID pet) {
+        return this.stayLocations.get(pet);
     }
 
     private void tickAllSessions() {

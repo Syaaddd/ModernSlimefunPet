@@ -151,6 +151,11 @@ public class PetDisplay {
      * every client while the display was already off the map, leaving a pet
      * frozen in place that nothing would ever tick or remove.
      */
+    /** Eye height minus the half block a head floats below the eyes, for a head on Stay. */
+    private static final double STAY_HEAD_HEIGHT = 1.12;
+
+    private org.bukkit.@Nullable Location stayAt;
+
     private volatile boolean spawned = false;
     private volatile boolean destroyed = false;
 
@@ -238,6 +243,11 @@ public class PetDisplay {
     /**
      * Move the pet and keep the list of players seeing it up to date.
      */
+    /** Stay mode: draws the pet at this spot instead of next to its owner; null follows again. */
+    public synchronized void setStayAt(org.bukkit.@Nullable Location stayAt) {
+        this.stayAt = stayAt == null ? null : stayAt.clone();
+    }
+
     public synchronized void tick() {
         if (destroyed || !spawned || !owner.isOnline()) return;
 
@@ -583,6 +593,12 @@ public class PetDisplay {
      * does not swing it about, and rises beside them while they fly.
      */
     private org.bukkit.Location computeTarget(boolean airborne) {
+        // Stay mode: the pet waits where it was left (a head floats at eye height there)
+        org.bukkit.Location stay = this.stayAt;
+        if (stay != null) {
+            double y = this.rig != null ? stay.getY() + this.modelYOffset : stay.getY() + STAY_HEAD_HEIGHT;
+            return new org.bukkit.Location(stay.getWorld(), stay.getX(), y, stay.getZ(), stay.getYaw(), 0.0f);
+        }
         org.bukkit.Location eye = owner.getEyeLocation();
         boolean model = this.rig != null;
         double yawRad = Math.toRadians(model ? owner.getBodyYaw() : eye.getYaw());

@@ -4,6 +4,7 @@ import com.muhammaddaffa.mdlib.MDLib;
 import com.muhammaddaffa.mdlib.fastinv.FastInvManager;
 import com.muhammaddaffa.mdlib.utils.Config;
 import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
+import id.alwination.slimefunpet.afk.AfkXpTask;
 import id.alwination.slimefunpet.commands.PetCommand;
 import id.alwination.slimefunpet.commands.SlimefunPetCommand;
 import id.alwination.slimefunpet.database.DatabaseManager;
@@ -80,6 +81,8 @@ public final class ModernSlimefunPet extends JavaPlugin {
     private final PetFoodTask petFoodTask = new PetFoodTask();
     private final PetActivityListener activityListener = new PetActivityListener();
     private final PetEffectTask petEffectTask = new PetEffectTask(this.activityListener);
+    private final AfkXpTask afkXpTask = new AfkXpTask(this.profileManager, this.petTask, this.activityListener,
+            this.getDataFolder().toPath().resolve("afk-payouts.log"));
     private @Nullable DatabaseManager database;
 
     public static ModernSlimefunPet getInstance() {
@@ -120,12 +123,14 @@ public final class ModernSlimefunPet extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PetItemListener(this.petManager, this.petTask), this);
         this.getServer().getPluginManager().registerEvents(new PetPlayerListener(this.profileManager, this.petTask, this.petEffectTask), this);
         this.getServer().getPluginManager().registerEvents(this.activityListener, this);
+        this.getServer().getPluginManager().registerEvents(this.afkXpTask, this);
         MDLib.getCommandRegistry().register(new PetCommand(this.petManager, this.petTask));
         MDLib.getCommandRegistry().register(new SlimefunPetCommand(this.petManager, this.petTask));
 
         this.petTask.start();
         this.petFoodTask.start();
         this.petEffectTask.start();
+        this.afkXpTask.start();
         // After a reload the players are already online
         for (Player player : Bukkit.getOnlinePlayers()) {
             this.petTask.setHidden(player, this.profileManager.getProfile(player.getUniqueId()).isToggleHidePet(), false);
@@ -138,6 +143,7 @@ public final class ModernSlimefunPet extends JavaPlugin {
     public void onDisable() {
         // Menus first: a menu click must not run while the managers shut down
         FastInvManager.closeAll();
+        this.afkXpTask.stop();
         this.petTask.stop();
         this.petFoodTask.stop();
         this.petEffectTask.stop();
@@ -163,6 +169,7 @@ public final class ModernSlimefunPet extends JavaPlugin {
         this.petTask.start();
         this.petFoodTask.start();
         this.petEffectTask.start();
+        this.afkXpTask.start();
         for (Player player : Bukkit.getOnlinePlayers()) {
             this.petTask.refreshFor(player);
         }

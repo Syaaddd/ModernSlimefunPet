@@ -83,6 +83,38 @@ equip:
   max-equipped: 1
 
 # ╔══════════════════════════════════════════════════════════╗
+# ║                     Mood & AFK XP                        ║
+# ╚══════════════════════════════════════════════════════════╝
+#  A pet's mood comes from its food bar: Happy at 'happy-at' percent or more,
+#  Neutral from 'neutral-at', Sad below that.
+mood:
+  happy-at: 60
+  neutral-at: 25
+
+#  A player who stands still (no move over 0.1 block, no camera turn, no chat,
+#  command, click, interaction, block break or place) for 'idle-minutes' is
+#  AFK. Every 'interval-minutes' of AFK pays 'xp-per-interval' XP POINTS (not
+#  levels; vanilla decides what they are worth), at most 'daily-cap' points a
+#  day. The day resets at 00:00 server time; the total, the day and the partial
+#  interval are saved, so a restart resets nothing.
+#  The interval only counts while the player has a pet out that is alive and at
+#  least 'required-mood', is not in combat ('stats.combat-seconds'), not in water
+#  or lava, and the pet is not on Stay further than 'stay-max-distance' blocks
+#  (or in another world or an unloaded chunk). Otherwise it pauses. Moving
+#  again resets the partial interval to 0.
+#  Every payout is written to plugins/ModernSlimefunPet/afk-payouts.log.
+afk-xp:
+  enabled: true
+  idle-minutes: 3
+  interval-minutes: 60
+  xp-per-interval: 30
+  daily-cap: 240
+  # HAPPY, NEUTRAL or SAD (SAD means any living pet)
+  required-mood: HAPPY
+  stay-max-distance: 16
+  log-payouts: true
+
+# ╔══════════════════════════════════════════════════════════╗
 # ║                       Display                            ║
 # ╚══════════════════════════════════════════════════════════╝
 display:
@@ -839,6 +871,11 @@ messages:
   no-permission: ' #FF4D00&lAlwiNation &8» &cYou do not have permission to do that.'
   # A reroll always keeps at least one stat it may change, so the last one cannot be locked
   pet-stat-lock-needs-one: ' #FF4D00&lAlwiNation &8» &cAt least one stat has to stay unlocked for the reroll!'
+  # AFK XP (action bar while AFK; {time} is the time left, like '42m')
+  afk-xp-next: '&eNext AFK XP: &f{time}'
+  afk-xp-paused: '&7AFK XP paused &8(pet out, Happy, no combat, not in water)'
+  afk-xp-capped: '&7Daily AFK XP limit reached'
+  afk-xp-paid: ' #FF4D00&lAlwiNation &8» &aYou earned &e{amount} XP &afor being AFK with your pet! &7({today}/{cap} today)'
   # Admin
   invalid-pet: ' #FF4D00&lAlwiNation &8» &cThat pet does not exist!'
   give-pet: ' #FF4D00&lAlwiNation &8» &aGave {pet} &7(Level {level}) &ato &e{player}'

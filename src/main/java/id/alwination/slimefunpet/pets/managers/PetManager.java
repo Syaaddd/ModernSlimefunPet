@@ -2,6 +2,7 @@ package id.alwination.slimefunpet.pets.managers;
 
 import com.muhammaddaffa.mdlib.utils.Logger;
 import id.alwination.slimefunpet.ModernSlimefunPet;
+import id.alwination.slimefunpet.afk.AfkSettings;
 import id.alwination.slimefunpet.database.DatabaseQueueHandler;
 import id.alwination.slimefunpet.pets.Pet;
 import id.alwination.slimefunpet.pets.PetPlayer;
@@ -89,6 +90,7 @@ public class PetManager {
         Pet.clearExpressionCache();
         // Reload every tunable of the pet system
         PetSettings.load();
+        AfkSettings.load();
         PetStatRegistry.load();
         PetItemRegistry.load();
         PetModels.load(ModernSlimefunPet.getInstance(), config.getConfigurationSection("skins"));
@@ -301,6 +303,8 @@ public class PetManager {
     public void loadPetData(List<PetPlayer> loaded) {
         petPlayers.clear();
         for (PetPlayer petPlayer : loaded) {
+            // The Stay spot is memory only, so no pet is still staying after a restart
+            petPlayer.setStay(false);
             petPlayers.put(petPlayer.getUniqueId(), petPlayer);
         }
         PetFoodTask.applyOfflineDecay(petPlayers.values());

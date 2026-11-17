@@ -17,6 +17,7 @@ import id.alwination.slimefunpet.packet.display.PetModels;
 import id.alwination.slimefunpet.pets.PlayerProfile;
 import id.alwination.slimefunpet.utils.Utils;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -37,6 +38,7 @@ public final class PetOptionsInventory extends FastInv {
     private static final int EQUIP_SLOT = 12;
     private static final int UNEQUIP_SLOT = 14;
     private static final int AUTO_FEED_SLOT = 16;
+    private static final int STAY_SLOT = 20;
     private static final int BACK_SLOT = 22;
 
     private final Player viewer;
@@ -127,6 +129,20 @@ public final class PetOptionsInventory extends FastInv {
                 Utils.success(this.viewer);
                 ModernSlimefunPet.PETS_CONFIG.sendMessage(this.viewer, "messages.pet-auto-feed-unlocked");
                 new PetAutoFeedInventory(this.viewer, this, this.petPlayer).open(this.viewer);
+            });
+        }
+        // Stay only means something for a pet that is out; a config without the button keeps it away
+        if (equipped && config.isConfigurationSection("stay") && config.isConfigurationSection("follow")) {
+            boolean staying = this.petPlayer.isStay();
+            this.setItem(STAY_SLOT, ItemBuilder.fromConfig(config, staying ? "follow" : "stay").placeholder(placeholder).build(), event -> {
+                Player owner = Bukkit.getPlayer(this.parent.target().getUniqueId());
+                if (owner == null || PetManager.getPetPlayer(this.petPlayer.getUniqueId()) != this.petPlayer) { // NOPMD - the same pet, not an equal one
+                    Utils.fail(this.viewer);
+                    return;
+                }
+                this.parent.petTask().setStay(owner, this.petPlayer, !this.petPlayer.isStay());
+                Utils.click(this.viewer);
+                this.redraw();
             });
         }
         this.setItem(BACK_SLOT, ItemBuilder.fromConfig(config, "back").placeholder(placeholder).build(), event -> {

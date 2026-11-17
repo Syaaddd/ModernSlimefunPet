@@ -3,8 +3,10 @@ package id.alwination.slimefunpet.utils;
 import com.google.common.base.Strings;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jspecify.annotations.Nullable;
@@ -21,6 +23,14 @@ public final class Utils {
             .build();
 
     private Utils() {
+    }
+
+    /**
+     * Where an online player (or any entity) is. Player also inherits OfflinePlayer#getLocation,
+     * which is @Nullable; read through Entity it never is.
+     */
+    public static Location locationOf(Entity entity) {
+        return entity.getLocation();
     }
 
     /**

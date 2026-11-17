@@ -14,7 +14,7 @@ Build and gate need `MCKIT_JAVA_HOME=$HOME/jdks/jdk25`. The MCP `gate` tool pick
 | M3 | Food, death, revive, candy, Auto-Feed (ported) | done, untested in game |
 | M4 | Evolution without boosters (handoff section 9 applied) | done, untested in game |
 | M5 | Stats: owner's list as the pool; new kinds ATTRIBUTE (transient modifiers) and HEAL; POTION_EFFECT conditions ALWAYS/MINING/HEALTH_BELOW/OUT_OF_COMBAT; reroll and stat lock kept | done, untested in game |
-| M6 | AFK XP, mood, Stay | next |
+| M6 | AFK XP (hand-rolled idle tracker, 30 XP points/hour, daily cap 240 saved per profile, async payout log, action bar), mood from food (Happy >= 60%), Stay (options menu button; spot in memory, ends on quit) | done, untested in game |
 | M7 | Slimefun guards (SLIMEFUN-VECTORS.md "Recommended item form and guard set"), cold review | waiting on owner decisions |
 
 ## Owner answers for M7 (2026-11-17)
@@ -51,6 +51,13 @@ New code is checked at ERROR. The 30 classes ported unchanged from ModernMineGen
 
 - Run `rm -rf target` before the gate after any `-Dmckit.skip` build: otherwise Maven treats the classes as up to date and Error Prone/NullAway never look at them (this hid the ported code's findings once).
 - `MessageKeysTest` fails when code sends a `messages.*` key that pets.yml does not ship (MDLib skips missing keys silently).
+
+## M6 defaults I chose
+
+- A failed condition (combat, water/lava, pet far on Stay, unhappy pet, no pet) pauses the hour; only the player's own activity resets it.
+- A join is not activity, so the saved partial hour carries on after a relog once the player idles again.
+- Action bar every second while AFK: countdown, "paused", or "daily limit reached".
+- Mood is not shown on the pet item yet.
 
 ## Open (small)
 

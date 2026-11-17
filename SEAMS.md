@@ -18,4 +18,5 @@ Seam ids come from the mc-plugin-kit seam catalog. No MockBukkit. Glue stays thi
 | Effect conditions, attribute percent, effect replace rule, heal timing | S1 | `PetEffectTaskTest` | M5 |
 | Shipped pets.yml and menus | S6 | `ShippedConfigTest` | M2-M5 |
 | Every `messages.*` key sent from code exists in pets.yml | S6 | `MessageKeysTest` | M2-M5 |
+| AFK idle rule, daily rollover and cap, payout amount, time left, mood | S1 | `AfkXpTaskTest` | M6 |
 | Menus, clicks, equip, feeding, evolution, reroll, attributes on a real player | in-game check | LIVE-CHECKS.md, not run | M2-M5 |

@@ -5,7 +5,8 @@
 #  thing that can be done with the pet, named on the button itself so nothing
 #  has to be hovered, which keeps it usable on Bedrock.
 #
-#  Slots: pet 4, skins 10, equip 12, unequip 14, auto-feed 16, back 22.
+#  Slots: pet 4, skins 10, equip 12, unequip 14, auto-feed 16, stay/follow 20
+#  (only while the pet is equipped), back 22.
 #
 #  Placeholders: {pet} {level} {skin}
 # --------------------------------------------------------------------------
@@ -122,3 +123,25 @@ auto-feed-locked:
     - ' &8◊ &7Needs: &#FFD45CAuto-Feed Unlocker'
     - ''
     - '&#83ca16→ &#70e510Click to Unlock'
+
+# Stay: the pet waits where you stand now instead of following you. It ends
+# when you quit. AFK XP still counts while you are within
+# 'afk-xp.stay-max-distance' blocks of it.
+stay:
+  material: LEAD
+  display-name: '&#79E4FF&lStay'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7Make {pet} &7wait here.'
+    - ''
+    - '&#83ca16→ &#70e510Click to Stay'
+follow:
+  material: LEAD
+  display-name: '&#8FF384&lFollow'
+  lore:
+    - '&8Interactive Item'
+    - ''
+    - '&7{pet} &7is staying. Make it follow you again.'
+    - ''
+    - '&#83ca16→ &#70e510Click to Follow'
