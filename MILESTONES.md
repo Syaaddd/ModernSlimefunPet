@@ -72,9 +72,8 @@ pet_candy SUGAR -> GLOW_BERRIES; super_candy HONEYCOMB -> GOLDEN_APPLE; evolutio
 
 ## Building
 
-The Slimefun fork is not on any Maven repository. Install the server's jar once before building:
-`mvn install:install-file -Dfile=Slimefun-5.0.0-UNOFFICIAL.jar -DgroupId=io.github.thebusybiscuit -DartifactId=slimefun5-ae -Dversion=5.0.0-UNOFFICIAL -Dpackaging=jar`
-(installed here from `_local-test-server/plugins`, build of 2026-11-01). Build and gate with `MCKIT_JAVA_HOME=$HOME/jdks/jdk25`.
+Slimefun4 (2024.3.1, events only, `provided`) comes from JitPack, so no manual install is needed. The server runs a Slimefun4 fork with the same `io.github.thebusybiscuit.slimefun4.api.events` classes.
+Build and gate with `MCKIT_JAVA_HOME=$HOME/jdks/jdk25`.
 
 ## Open (small)
 

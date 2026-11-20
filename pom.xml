@@ -175,13 +175,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- The server's own Slimefun fork, for its events only (provided by the server, softdepend).
-             Not on any repository: install the fork's jar into the local Maven repo first, see
-             MILESTONES.md "Building". -->
+        <!-- Slimefun4 API, for its events only (provided by the server, softdepend). The server's Slimefun fork keeps
+             the same io.github.thebusybiscuit.slimefun4.api.events package. -->
         <dependency>
-            <groupId>io.github.thebusybiscuit</groupId>
-            <artifactId>slimefun5-ae</artifactId>
-            <version>5.0.0-UNOFFICIAL</version>
+            <groupId>com.github.SlimefunGuguProject</groupId>
+            <artifactId>Slimefun4</artifactId>
+            <version>2024.3.1</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>

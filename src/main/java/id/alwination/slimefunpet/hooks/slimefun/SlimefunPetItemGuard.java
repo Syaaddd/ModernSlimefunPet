@@ -1,13 +1,13 @@
 package id.alwination.slimefunpet.hooks.slimefun;
 
 import id.alwination.slimefunpet.pets.items.PetItemRegistry;
-import io.github.thebusybiscuit.slimefun5.api.events.AsyncAutoEnchanterProcessEvent;
-import io.github.thebusybiscuit.slimefun5.api.events.AutoDisenchantEvent;
-import io.github.thebusybiscuit.slimefun5.api.events.AutoEnchantEvent;
-import io.github.thebusybiscuit.slimefun5.api.events.BlockPlacerPlaceEvent;
-import io.github.thebusybiscuit.slimefun5.api.events.MultiBlockCraftEvent;
-import io.github.thebusybiscuit.slimefun5.api.events.MultiBlockInteractEvent;
-import io.github.thebusybiscuit.slimefun5.api.events.PlayerRightClickEvent;
+import io.github.thebusybiscuit.slimefun4.api.events.AsyncAutoEnchanterProcessEvent;
+import io.github.thebusybiscuit.slimefun4.api.events.AutoDisenchantEvent;
+import io.github.thebusybiscuit.slimefun4.api.events.AutoEnchantEvent;
+import io.github.thebusybiscuit.slimefun4.api.events.BlockPlacerPlaceEvent;
+import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockCraftEvent;
+import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockInteractEvent;
+import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
