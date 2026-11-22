@@ -1,0 +1,1132 @@
+# ╔═════════════════════════════════════════════════════════════════════════════╗
+# ║              ModernSlimefunPet — pet pack (the 'pets:' block)                ║
+# ╚═════════════════════════════════════════════════════════════════════════════╝
+#  21 pets in 7 lines of 3. This file is the 'pets:' section ONLY: paste it over the
+#  'pets:' block at the bottom of plugins/ModernSlimefunPet/pets.yml (or
+#  src/main/resources/pets.yml). Everything above it — food, the stat pool, the pet
+#  items, the menu texts, the messages — stays exactly as it is.
+#
+#  A line that ends its chain (magma_beast, aurum_dragon, ...) has no 'evolution:'
+#  block, which is what makes it the end. Every 'into' points at a pet defined here.
+#
+#  No artwork is shipped: 'model: none' keeps the head. Give a pet a look by dropping
+#  models/<pet id>.bbmodel in and setting 'model: <pet id>', or by filling 'skull:'.
+#  Reload with: /slimefunpet reload
+#
+#  Money costs (money-cost) need Vault plus an economy plugin, otherwise the
+#  evolution is refused rather than run for free.
+
+pets:
+
+  # ═══ Line A — Ember: the combat line ═══
+
+  # A cheap starter that only knows how to bite.
+  ember_pup:
+    max-level: 10
+    level-cost: '1000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/ember_pup.bbmodel in and set 'model: ember_pup' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      attack_damage: 30
+      max_health: 25
+      armor: 20
+      movement_speed: 15
+      haste: 10
+    guaranteed-stats:
+      attack_damage: 0.5
+    item-display-name: "&f&l[I] &7Ember Pup"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: ash_hound
+      display-name: "&9&l[II] &9Ash Hound"
+      required-level: 10
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 50.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 50000
+
+  # Faster and hungrier than the pup.
+  ash_hound:
+    max-level: 15
+    level-cost: '2500 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.5
+    exp-per-food: '30'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/ash_hound.bbmodel in and set 'model: ash_hound' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      attack_damage: 30
+      attack_speed: 20
+      max_health: 20
+      movement_speed: 15
+      haste: 10
+    guaranteed-stats:
+      attack_damage: 0.5
+    item-display-name: "&9&l[II] &9Ash Hound"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: magma_beast
+      display-name: "&5&l[III] &5Magma Beast"
+      required-level: 15
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 40.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 150000
+      item-requirement:
+        material-name: BLAZE_POWDER
+        display-name: '&#FFB36B&lEmber Core'
+        amount: 16
+
+  # Best damage of the line and eats twice as fast as a normal pet.
+  magma_beast:
+    max-level: 20
+    level-cost: '5000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 2.0
+    exp-per-food: '30'
+    starting-stats: 3
+    max-stats: 9
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/magma_beast.bbmodel in and set 'model: magma_beast' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      attack_damage: 35
+      max_health: 25
+      armor: 20
+      attack_speed: 15
+      movement_speed: 10
+    guaranteed-stats:
+      attack_damage: 1.0
+    item-display-name: "&5&l[III] &5Magma Beast"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+
+  # ═══ Line B — Royal: the money line ═══
+
+  # Small luck pet, the cheapest way into the line.
+  coin_fox:
+    max-level: 10
+    level-cost: '1000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/coin_fox.bbmodel in and set 'model: coin_fox' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      luck: 35
+      attack_speed: 25
+      movement_speed: 20
+      max_health: 20
+    guaranteed-stats:
+      luck: 1
+    item-display-name: "&f&l[I] &7Coin Fox"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: gilded_lynx
+      display-name: "&9&l[II] &9Gilded Lynx"
+      required-level: 10
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 50.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 100000
+
+  # Wants coins to evolve, pays them back through luck.
+  gilded_lynx:
+    max-level: 15
+    level-cost: '2500 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/gilded_lynx.bbmodel in and set 'model: gilded_lynx' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      luck: 30
+      attack_speed: 25
+      movement_speed: 20
+      armor: 15
+      max_health: 20
+    guaranteed-stats:
+      luck: 1
+    item-display-name: "&9&l[II] &9Gilded Lynx"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: aurum_dragon
+      display-name: "&5&l[III] &5Aurum Dragon"
+      required-level: 15
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 40.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 250000
+      item-requirement:
+        material-name: GOLD_INGOT
+        display-name: '&#FFD27A&lGilded Coin'
+        amount: 32
+
+  # End of the money line: luck 2 for free on every reroll.
+  aurum_dragon:
+    max-level: 20
+    level-cost: '5000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 4
+    max-stats: 9
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/aurum_dragon.bbmodel in and set 'model: aurum_dragon' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      luck: 35
+      attack_speed: 25
+      max_health: 20
+      armor: 20
+    guaranteed-stats:
+      luck: 2
+    item-display-name: "&5&l[III] &5Aurum Dragon"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+
+  # ═══ Line C — Terra: the mining line ═══
+
+  # Mining pet: haste fires while you are breaking blocks.
+  stone_golem:
+    max-level: 12
+    level-cost: '1200 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30 + ({level} * 3)'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/stone_golem.bbmodel in and set 'model: stone_golem' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      haste: 30
+      luck: 20
+      armor: 25
+      max_health: 25
+    guaranteed-stats:
+      armor: 1
+    item-display-name: "&f&l[I] &7Stone Golem"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: deepslate_golem
+      display-name: "&9&l[II] &9Deepslate Golem"
+      required-level: 12
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 45.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 75000
+      item-requirement:
+        material-name: COBBLED_DEEPSLATE
+        display-name: '&#F2CFA0&lGolem Core'
+        amount: 64
+
+  # Digs better than the stone version, asks for a deep core.
+  deepslate_golem:
+    max-level: 18
+    level-cost: '3000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.1
+    exp-per-food: '30 + ({level} * 3)'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/deepslate_golem.bbmodel in and set 'model: deepslate_golem' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      haste: 30
+      armor: 25
+      max_health: 25
+      luck: 20
+    guaranteed-stats:
+      armor: 1
+    item-display-name: "&9&l[II] &9Deepslate Golem"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: bedrock_titan
+      display-name: "&5&l[III] &5Bedrock Titan"
+      required-level: 18
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 35.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 200000
+      item-requirement:
+        material-name: DEEPSLATE_DIAMOND_ORE
+        display-name: '&#5DE2E7&lDeep Core'
+        amount: 32
+
+  # End of the mining line, haste and armor 2 guaranteed.
+  bedrock_titan:
+    max-level: 25
+    level-cost: '6000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.2
+    exp-per-food: '30 + ({level} * 3)'
+    starting-stats: 4
+    max-stats: 9
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/bedrock_titan.bbmodel in and set 'model: bedrock_titan' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      haste: 30
+      armor: 30
+      max_health: 25
+      luck: 15
+    guaranteed-stats:
+      armor: 2
+    item-display-name: "&5&l[III] &5Bedrock Titan"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+
+  # ═══ Line D — Verdant: the AFK line ═══
+
+  # Half the hunger of a normal pet: the AFK pet to keep out overnight.
+  lazy_sloth:
+    max-level: 10
+    level-cost: '1000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 0.5
+    exp-per-food: '30 + ({level} * 5)'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/lazy_sloth.bbmodel in and set 'model: lazy_sloth' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      regeneration: 30
+      max_health: 25
+      armor: 20
+      resistance: 15
+      haste: 10
+    guaranteed-stats:
+      regeneration: 1
+    item-display-name: "&f&l[I] &7Lazy Sloth"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: dozy_panda
+      display-name: "&9&l[II] &9Dozy Panda"
+      required-level: 10
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 55.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 50000
+
+  # Same slow hunger, more healing.
+  dozy_panda:
+    max-level: 15
+    level-cost: '2500 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 0.5
+    exp-per-food: '30 + ({level} * 5)'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/dozy_panda.bbmodel in and set 'model: dozy_panda' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      regeneration: 30
+      max_health: 25
+      armor: 20
+      resistance: 20
+    guaranteed-stats:
+      regeneration: 1
+    item-display-name: "&9&l[II] &9Dozy Panda"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: dream_ox
+      display-name: "&5&l[III] &5Dream Ox"
+      required-level: 15
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 45.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 150000
+      item-requirement:
+        material-name: HONEYCOMB
+        display-name: '&#FFB3D1&lSweet Nectar'
+        amount: 32
+
+  # Digests better as it grows, so it levels while its owner sleeps.
+  dream_ox:
+    max-level: 20
+    level-cost: '5000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 0.5
+    exp-per-food: '30 + ({level} * 5)'
+    starting-stats: 4
+    max-stats: 9
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/dream_ox.bbmodel in and set 'model: dream_ox' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      regeneration: 35
+      max_health: 25
+      resistance: 20
+      armor: 20
+    guaranteed-stats:
+      regeneration: 1
+    item-display-name: "&5&l[III] &5Dream Ox"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+
+  # ═══ Line E — Abyss: the utility line ═══
+
+  # Never carries a torch again.
+  void_wisp:
+    max-level: 10
+    level-cost: '1000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/void_wisp.bbmodel in and set 'model: void_wisp' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      night_vision: 25
+      fire_resistance: 20
+      water_breathing: 15
+      speed: 20
+      movement_speed: 20
+    guaranteed-stats:
+      night_vision: 1
+    item-display-name: "&f&l[I] &7Void Wisp"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: abyss_specter
+      display-name: "&9&l[II] &9Abyss Specter"
+      required-level: 10
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 50.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 75000
+
+  # Lava, water and darkness all handled.
+  abyss_specter:
+    max-level: 15
+    level-cost: '2500 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/abyss_specter.bbmodel in and set 'model: abyss_specter' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      night_vision: 20
+      fire_resistance: 20
+      water_breathing: 20
+      speed: 20
+      jump_boost: 20
+    guaranteed-stats:
+      night_vision: 1
+      fire_resistance: 1
+    item-display-name: "&9&l[II] &9Abyss Specter"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: void_sovereign
+      display-name: "&5&l[III] &5Void Sovereign"
+      required-level: 15
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 40.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 200000
+      item-requirement:
+        material-name: ECHO_SHARD
+        display-name: '&#B8A9FF&lVoid Shard'
+        amount: 16
+
+  # End of the utility line: it does not care where you fight.
+  void_sovereign:
+    max-level: 22
+    level-cost: '5000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 4
+    max-stats: 9
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/void_sovereign.bbmodel in and set 'model: void_sovereign' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      night_vision: 20
+      fire_resistance: 20
+      water_breathing: 20
+      speed: 20
+      movement_speed: 20
+    guaranteed-stats:
+      night_vision: 1
+      fire_resistance: 1
+      water_breathing: 1
+    item-display-name: "&5&l[III] &5Void Sovereign"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+
+  # ═══ Line F — Bloom: the support line ═══
+
+  # Heals its owner while their health is low.
+  bloom_sprite:
+    max-level: 10
+    level-cost: '1000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/bloom_sprite.bbmodel in and set 'model: bloom_sprite' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      regeneration: 30
+      max_health: 25
+      armor: 20
+      resistance: 25
+    guaranteed-stats:
+      regeneration: 1
+    item-display-name: "&f&l[I] &7Bloom Sprite"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: verdant_druid
+      display-name: "&9&l[II] &9Verdant Druid"
+      required-level: 10
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 50.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 50000
+
+  # Resistance under 30% health, healing under 70%.
+  verdant_druid:
+    max-level: 16
+    level-cost: '2500 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 3
+    max-stats: 8
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/verdant_druid.bbmodel in and set 'model: verdant_druid' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      regeneration: 30
+      resistance: 25
+      max_health: 25
+      armor: 20
+    guaranteed-stats:
+      regeneration: 1
+    item-display-name: "&9&l[II] &9Verdant Druid"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: worldtree_guardian
+      display-name: "&5&l[III] &5Worldtree Guardian"
+      required-level: 16
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 40.0
+      bonus-stats: 1
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 200000
+      item-requirement:
+        material-name: SUNFLOWER
+        display-name: '&#FFD27A&lSolar Bloom'
+        amount: 64
+
+  # End of the support line, the safest pet to have out.
+  worldtree_guardian:
+    max-level: 24
+    level-cost: '6000 * 1.15 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30'
+    starting-stats: 4
+    max-stats: 9
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/worldtree_guardian.bbmodel in and set 'model: worldtree_guardian' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      regeneration: 30
+      resistance: 25
+      max_health: 25
+      armor: 20
+    guaranteed-stats:
+      regeneration: 2
+      resistance: 1
+    item-display-name: "&5&l[III] &5Worldtree Guardian"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+
+  # ═══ Endgame — Legendary, Mythic, Celestial (these three fill the stat_eraser whitelist) ═══
+
+  # Everything good at once, nothing specialised.
+  legendary_pet:
+    max-level: 35
+    level-cost: '15000 * 1.2 ^ ({level} - 1)'
+    food-decay-multiplier: 1.5
+    exp-per-food: '30 + ({level} * 8)'
+    starting-stats: 4
+    max-stats: 10
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/legendary_pet.bbmodel in and set 'model: legendary_pet' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      attack_damage: 15
+      max_health: 15
+      armor: 15
+      movement_speed: 10
+      attack_speed: 10
+      luck: 10
+      regeneration: 10
+      haste: 10
+    guaranteed-stats:
+      armor: 1
+      luck: 1
+    item-display-name: "&6&l[IV] &6Legendary Pet"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: mythic_pet
+      display-name: "&d&l[V] &dMythic Pet"
+      required-level: 35
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 30.0
+      bonus-stats: 2
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 500000
+      item-requirement:
+        material-name: DIAMOND_BLOCK
+        display-name: '&#5DE2E7&lLegendary Core'
+        amount: 16
+
+  # Failing this one costs a Netherite ingot, so read the menu first.
+  mythic_pet:
+    max-level: 50
+    level-cost: '30000 * 1.22 ^ ({level} - 1)'
+    food-decay-multiplier: 1.5
+    exp-per-food: '30 + ({level} * 8)'
+    starting-stats: 4
+    max-stats: 11
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/mythic_pet.bbmodel in and set 'model: mythic_pet' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      attack_damage: 15
+      max_health: 15
+      armor: 15
+      movement_speed: 10
+      attack_speed: 10
+      luck: 10
+      regeneration: 10
+      haste: 10
+    guaranteed-stats:
+      armor: 1
+      luck: 1
+      attack_damage: 1
+    item-display-name: "&d&l[V] &dMythic Pet"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+    evolution:
+      into: celestial_pet
+      display-name: "&b&l[VI] &bCelestial Pet"
+      required-level: 50
+      item:
+        - evolution_stone
+        - blessed_evolution_stone
+      chance: 25.0
+      bonus-stats: 2
+      keep-level: false
+      lose-item-on-fail: true
+      money-cost: 1000000
+      item-requirements:
+        req0:
+          material-name: NETHERITE_INGOT
+          display-name: '&#8FF384&lMythic Core'
+          amount: 8
+        req1:
+          material-name: ECHO_SHARD
+          display-name: '&#B8A9FF&lVoid Shard'
+          amount: 32
+
+  # End of the game: 12 stats, luck 2 and armor 2 for free, cheap to keep.
+  celestial_pet:
+    max-level: 75
+    level-cost: '60000 * 1.25 ^ ({level} - 1)'
+    food-decay-multiplier: 1.0
+    exp-per-food: '30 + ({level} * 10)'
+    starting-stats: 5
+    max-stats: 12
+    # No artwork shipped: 'model: none' keeps the head. Drop
+    # models/celestial_pet.bbmodel in and set 'model: celestial_pet' (or fill
+    # 'skull:' with your own head texture) to give it a look.
+    model: none
+    stat-pool:
+      attack_damage: 15
+      max_health: 15
+      armor: 15
+      movement_speed: 10
+      attack_speed: 10
+      luck: 10
+      regeneration: 10
+      haste: 10
+    guaranteed-stats:
+      luck: 2
+      armor: 2
+    item-display-name: "&b&l[VI] &bCelestial Pet"
+    item-lore:
+      - "&8Pet Item"
+      - "&7"
+      - "&7Equip this pet to gain its stats."
+      - "&7"
+      - "&9&lProgress"
+      - " &b┠ &7Level: &f{level} &8/ &f{max_level}"
+      - " &b┠ &7EXP: &a{exp} &8/ &c{exp_needed}"
+      - "  {progress_bar}"
+      - "&7"
+      - "&6&lFood"
+      - "  {food_bar} &7{food_percent}%"
+      - " &e┣ &7Status: {status}"
+      - "&7"
+      - "&d&lStats &7(&f{stat_scaling}%&7)"
+      - "{stats}"
+      - "&7"
+      - " &b┣ &7Evolves into: &f{evolution}"
+      - "&7"
+      - "&7&o(( &f&oLeft-Click &7&oto &amanage &7&othis pet! ))"
+
