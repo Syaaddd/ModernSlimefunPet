@@ -9,8 +9,9 @@
 #  A line that ends its chain (magma_beast, aurum_dragon, ...) has no 'evolution:'
 #  block, which is what makes it the end. Every 'into' points at a pet defined here.
 #
-#  No artwork is shipped: 'model: none' keeps the head. Give a pet a look by dropping
-#  models/<pet id>.bbmodel in and setting 'model: <pet id>', or by filling 'skull:'.
+#  Every pet carries a real head texture in 'skull:' (a skin hash from the minecraft-heads
+#  catalogue) and ships 'model: none', so it renders as that head out of the box. Swap in a
+#  Blockbench model instead by dropping models/<pet id>.bbmodel and setting 'model: <pet id>'.
 #  Reload with: /slimefunpet reload
 #
 #  Money costs (money-cost) need Vault plus an economy plugin, otherwise the
@@ -28,9 +29,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/ember_pup.bbmodel in and set 'model: ember_pup' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Puppy (minecraft-heads aced4d9efd…). Add
+    # models/ember_pup.bbmodel + 'model: ember_pup' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2FjZWQ0ZDllZmQ3ZTRlNzUwMzViODJhMTUyNmI0M2M2MWZhNjZiYTcwODU3MDMxZjYzMTVkNDEzMTNhOTQ0MDgifX19"
     model: none
     stat-pool:
       attack_damage: 30
@@ -82,9 +83,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/ash_hound.bbmodel in and set 'model: ash_hound' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Hell Hound (minecraft-heads 5c42cbb31b…). Add
+    # models/ash_hound.bbmodel + 'model: ash_hound' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzVjNDJjYmIzMWJjZDZlNWQwMGU5Y2Y3ZDBlMzRlYzI3Yzk2MGFlNzU3MGI2NDIxZjcyYWRkYTdkMDdiNmY5MDgifX19"
     model: none
     stat-pool:
       attack_damage: 30
@@ -140,9 +141,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 3
     max-stats: 9
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/magma_beast.bbmodel in and set 'model: magma_beast' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Magma Bull (minecraft-heads 452b8b820f…). Add
+    # models/magma_beast.bbmodel + 'model: magma_beast' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzQ1MmI4YjgyMGZlOGViMzAxMDgxNTE2MGFhOGFlMzFmM2UzOWI0MDJkNTU0MjM4NzQ5Njg3ZTIyMjliNTg2ZmYifX19"
     model: none
     stat-pool:
       attack_damage: 35
@@ -184,9 +185,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/coin_fox.bbmodel in and set 'model: coin_fox' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Golden Fox (minecraft-heads 6f9c7ea6bc…). Add
+    # models/coin_fox.bbmodel + 'model: coin_fox' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzZmOWM3ZWE2YmNmYTg0YjIwNmU1YmI0M2RiNDBiYmFlNDI0M2RhOTE4ZjQ0MTYxZGNkODc5ZDhiNDFlZTcwYmMifX19"
     model: none
     stat-pool:
       luck: 35
@@ -237,9 +238,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/gilded_lynx.bbmodel in and set 'model: gilded_lynx' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Lynx (minecraft-heads ea5582864a…). Add
+    # models/gilded_lynx.bbmodel + 'model: gilded_lynx' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2VhNTU4Mjg2NGE0NTE2NjRiODNlNWIxYjAyZmUxMWZhZGViMzlhNzZhOWMxODRiOTAyMGI2OGJlOWI1NWRhNjQifX19"
     model: none
     stat-pool:
       luck: 30
@@ -295,9 +296,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 4
     max-stats: 9
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/aurum_dragon.bbmodel in and set 'model: aurum_dragon' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Golden Dragon Plushie (minecraft-heads ff1283d0db…). Add
+    # models/aurum_dragon.bbmodel + 'model: aurum_dragon' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2ZmMTI4M2QwZGJmMTM1NzI2YTlmZmY4MTdiYzk2MDc0YTYxODhhNWFkZDEyNjI1MDFhYTQ1OWZhOGUwMjU5MTMifX19"
     model: none
     stat-pool:
       luck: 35
@@ -338,9 +339,9 @@ pets:
     exp-per-food: '30 + ({level} * 3)'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/stone_golem.bbmodel in and set 'model: stone_golem' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Stone Golem (minecraft-heads 854ce6f010…). Add
+    # models/stone_golem.bbmodel + 'model: stone_golem' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzg1NGNlNmYwMTBmMzFlYzdjYmNjMGZlN2NkZTE4MTEwY2Q0OGFjMGEyM2NkZWYwZDU0MDQ2NTE1MWE1YjQ3ZDUifX19"
     model: none
     stat-pool:
       haste: 30
@@ -395,9 +396,9 @@ pets:
     exp-per-food: '30 + ({level} * 3)'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/deepslate_golem.bbmodel in and set 'model: deepslate_golem' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Sculk Golem (minecraft-heads c073475a05…). Add
+    # models/deepslate_golem.bbmodel + 'model: deepslate_golem' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2MwNzM0NzVhMDUzZTczOTUxNTU5MmZiYzQyYzY3MTI2MmExMmZlMTEzMmRjODRjYTFlYTcyMGE3NmY1N2NjMjEifX19"
     model: none
     stat-pool:
       haste: 30
@@ -452,9 +453,9 @@ pets:
     exp-per-food: '30 + ({level} * 3)'
     starting-stats: 4
     max-stats: 9
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/bedrock_titan.bbmodel in and set 'model: bedrock_titan' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Obsidian Golem (minecraft-heads a372037fce…). Add
+    # models/bedrock_titan.bbmodel + 'model: bedrock_titan' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2EzNzIwMzdmY2U2MzRkNDUzOTk5MjZkZDY5Njk0NmVjODQ0MmRkZjFmZWMxNjNmZjg3OWFiMzNlNWEzNjVjMjAifX19"
     model: none
     stat-pool:
       haste: 30
@@ -495,9 +496,9 @@ pets:
     exp-per-food: '30 + ({level} * 5)'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/lazy_sloth.bbmodel in and set 'model: lazy_sloth' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Sloth (minecraft-heads 4a510a735e…). Add
+    # models/lazy_sloth.bbmodel + 'model: lazy_sloth' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzRhNTEwYTczNWUxYjZlOGE5NzAwYzNlMjM5OGQyMDJlNTM1ODgyZTk1MmViMmIyZTI1Yzk0MjEyMDU3ODRhZjkifX19"
     model: none
     stat-pool:
       regeneration: 30
@@ -549,9 +550,9 @@ pets:
     exp-per-food: '30 + ({level} * 5)'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/dozy_panda.bbmodel in and set 'model: dozy_panda' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Baby Panda (lazy) (minecraft-heads aa54c47609…). Add
+    # models/dozy_panda.bbmodel + 'model: dozy_panda' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2FhNTRjNDc2MDkzNDQ4NjYxNWM4ZmI1MWJiNTUyYjEwNDEwOWM4YTYxMDExMzg2NjA2N2Y0OTIyNGUyNjU2MCJ9fX0="
     model: none
     stat-pool:
       regeneration: 30
@@ -606,9 +607,9 @@ pets:
     exp-per-food: '30 + ({level} * 5)'
     starting-stats: 4
     max-stats: 9
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/dream_ox.bbmodel in and set 'model: dream_ox' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Ashen Cow (minecraft-heads ea31405092…). Add
+    # models/dream_ox.bbmodel + 'model: dream_ox' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2VhMzE0MDUwOTJkYzBkMjRiY2Q1ODFlMjkxMGUxYzA5NzhkOWIzOTA2ZWRlMWVjMzdjMTIxNTNiYzY3NmM0MjIifX19"
     model: none
     stat-pool:
       regeneration: 35
@@ -649,9 +650,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/void_wisp.bbmodel in and set 'model: void_wisp' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Wybel (wisp) (minecraft-heads 3d90d27b6d…). Add
+    # models/void_wisp.bbmodel + 'model: void_wisp' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzNkOTBkMjdiNmRjNjliOTBkNDlhMzdmNjVkZmNlYjVmNjJlZDExY2Y3ZjkzNTE2NjRmMzYyYjVlNzlhMzJjYjQifX19"
     model: none
     stat-pool:
       night_vision: 25
@@ -703,9 +704,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/abyss_specter.bbmodel in and set 'model: abyss_specter' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Spectre (aurora) (minecraft-heads f5c9188fd8…). Add
+    # models/abyss_specter.bbmodel + 'model: abyss_specter' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2Y1YzkxODhmZDgyNDY0N2E1YzllZDFmZWMyOWI1YWU5NzliNDA5NDg2Y2UyNjczMzg2NjA3ZjYzNGE1YjZhMjUifX19"
     model: none
     stat-pool:
       night_vision: 20
@@ -762,9 +763,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 4
     max-stats: 9
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/void_sovereign.bbmodel in and set 'model: void_sovereign' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Neon Enderman Plushie (minecraft-heads 7ab3c12c14…). Add
+    # models/void_sovereign.bbmodel + 'model: void_sovereign' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzdhYjNjMTJjMTRlNjZjNDgxNzU0NTMyZWFhNDRjOTI1YTNmMjQwYmJmMTk4M2FlMTNlYWYyNjJhYjg5N2ZhM2UifX19"
     model: none
     stat-pool:
       night_vision: 20
@@ -808,9 +809,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/bloom_sprite.bbmodel in and set 'model: bloom_sprite' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Fairy (minecraft-heads 8d93835205…). Add
+    # models/bloom_sprite.bbmodel + 'model: bloom_sprite' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzhkOTM4MzUyMDUyZjlkNmUxNGEyNzgyYTc0OWM2NzgyOGRiNGE5YTViMGIzM2FlMDQ3ZDE1MWI3MTFjMmM1N2IifX19"
     model: none
     stat-pool:
       regeneration: 30
@@ -861,9 +862,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 3
     max-stats: 8
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/verdant_druid.bbmodel in and set 'model: verdant_druid' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Druid (minecraft-heads 3dbdd0a212…). Add
+    # models/verdant_druid.bbmodel + 'model: verdant_druid' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzNkYmRkMGEyMTIwNjRmMDM5MjY3ZWMzYmE2ZTM0NWJkZDA2ZWIzNmQ5MjRkOGZhMTY1ODYxNjFmMWU4YzE5ZmYifX19"
     model: none
     stat-pool:
       regeneration: 30
@@ -918,9 +919,9 @@ pets:
     exp-per-food: '30'
     starting-stats: 4
     max-stats: 9
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/worldtree_guardian.bbmodel in and set 'model: worldtree_guardian' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Treant (minecraft-heads 7543496307…). Add
+    # models/worldtree_guardian.bbmodel + 'model: worldtree_guardian' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzc1NDM0OTYzMDc4MTI4Mzk4Y2QwNDQyNzcwMDNmMDJhZDlkOTQzNGZlOWMwYWRkY2RlMDI1ZjBhMzIwZTI3Y2QifX19"
     model: none
     stat-pool:
       regeneration: 30
@@ -962,9 +963,9 @@ pets:
     exp-per-food: '30 + ({level} * 8)'
     starting-stats: 4
     max-stats: 10
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/legendary_pet.bbmodel in and set 'model: legendary_pet' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Phoenix (minecraft-heads 3241b83d9b…). Add
+    # models/legendary_pet.bbmodel + 'model: legendary_pet' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzMyNDFiODNkOWI1OWI5YjQzNjYwZDBjY2QxOTM4OGNkNzNjNjkwYmE0NDNhZjM0ZTlkZDdlMzIxNTBmODkxMyJ9fX0="
     model: none
     stat-pool:
       attack_damage: 15
@@ -1024,9 +1025,9 @@ pets:
     exp-per-food: '30 + ({level} * 8)'
     starting-stats: 4
     max-stats: 11
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/mythic_pet.bbmodel in and set 'model: mythic_pet' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Ender Dragon Plushie (holy) (minecraft-heads ec13558968…). Add
+    # models/mythic_pet.bbmodel + 'model: mythic_pet' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2VjMTM1NTg5NjhjMTg4YjM0N2Q2ZWQ5YWFiNTkyN2RjYzQ1NTBkNjc2MzUwYmQyODQwYjEwZDBjODU0NmJiN2EifX19"
     model: none
     stat-pool:
       attack_damage: 15
@@ -1092,9 +1093,9 @@ pets:
     exp-per-food: '30 + ({level} * 10)'
     starting-stats: 5
     max-stats: 12
-    # No artwork shipped: 'model: none' keeps the head. Drop
-    # models/celestial_pet.bbmodel in and set 'model: celestial_pet' (or fill
-    # 'skull:' with your own head texture) to give it a look.
+    # Head texture: Wybel (angel) (minecraft-heads f4885633f0…). Add
+    # models/celestial_pet.bbmodel + 'model: celestial_pet' to replace it with a 3D model.
+    skull: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2Y0ODg1NjMzZjBjOTFhNmZlODY1MmZmZjI0MTQxOThmNjlhOTQzZjM4YjY0OGU0NzM5ODgwYTE3MDNiMjRjZTEifX19"
     model: none
     stat-pool:
       attack_damage: 15
