@@ -1,4 +1,16 @@
-menu_title: '&b&l✦ PET ITEM STORE'
+# Pet Item Store - DeluxeMenus menu (Alwination house style, Arcane theme)
+#
+# Slots:
+#   10,12,14,16   Pet Treat / Pet Feast / Pet Candy / Super Pet Candy
+#   19,21,23,25   Evolution Stone / Blessed Evolution Stone / Reroll Token / Blessed Reroll Token
+#   28,30,32,34   Stat Shard / Stat Eraser / Stat Lock Charm / Auto-Feed Unlocker
+#   39,41         Auto-Feed Upgrade / Pet Revival Totem
+#   49            Balance info        0-53  filler (GRAY_STAINED_GLASS_PANE)
+#
+# Placeholders: %player_name% (click commands), %nextcredits_balance% (PAPI / NextCredits)
+# Every buy button checks the price before it charges and grants the item.
+
+menu_title: '&8&nᴘᴇᴛ ɪᴛᴇᴍ ꜱʜᴏᴘ'
 open_command: petstore
 register_command: true
 size: 54
@@ -6,7 +18,7 @@ size: 54
 items:
 
   'filler':
-    material: BLACK_STAINED_GLASS_PANE
+    material: GRAY_STAINED_GLASS_PANE
     display_name: ' '
     slots:
     - 0-53
@@ -15,496 +27,459 @@ items:
     material: COOKIE
     slot: 10
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#CB883E&lPet Treat x10'
+    display_name: '#CB883E&lPet Treat &8x10'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Food &7- Pet Item'
+    - '&8Food Item'
     - ''
-    - '&7Right click the item on one of your pets'
-    - '&7to feed it, or drop it in the Auto-Feed slot.'
+    - '&7Feed this to one of your pets to top up its'
+    - '&7Hunger, or drop it in the pet''s Auto-Feed slot.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 10x Pet Treat'
-    - '&8    +25 Food each'
+    - ' &8◊ &7Contents: &f10x Pet Treat'
+    - ' &8◊ &7Restores: &f+25 &7Food each'
+    - ' &8◊ &7Price: &#FFD27A⚜ 500 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f500 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 500 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 500'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Pet Treat x10!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF10x Pet Treat&7.'
     - '[console] nextcredits take %player_name% 500'
     - '[console] slimefunpet givepetitem %player_name% food small_treat 10'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'pet_feast':
     material: PUMPKIN_PIE
     slot: 12
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FFF5A3&lPet Feast x5'
+    display_name: '#FFF5A3&lPet Feast &8x5'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Food &7- Pet Item'
+    - '&8Food Item'
     - ''
-    - '&7Right click the item on one of your pets'
-    - '&7to feed it, or drop it in the Auto-Feed slot.'
+    - '&7A full meal for one pet. Best saved for the'
+    - '&7pets that drain Hunger the fastest.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 5x Pet Feast'
-    - '&8    +150 Food each'
+    - ' &8◊ &7Contents: &f5x Pet Feast'
+    - ' &8◊ &7Restores: &f+150 &7Food each'
+    - ' &8◊ &7Price: &#FFD27A⚜ 1,100 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f1,100 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 1,100 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 1100'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Pet Feast x5!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF5x Pet Feast&7.'
     - '[console] nextcredits take %player_name% 1100'
     - '[console] slimefunpet givepetitem %player_name% food large_feast 5'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'pet_candy':
     material: GLOW_BERRIES
     slot: 14
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FFA96E&lPet Candy x4'
+    display_name: '#FFA96E&lPet Candy &8x4'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Candy &7- Pet Item'
+    - '&8Candy Item'
     - ''
-    - '&7Right click the item to instantly level'
-    - '&7one of your pets up.'
+    - '&7Right click it on a pet to raise that pet one'
+    - '&7level without the waiting.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 4x Pet Candy'
-    - '&8    +1 Pet Level each'
+    - ' &8◊ &7Contents: &f4x Pet Candy'
+    - ' &8◊ &7Grants: &f+1 Level &7each'
+    - ' &8◊ &7Price: &#FFD27A⚜ 2,000 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f2,000 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 2,000 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 2000'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Pet Candy x4!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF4x Pet Candy&7.'
     - '[console] nextcredits take %player_name% 2000'
     - '[console] slimefunpet givepetitem %player_name% candy pet_candy 4'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'super_candy':
     material: GOLDEN_APPLE
     slot: 16
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '#FFD460&lSuper Pet Candy'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Candy &7- Pet Item'
+    - '&8Candy Item'
     - ''
-    - '&7Right click the item to instantly level'
-    - '&7one of your pets up by five levels.'
+    - '&7The fast lane: five pet levels in one click.'
+    - '&7Cheaper per level than five Pet Candies.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 1x Super Pet Candy'
-    - '&8    +5 Pet Levels'
+    - ' &8◊ &7Contents: &f1x Super Pet Candy'
+    - ' &8◊ &7Grants: &f+5 Levels'
+    - ' &8◊ &7Price: &#FFD27A⚜ 2,600 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f2,600 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 2,600 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 2600'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Super Pet Candy!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Super Pet Candy&7.'
     - '[console] nextcredits take %player_name% 2600'
     - '[console] slimefunpet givepetitem %player_name% candy super_candy 1'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'evolution_stone':
     material: AMETHYST_CLUSTER
     slot: 19
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '#31BCFF&lEvolution Stone'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Evolution &7- Pet Item'
+    - '&8Evolution Item'
     - ''
-    - '&7Use it to evolve a pet into the next pet'
-    - '&7of its chain, once the pet is max level.'
+    - '&7Use it on a max level pet to evolve it into'
+    - '&7the next pet of its chain. A failed try burns.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 1x Evolution Stone'
-    - '&8    A failed try loses the stone'
+    - ' &8◊ &7Contents: &f1x Evolution Stone'
+    - ' &8◊ &7Result: &fEvolution &7or nothing'
+    - ' &8◊ &7Price: &#FFD27A⚜ 750 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f750 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 750 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 750'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Evolution Stone!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Evolution Stone&7.'
     - '[console] nextcredits take %player_name% 750'
     - '[console] slimefunpet givepetitem %player_name% evolution evolution_stone 1'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'blessed_evolution_stone':
     material: FIREWORK_STAR
     slot: 21
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '#B184EF&lBlessed Evolution Stone'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Evolution &7- Pet Item'
+    - '&8Evolution Item'
     - ''
-    - '&7Use it to evolve a pet into the next pet'
-    - '&7of its chain with a safer success rate.'
+    - '&7Same evolve attempt as the plain stone, with'
+    - '&7a much safer success chance.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 1x Blessed Evolution Stone'
-    - '&8    Success rate &a+25%'
+    - ' &8◊ &7Contents: &f1x Blessed Evolution Stone'
+    - ' &8◊ &7Success: &f+25% &7chance'
+    - ' &8◊ &7Price: &#FFD27A⚜ 2,000 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f2,000 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 2,000 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 2000'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Blessed Evolution Stone!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Blessed Evolution Stone&7.'
     - '[console] nextcredits take %player_name% 2000'
     - '[console] slimefunpet givepetitem %player_name% evolution blessed_evolution_stone 1'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'reroll_token':
     material: GLOBE_BANNER_PATTERN
     slot: 23
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '#88D7FD&lStat Reroll Token'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Reroll &7- Pet Item'
+    - '&8Reroll Item'
     - ''
-    - '&7Right click to gamble the stats of one of'
-    - '&7your pets. The pet can come out worse.'
+    - '&7Rerolls every stat of one pet. A bad roll can'
+    - '&7leave the pet worse than it was.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 1x Stat Reroll Token'
-    - '&8    50% reroll &7· &8 50% burn one'
+    - ' &8◊ &7Contents: &f1x Stat Reroll Token'
+    - ' &8◊ &7Odds: &f50% &7reroll &8/ &f50% &7burn one'
+    - ' &8◊ &7Price: &#FFD27A⚜ 1,000 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f1,000 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 1,000 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 1000'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Stat Reroll Token!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Stat Reroll Token&7.'
     - '[console] nextcredits take %player_name% 1000'
     - '[console] slimefunpet givepetitem %player_name% reroll reroll_token 1'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'blessed_reroll_token':
     material: KNOWLEDGE_BOOK
     slot: 25
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '#70FFBA&lBlessed Stat Reroll Token'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Reroll &7- Pet Item'
+    - '&8Reroll Item'
     - ''
-    - '&7Right click to gamble the stats of one of'
-    - '&7your pets with a much safer roll.'
+    - '&7The safe reroll: nine times out of ten the'
+    - '&7pet comes out with a fresh set of stats.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 1x Blessed Stat Reroll Token'
-    - '&8    90% reroll &7· &8 10% burn one'
+    - ' &8◊ &7Contents: &f1x Blessed Stat Reroll Token'
+    - ' &8◊ &7Odds: &f90% &7reroll &8/ &f10% &7burn one'
+    - ' &8◊ &7Price: &#FFD27A⚜ 2,000 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f2,000 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 2,000 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 2000'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Blessed Stat Reroll Token!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Blessed Stat Reroll Token&7.'
     - '[console] nextcredits take %player_name% 2000'
     - '[console] slimefunpet givepetitem %player_name% reroll blessed_reroll_token 1'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'stat_shard':
     material: LARGE_AMETHYST_BUD
     slot: 28
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#DCA9FC&lStat Shard x4'
+    display_name: '#DCA9FC&lStat Shard &8x4'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Reroll &7- Pet Item'
+    - '&8Reroll Item'
     - ''
-    - '&7Right click to roll one extra stat onto a'
-    - '&7pet. Nothing happens when it is capped.'
+    - '&7Adds one more stat line to a pet. Does'
+    - '&7nothing once that pet is at its stat cap.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 4x Stat Shard'
-    - '&8    +1 extra stat each'
+    - ' &8◊ &7Contents: &f4x Stat Shard'
+    - ' &8◊ &7Grants: &f+1 Extra Stat &7each'
+    - ' &8◊ &7Price: &#FFD27A⚜ 1,000 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f1,000 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 1,000 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 1000'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Stat Shard x4!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF4x Stat Shard&7.'
     - '[console] nextcredits take %player_name% 1000'
     - '[console] slimefunpet givepetitem %player_name% reroll stat_shard 4'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'stat_eraser':
     material: WIND_CHARGE
     slot: 30
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FF8BC3&lStat Eraser x5'
+    display_name: '#FF8BC3&lStat Eraser &8x5'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Reroll &7- Pet Item'
+    - '&8Reroll Item'
     - ''
-    - '&7Right click to burn one random stat off a'
-    - '&7pet. Only the allowed pets accept it.'
+    - '&7Burns one random stat off a pet. Only the'
+    - '&7strongest pets of the line accept it.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 5x Stat Eraser'
-    - '&8    -1 random stat each'
+    - ' &8◊ &7Contents: &f5x Stat Eraser'
+    - ' &8◊ &7Removes: &f1 Random Stat &7each'
+    - ' &8◊ &7Price: &#FFD27A⚜ 500 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f500 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 500 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 500'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Stat Eraser x5!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF5x Stat Eraser&7.'
     - '[console] nextcredits take %player_name% 500'
     - '[console] slimefunpet givepetitem %player_name% reroll stat_eraser 5'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'stat_lock_charm':
     material: NAME_TAG
     slot: 32
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#C0F18F&lStat Lock Charm x5'
+    display_name: '#C0F18F&lStat Lock Charm &8x5'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Reroll &7- Pet Item'
+    - '&8Stat Lock Item'
     - ''
-    - '&7Pick a pet in the reroll menu, then lock'
-    - '&7the stats that must survive the roll.'
+    - '&7In the reroll screen, lock the stats you want'
+    - '&7to keep. Locked stats survive the roll.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 5x Stat Lock Charm'
-    - '&8    One charm per locked stat'
+    - ' &8◊ &7Contents: &f5x Stat Lock Charm'
+    - ' &8◊ &7Locks: &f1 Stat &7per charm'
+    - ' &8◊ &7Price: &#FFD27A⚜ 3,000 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f3,000 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 3,000 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 3000'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Stat Lock Charm x5!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF5x Stat Lock Charm&7.'
     - '[console] nextcredits take %player_name% 3000'
     - '[console] slimefunpet givepetitem %player_name% stat_lock stat_lock_charm 5'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'auto_feed_unlocker':
     material: BEETROOT_SOUP
     slot: 34
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '#FFD45C&lAuto-Feed Unlocker'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Auto-Feed &7- Pet Item'
+    - '&8Auto-Feed Item'
     - ''
-    - '&7Open a pet''s options and click the locked'
-    - '&7Auto-Feed button to make it eat on its own.'
+    - '&7Open a pet''s options and click its locked'
+    - '&7Auto-Feed button to let it eat by itself.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 1x Auto-Feed Unlocker'
-    - '&8    Unlocks the pet you use it on'
+    - ' &8◊ &7Contents: &f1x Auto-Feed Unlocker'
+    - ' &8◊ &7Unlocks: &fThe pet you use it on'
+    - ' &8◊ &7Price: &#FFD27A⚜ 3,000 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f3,000 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 3,000 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 3000'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Auto-Feed Unlocker!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Auto-Feed Unlocker&7.'
     - '[console] nextcredits take %player_name% 3000'
     - '[console] slimefunpet givepetitem %player_name% auto_feed_unlocker auto_feed_unlocker 1'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'auto_feed_upgrade':
     material: GOLDEN_CARROT
     slot: 39
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '#FFB717&lAuto-Feed Upgrade'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Auto-Feed &7- Pet Item'
+    - '&8Auto-Feed Item'
     - ''
-    - '&7Open a pet''s Auto-Feed menu and click the'
-    - '&7upgrade button to raise its tier.'
+    - '&7Makes an unlocked Auto-Feed eat sooner and'
+    - '&7hold more food. Needs the Unlocker first.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 1x Auto-Feed Upgrade'
-    - '&8    Feeds earlier, stores more food'
+    - ' &8◊ &7Contents: &f1x Auto-Feed Upgrade'
+    - ' &8◊ &7Upgrades: &fFeed tier &8(+storage)'
+    - ' &8◊ &7Price: &#FFD27A⚜ 800 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f800 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 800 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 800'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Auto-Feed Upgrade!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Auto-Feed Upgrade&7.'
     - '[console] nextcredits take %player_name% 800'
     - '[console] slimefunpet givepetitem %player_name% auto_feed_upgrade auto_feed_upgrade 1'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
+
   'revive_totem':
     material: TOTEM_OF_UNDYING
     slot: 41
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '#FFE135&lPet Revival Totem'
     lore:
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&8Revival &7- Pet Item'
+    - '&8Revival Item'
     - ''
-    - '&7Right click to bring one of your dead pets'
-    - '&7back to life, fed and ready to go.'
+    - '&7Right click it to bring one of your dead pets'
+    - '&7back to life, already fed.'
     - ''
-    - '&e&lCONTENTS'
-    - '&7  ✦ 1x Pet Revival Totem'
-    - '&8    Wakes the pet up with +50 Food'
+    - ' &8◊ &7Contents: &f1x Pet Revival Totem'
+    - ' &8◊ &7Revives: &f+50 Food'
+    - ' &8◊ &7Price: &#FFD27A⚜ 1,000 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
     - ''
-    - '&8&m━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
-    - '&ePrice: &f1,000 Cr'
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
-    - ''
-    - '&7Click to purchase!'
+    - '&#83ca16→ &#70e510Click to Buy'
     click_requirement:
       deny_commands:
-      - '[message] &c&l! &cYou do not have enough Credits.'
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 1,000 &7Credits for this.'
       - '[close]'
       requirements:
         credits:
           type: javascript
           expression: '%nextcredits_balance% >= 1000'
     click_commands:
-    - '[message] &a&l! &aSuccessfully purchased Pet Revival Totem!'
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Pet Revival Totem&7.'
     - '[console] nextcredits take %player_name% 1000'
     - '[console] slimefunpet givepetitem %player_name% revive revive_totem 1'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
 
+
   'info_balance':
     material: SUNFLOWER
     slot: 49
-    display_name: '&e&lBalance Info'
+    display_name: '&#D6A8FF&lYour Credits'
     lore:
-    - '&eYour Credits: &f%nextcredits_balance% Cr'
+    - '&8Shop Information'
+    - ''
+    - '&7Every button in this store is paid with'
+    - '&7Credits, so keep an eye on the amount below.'
+    - ''
+    - ' &8◊ &7Balance: &f%nextcredits_balance%'
