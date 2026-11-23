@@ -27,8 +27,7 @@ items:
     - 0-53
 
   'common_pet':
-    material: PLAYER_HEAD
-    skull: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzMxZTdlMWM2MTQ2MzliYmM5NWEwZDgxZmY3ZTVmN2Y2MDZkOWIzMzExNWNmMmJmMmE0MGNkY2JiYjUzMTMyNCJ9fX0='
+    material: 'texture-c31e7e1c614639bbc95a0d81ff7e5f7f606d9b33115cf2bf2a40cdcbbb531324'
     slot: 13
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&e&l[I] &#62FF8C&lCommon Pet'
