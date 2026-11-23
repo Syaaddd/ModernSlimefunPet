@@ -2,11 +2,11 @@
 #
 # Slots used:
 #   13  Common Pet (starter pet)
-#   21  Pet Treat
-#   23  Pet Feast
-#   30  Pet Candy
-#   32  Super Pet Candy
-#   40  Pet Revival Totem
+#   19  Pet Treat
+#   21  Pet Feast
+#   24  Pet Candy
+#   26  Super Pet Candy
+#   31  Pet Revival Totem
 #   45   previous page      49  balance info      53  next page
 #   0-53 filler (GRAY_STAINED_GLASS_PANE)
 #
@@ -62,7 +62,7 @@ items:
 
   'pet_treat':
     material: COOKIE
-    slot: 21
+    slot: 19
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#CB883E&lPet Treat &8x10'
     lore:
@@ -94,7 +94,7 @@ items:
 
   'pet_feast':
     material: PUMPKIN_PIE
-    slot: 23
+    slot: 21
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#FFF5A3&lPet Feast &8x5'
     lore:
@@ -126,7 +126,7 @@ items:
 
   'pet_candy':
     material: GLOW_BERRIES
-    slot: 30
+    slot: 24
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#FFA96E&lPet Candy &8x4'
     lore:
@@ -158,7 +158,7 @@ items:
 
   'super_candy':
     material: GOLDEN_APPLE
-    slot: 32
+    slot: 26
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#FFD460&lSuper Pet Candy'
     lore:
@@ -190,7 +190,7 @@ items:
 
   'revive_totem':
     material: TOTEM_OF_UNDYING
-    slot: 40
+    slot: 31
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#FFE135&lPet Revival Totem'
     lore:
