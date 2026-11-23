@@ -27,7 +27,7 @@ items:
     material: COOKIE
     slot: 10
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#CB883E&lPet Treat &8x10'
+    display_name: '&#CB883E&lPet Treat &8x10'
     lore:
     - '&8Food Item'
     - ''
@@ -59,7 +59,7 @@ items:
     material: PUMPKIN_PIE
     slot: 12
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FFF5A3&lPet Feast &8x5'
+    display_name: '&#FFF5A3&lPet Feast &8x5'
     lore:
     - '&8Food Item'
     - ''
@@ -91,7 +91,7 @@ items:
     material: GLOW_BERRIES
     slot: 14
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FFA96E&lPet Candy &8x4'
+    display_name: '&#FFA96E&lPet Candy &8x4'
     lore:
     - '&8Candy Item'
     - ''
@@ -123,7 +123,7 @@ items:
     material: GOLDEN_APPLE
     slot: 16
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FFD460&lSuper Pet Candy'
+    display_name: '&#FFD460&lSuper Pet Candy'
     lore:
     - '&8Candy Item'
     - ''
@@ -155,7 +155,7 @@ items:
     material: AMETHYST_CLUSTER
     slot: 19
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#31BCFF&lEvolution Stone'
+    display_name: '&#31BCFF&lEvolution Stone'
     lore:
     - '&8Evolution Item'
     - ''
@@ -187,7 +187,7 @@ items:
     material: FIREWORK_STAR
     slot: 21
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#B184EF&lBlessed Evolution Stone'
+    display_name: '&#B184EF&lBlessed Evolution Stone'
     lore:
     - '&8Evolution Item'
     - ''
@@ -219,7 +219,7 @@ items:
     material: GLOBE_BANNER_PATTERN
     slot: 23
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#88D7FD&lStat Reroll Token'
+    display_name: '&#88D7FD&lStat Reroll Token'
     lore:
     - '&8Reroll Item'
     - ''
@@ -251,7 +251,7 @@ items:
     material: KNOWLEDGE_BOOK
     slot: 25
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#70FFBA&lBlessed Stat Reroll Token'
+    display_name: '&#70FFBA&lBlessed Stat Reroll Token'
     lore:
     - '&8Reroll Item'
     - ''
@@ -283,7 +283,7 @@ items:
     material: LARGE_AMETHYST_BUD
     slot: 28
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#DCA9FC&lStat Shard &8x4'
+    display_name: '&#DCA9FC&lStat Shard &8x4'
     lore:
     - '&8Reroll Item'
     - ''
@@ -315,7 +315,7 @@ items:
     material: WIND_CHARGE
     slot: 30
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FF8BC3&lStat Eraser &8x5'
+    display_name: '&#FF8BC3&lStat Eraser &8x5'
     lore:
     - '&8Reroll Item'
     - ''
@@ -347,7 +347,7 @@ items:
     material: NAME_TAG
     slot: 32
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#C0F18F&lStat Lock Charm &8x5'
+    display_name: '&#C0F18F&lStat Lock Charm &8x5'
     lore:
     - '&8Stat Lock Item'
     - ''
@@ -379,7 +379,7 @@ items:
     material: BEETROOT_SOUP
     slot: 34
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FFD45C&lAuto-Feed Unlocker'
+    display_name: '&#FFD45C&lAuto-Feed Unlocker'
     lore:
     - '&8Auto-Feed Item'
     - ''
@@ -411,7 +411,7 @@ items:
     material: GOLDEN_CARROT
     slot: 39
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FFB717&lAuto-Feed Upgrade'
+    display_name: '&#FFB717&lAuto-Feed Upgrade'
     lore:
     - '&8Auto-Feed Item'
     - ''
@@ -443,7 +443,7 @@ items:
     material: TOTEM_OF_UNDYING
     slot: 41
     item_flags: [HIDE_ATTRIBUTES]
-    display_name: '#FFE135&lPet Revival Totem'
+    display_name: '&#FFE135&lPet Revival Totem'
     lore:
     - '&8Revival Item'
     - ''
