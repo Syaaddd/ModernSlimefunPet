@@ -7,12 +7,14 @@
 #   21  Blessed Stat Reroll Token
 #   23  Stat Shard
 #   25  Stat Eraser
-#   40  Stat Lock Charm
+#   31  Stat Lock Charm
+#   39  Auto-Feed Unlocker
+#   41  Auto-Feed Upgrade
 #   45   previous page      49  balance info      53  next page
 #   0-53 filler (GRAY_STAINED_GLASS_PANE)
 #
 # Placeholders: %player_name% (click commands), %nextcredits_balance% (PAPI / NextCredits)
-# Evolve a pet and reroll, erase or lock the stats it rolled.
+# Evolve a pet, reroll, erase or lock its stats, and let it feed itself.
 
 menu_title: '&8&nᴘᴇᴛ ꜱᴛᴀᴛꜱ'
 size: 54
@@ -219,7 +221,7 @@ items:
 
   'stat_lock_charm':
     material: NAME_TAG
-    slot: 40
+    slot: 31
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#C0F18F&lStat Lock Charm &8x5'
     lore:
@@ -249,6 +251,70 @@ items:
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
 
+  'auto_feed_unlocker':
+    material: BEETROOT_SOUP
+    slot: 39
+    item_flags: [HIDE_ATTRIBUTES]
+    display_name: '&#FFD45C&lAuto-Feed Unlocker'
+    lore:
+    - '&8Auto-Feed Item'
+    - ''
+    - '&7Open a pet''s options and click its locked'
+    - '&7Auto-Feed button to let it eat by itself.'
+    - ''
+    - ' &8◊ &7Contents: &f1x Auto-Feed Unlocker'
+    - ' &8◊ &7Unlocks: &fThe pet you use it on'
+    - ' &8◊ &7Price: &#FFD27A⚜ 3,000 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
+    - ''
+    - '&#83ca16→ &#70e510Click to Buy'
+    click_requirement:
+      deny_commands:
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 3,000 &7Credits for this.'
+      - '[close]'
+      requirements:
+        credits:
+          type: javascript
+          expression: '%nextcredits_balance% >= 3000'
+    click_commands:
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Auto-Feed Unlocker&7.'
+    - '[console] nextcredits take %player_name% 3000'
+    - '[console] slimefunpet givepetitem %player_name% auto_feed_unlocker auto_feed_unlocker 1'
+    - '[sound] ENTITY_PLAYER_LEVELUP'
+    - '[close]'
+
+  'auto_feed_upgrade':
+    material: GOLDEN_CARROT
+    slot: 41
+    item_flags: [HIDE_ATTRIBUTES]
+    display_name: '&#FFB717&lAuto-Feed Upgrade'
+    lore:
+    - '&8Auto-Feed Item'
+    - ''
+    - '&7Makes an unlocked Auto-Feed eat sooner and'
+    - '&7hold more food. Needs the Unlocker first.'
+    - ''
+    - ' &8◊ &7Contents: &f1x Auto-Feed Upgrade'
+    - ' &8◊ &7Upgrades: &fFeed tier &8(+storage)'
+    - ' &8◊ &7Price: &#FFD27A⚜ 800 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
+    - ''
+    - '&#83ca16→ &#70e510Click to Buy'
+    click_requirement:
+      deny_commands:
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 800 &7Credits for this.'
+      - '[close]'
+      requirements:
+        credits:
+          type: javascript
+          expression: '%nextcredits_balance% >= 800'
+    click_commands:
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Auto-Feed Upgrade&7.'
+    - '[console] nextcredits take %player_name% 800'
+    - '[console] slimefunpet givepetitem %player_name% auto_feed_upgrade auto_feed_upgrade 1'
+    - '[sound] ENTITY_PLAYER_LEVELUP'
+    - '[close]'
+
   'previous-page':
     material: ARROW
     slot: 45
@@ -256,7 +322,7 @@ items:
     lore:
     - '&8Interactive Item'
     - ''
-    - '&7Food, candy, auto-feed and revival items.'
+    - '&7The starter pet, its food, candy and revival items.'
     - ''
     - '&#83ca16→ &#70e510Click for Page 1'
     click_commands:

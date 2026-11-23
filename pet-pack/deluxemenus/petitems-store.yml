@@ -1,18 +1,17 @@
 # Pet Item Store, ᴄᴀʀᴇ - DeluxeMenus menu (Alwination house style, Arcane theme)
 #
 # Slots used:
-#   12  Pet Treat
-#   14  Pet Feast
-#   21  Pet Candy
-#   23  Super Pet Candy
-#   30  Auto-Feed Unlocker
-#   32  Auto-Feed Upgrade
+#   13  Common Pet (starter pet)
+#   21  Pet Treat
+#   23  Pet Feast
+#   30  Pet Candy
+#   32  Super Pet Candy
 #   40  Pet Revival Totem
 #   45   previous page      49  balance info      53  next page
 #   0-53 filler (GRAY_STAINED_GLASS_PANE)
 #
 # Placeholders: %player_name% (click commands), %nextcredits_balance% (PAPI / NextCredits)
-# Food, Candy, Auto-Feed and Revival items - everything a pet eats or needs.
+# The starter pet plus everything it eats, drinks or needs to come back.
 
 menu_title: '&8&nᴘᴇᴛ ᴄᴀʀᴇ'
 open_command: petstore
@@ -27,9 +26,44 @@ items:
     slots:
     - 0-53
 
+  'common_pet':
+    material: PLAYER_HEAD
+    skull: 'eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzMxZTdlMWM2MTQ2MzliYmM5NWEwZDgxZmY3ZTVmN2Y2MDZkOWIzMzExNWNmMmJmMmE0MGNkY2JiYjUzMTMyNCJ9fX0='
+    slot: 13
+    item_flags: [HIDE_ATTRIBUTES]
+    display_name: '&e&l[I] &#62FF8C&lCommon Pet'
+    lore:
+    - '&8Pet'
+    - ''
+    - '&7A starter pet: feed it to level it up, then'
+    - '&7evolve it into a &9&lRare Pet &7at level &f10&7.'
+    - ''
+    - ' &8◊ &7Level: &f1 &8/ &f10'
+    - ' &8◊ &7Starts with: &f3 stats &7(up to &f8&7)'
+    - ' &8◊ &7Food: &f+30 EXP &7per feed'
+    - ' &8◊ &7Evolves into: &9&lRare Pet'
+    - ' &8◊ &7Price: &#FFD27A⚜ 1,500 &fCr'
+    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
+    - ''
+    - '&#83ca16→ &#70e510Click to Buy'
+    click_requirement:
+      deny_commands:
+      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 1,500 &7Credits for this.'
+      - '[close]'
+      requirements:
+        credits:
+          type: javascript
+          expression: '%nextcredits_balance% >= 1500'
+    click_commands:
+    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Common Pet&7.'
+    - '[console] nextcredits take %player_name% 1500'
+    - '[console] slimefunpet givepet %player_name% common_pet 1'
+    - '[sound] ENTITY_PLAYER_LEVELUP'
+    - '[close]'
+
   'pet_treat':
     material: COOKIE
-    slot: 12
+    slot: 21
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#CB883E&lPet Treat &8x10'
     lore:
@@ -61,7 +95,7 @@ items:
 
   'pet_feast':
     material: PUMPKIN_PIE
-    slot: 14
+    slot: 23
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#FFF5A3&lPet Feast &8x5'
     lore:
@@ -93,7 +127,7 @@ items:
 
   'pet_candy':
     material: GLOW_BERRIES
-    slot: 21
+    slot: 30
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#FFA96E&lPet Candy &8x4'
     lore:
@@ -125,7 +159,7 @@ items:
 
   'super_candy':
     material: GOLDEN_APPLE
-    slot: 23
+    slot: 32
     item_flags: [HIDE_ATTRIBUTES]
     display_name: '&#FFD460&lSuper Pet Candy'
     lore:
@@ -152,70 +186,6 @@ items:
     - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Super Pet Candy&7.'
     - '[console] nextcredits take %player_name% 2600'
     - '[console] slimefunpet givepetitem %player_name% candy super_candy 1'
-    - '[sound] ENTITY_PLAYER_LEVELUP'
-    - '[close]'
-
-  'auto_feed_unlocker':
-    material: BEETROOT_SOUP
-    slot: 30
-    item_flags: [HIDE_ATTRIBUTES]
-    display_name: '&#FFD45C&lAuto-Feed Unlocker'
-    lore:
-    - '&8Auto-Feed Item'
-    - ''
-    - '&7Open a pet''s options and click its locked'
-    - '&7Auto-Feed button to let it eat by itself.'
-    - ''
-    - ' &8◊ &7Contents: &f1x Auto-Feed Unlocker'
-    - ' &8◊ &7Unlocks: &fThe pet you use it on'
-    - ' &8◊ &7Price: &#FFD27A⚜ 3,000 &fCr'
-    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
-    - ''
-    - '&#83ca16→ &#70e510Click to Buy'
-    click_requirement:
-      deny_commands:
-      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 3,000 &7Credits for this.'
-      - '[close]'
-      requirements:
-        credits:
-          type: javascript
-          expression: '%nextcredits_balance% >= 3000'
-    click_commands:
-    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Auto-Feed Unlocker&7.'
-    - '[console] nextcredits take %player_name% 3000'
-    - '[console] slimefunpet givepetitem %player_name% auto_feed_unlocker auto_feed_unlocker 1'
-    - '[sound] ENTITY_PLAYER_LEVELUP'
-    - '[close]'
-
-  'auto_feed_upgrade':
-    material: GOLDEN_CARROT
-    slot: 32
-    item_flags: [HIDE_ATTRIBUTES]
-    display_name: '&#FFB717&lAuto-Feed Upgrade'
-    lore:
-    - '&8Auto-Feed Item'
-    - ''
-    - '&7Makes an unlocked Auto-Feed eat sooner and'
-    - '&7hold more food. Needs the Unlocker first.'
-    - ''
-    - ' &8◊ &7Contents: &f1x Auto-Feed Upgrade'
-    - ' &8◊ &7Upgrades: &fFeed tier &8(+storage)'
-    - ' &8◊ &7Price: &#FFD27A⚜ 800 &fCr'
-    - ' &8◊ &7Your Credits: &f%nextcredits_balance%'
-    - ''
-    - '&#83ca16→ &#70e510Click to Buy'
-    click_requirement:
-      deny_commands:
-      - '[message] &#d92625&l! &7You need &#FFD27A⚜ 800 &7Credits for this.'
-      - '[close]'
-      requirements:
-        credits:
-          type: javascript
-          expression: '%nextcredits_balance% >= 800'
-    click_commands:
-    - '[message] &#8FF384&l! &7Purchased &#D6A8FF1x Auto-Feed Upgrade&7.'
-    - '[console] nextcredits take %player_name% 800'
-    - '[console] slimefunpet givepetitem %player_name% auto_feed_upgrade auto_feed_upgrade 1'
     - '[sound] ENTITY_PLAYER_LEVELUP'
     - '[close]'
 
@@ -281,7 +251,7 @@ items:
     lore:
     - '&8Interactive Item'
     - ''
-    - '&7Evolution stones, reroll tokens, stat locks and shards.'
+    - '&7Evolution stones, reroll tokens, stat locks and auto-feed upgrades.'
     - ''
     - '&#83ca16→ &#70e510Click for Page 2'
     click_commands:
