@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    7bf994b5-9c67-42a9-9535-74570399cc0b:
+    b1143094-7a66-4c7a-a5c0-8e225eb98e80:
       commands:
       - 'slimefunpet givepetitem %player_name% candy pet_candy 4'
       weight: 0.0

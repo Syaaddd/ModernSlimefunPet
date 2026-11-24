@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    1e0aae75-a5d7-49ec-a108-a9b3cd6821ce:
+    706c3546-f011-44dd-9822-b9fb838766e3:
       commands:
       - 'slimefunpet givepet %player_name% lazy_sloth 1'
       weight: 0.0

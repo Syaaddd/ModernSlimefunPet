@@ -1,9 +1,9 @@
 base:
   virtual: false
 display:
-  name: <#A86BFF>Pet Gacha Key
+  name: <#A86BFF>Pets Key
   lore:
-  - <gray>Opens the Pet Gacha crate.</gray>
+  - <gray>Opens the Pets crate.</gray>
   - ''
   - '<gray>Pets in the pool: <white>8 base pets only</white>'
   - '<gray>Upgraded pets are never rolled.'

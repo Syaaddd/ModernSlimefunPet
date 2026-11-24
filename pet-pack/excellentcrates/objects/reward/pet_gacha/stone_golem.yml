@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    829683d0-bd62-44bf-a67c-7acd3bde876c:
+    e85e3b93-2934-4524-bd41-88e754788e85:
       commands:
       - 'slimefunpet givepet %player_name% stone_golem 1'
       weight: 0.0

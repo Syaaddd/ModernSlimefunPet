@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    a9f7a0c2-80a3-40d1-b4ef-687a67b5cced:
+    41c9851d-75e6-4e48-9536-e8d908f828cf:
       commands:
       - 'slimefunpet givepetitem %player_name% evolution evolution_stone 1'
       weight: 0.0

@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    42986923-7a51-41c3-bed6-993ad8373658:
+    0e8c3ce5-e0ff-4703-ac33-9e7ffb7e3756:
       commands:
       - 'slimefunpet givepet %player_name% ember_pup 1'
       weight: 0.0

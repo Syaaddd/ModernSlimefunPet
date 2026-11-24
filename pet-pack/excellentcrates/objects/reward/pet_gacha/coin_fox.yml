@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    e4f06905-f760-4f44-b55b-0e39b4ac6acc:
+    4e457c97-ad22-46e4-b0a5-fed50fad50c1:
       commands:
       - 'slimefunpet givepet %player_name% coin_fox 1'
       weight: 0.0

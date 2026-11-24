@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    cea9cb3e-f748-4034-a7ff-bd1c69142703:
+    81f3ed50-1694-4db5-a5fb-d6c3c94889a3:
       commands:
       - 'slimefunpet givepetitem %player_name% auto_feed_unlocker auto_feed_unlocker 1'
       weight: 0.0

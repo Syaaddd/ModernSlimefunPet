@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    fe261a5d-d12f-47db-b039-0d4dfacfa4a3:
+    ac86759c-3c5a-43c6-b713-dc420bec3804:
       commands:
       - 'slimefunpet givepetitem %player_name% stat_lock stat_lock_charm 5'
       weight: 0.0

@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    81ed25de-b901-4736-929a-38a41bd7c2e3:
+    713b0831-6593-4f96-9aca-2fe281614eb1:
       commands:
       - 'slimefunpet givepetitem %player_name% reroll stat_shard 4'
       weight: 0.0

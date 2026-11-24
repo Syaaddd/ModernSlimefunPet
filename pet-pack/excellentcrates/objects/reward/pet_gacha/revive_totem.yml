@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    59d69df2-9473-4657-b41e-67d8e625609f:
+    46e12328-6331-492b-97eb-cb2c247f3115:
       commands:
       - 'slimefunpet givepetitem %player_name% revive revive_totem 1'
       weight: 0.0

@@ -226,9 +226,9 @@ def write(path, text):
 CRATE = """base:
   permission_required: false
 display:
-  name: <#A86BFF>Pet Gacha
+  name: <#A86BFF>Pets
   lore:
-  - <gray>Base pets only &8- <white>never an upgraded one</white>
+  - <gray>Base pets only <dark_gray>- <white>never an upgraded one</white>
   - <gray>Pet chance: <white>1 in 185 keys</white>
 item:
   item:
@@ -290,9 +290,9 @@ blocks:
 KEY = """base:
   virtual: false
 display:
-  name: <#A86BFF>Pet Gacha Key
+  name: <#A86BFF>Pets Key
   lore:
-  - <gray>Opens the Pet Gacha crate.</gray>
+  - <gray>Opens the Pets crate.</gray>
   - ''
   - '<gray>Pets in the pool: <white>8 base pets only</white>'
   - '<gray>Upgraded pets are never rolled.'

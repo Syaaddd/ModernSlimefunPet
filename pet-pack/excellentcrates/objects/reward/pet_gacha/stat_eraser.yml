@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    82757931-eec6-4749-8855-5ca59b74e96a:
+    16b69b01-7d52-47e9-bd89-d85b8dbf45f8:
       commands:
       - 'slimefunpet givepetitem %player_name% reroll stat_eraser 5'
       weight: 0.0

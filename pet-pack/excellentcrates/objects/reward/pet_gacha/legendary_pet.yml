@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    69e9bbd7-025a-4e17-96e9-dcf8f9afb8c0:
+    995ed6fc-71a0-4a78-b5d0-6d3038d2c0b8:
       commands:
       - 'slimefunpet givepet %player_name% legendary_pet 1'
       weight: 0.0

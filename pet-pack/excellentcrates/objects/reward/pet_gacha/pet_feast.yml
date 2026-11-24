@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    fd48f73f-3a48-4614-b354-d995c5e4ae81:
+    d3e65111-d1ba-448c-8ec0-e2f0a047b706:
       commands:
       - 'slimefunpet givepetitem %player_name% food large_feast 5'
       weight: 0.0

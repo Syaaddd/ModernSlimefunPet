@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    e7b710ae-ac95-4add-a06c-0f7262e4f790:
+    e21cfa0a-1120-424c-a362-6e1188ffcdd4:
       commands:
       - 'slimefunpet givepet %player_name% void_wisp 1'
       weight: 0.0

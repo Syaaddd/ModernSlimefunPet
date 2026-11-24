@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    5e9e2043-130b-473f-ae3e-6e01b808f8c3:
+    0618a6e2-a999-4a39-8dd1-f5d41eef8a0b:
       commands:
       - 'slimefunpet givepetitem %player_name% reroll blessed_reroll_token 1'
       weight: 0.0

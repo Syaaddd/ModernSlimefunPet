@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    a76ed973-8e0e-49e8-aaaa-fe8db98354ed:
+    0fdd14e1-b508-48ab-89d7-fb8e7e295640:
       commands:
       - 'slimefunpet givepet %player_name% bloom_sprite 1'
       weight: 0.0
