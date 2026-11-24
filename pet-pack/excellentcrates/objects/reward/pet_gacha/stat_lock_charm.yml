@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Stat Lock Charm x5","color":"#C0F18F","italic":false,"bold":true}},count:5,id:"minecraft:name_tag"}'
+      Value: '{count:5,id:"minecraft:name_tag"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    54279df1-4c77-43f6-8f6f-cffbd3230edb:
+    fe261a5d-d12f-47db-b039-0d4dfacfa4a3:
       commands:
       - 'slimefunpet givepetitem %player_name% stat_lock stat_lock_charm 5'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: epic

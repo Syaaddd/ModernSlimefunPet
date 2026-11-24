@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"[I] Lazy Sloth","italic":false,"bold":true},"minecraft:profile":{"properties":[{"name":"textures","value":"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzRhNTEwYTczNWUxYjZlOGE5NzAwYzNlMjM5OGQyMDJlNTM1ODgyZTk1MmViMmIyZTI1Yzk0MjEyMDU3ODRhZjkifX19"}]}},count:1,id:"minecraft:player_head"}'
+      Value: '{count:1,id:"minecraft:player_head",components:{"minecraft:profile":{properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzRhNTEwYTczNWUxYjZlOGE5NzAwYzNlMjM5OGQyMDJlNTM1ODgyZTk1MmViMmIyZTI1Yzk0MjEyMDU3ODRhZjkifX19"}]}}}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    a64bd1e5-7d0b-4feb-979c-826216689b86:
+    1e0aae75-a5d7-49ec-a108-a9b3cd6821ce:
       commands:
       - 'slimefunpet givepet %player_name% lazy_sloth 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: epic

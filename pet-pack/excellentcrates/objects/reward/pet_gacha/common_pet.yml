@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"[I] Common Pet","italic":false,"bold":true},"minecraft:profile":{"properties":[{"name":"textures","value":"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzMxZTdlMWM2MTQ2MzliYmM5NWEwZDgxZmY3ZTVmN2Y2MDZkOWIzMzExNWNmMmJmMmE0MGNkY2JiYjUzMTMyNCJ9fX0="}]}},count:1,id:"minecraft:player_head"}'
+      Value: '{count:1,id:"minecraft:player_head",components:{"minecraft:profile":{properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzMxZTdlMWM2MTQ2MzliYmM5NWEwZDgxZmY3ZTVmN2Y2MDZkOWIzMzExNWNmMmJmMmE0MGNkY2JiYjUzMTMyNCJ9fX0="}]}}}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    a0c90122-ff50-4e05-950c-0e56792a7ea3:
+    d82a323d-7549-4e88-92e2-4501ff2ae472:
       commands:
       - 'slimefunpet givepet %player_name% common_pet 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: epic

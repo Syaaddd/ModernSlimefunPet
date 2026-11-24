@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Pet Candy x4","color":"#FFA96E","italic":false,"bold":true}},count:4,id:"minecraft:glow_berries"}'
+      Value: '{count:4,id:"minecraft:glow_berries"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    f436e3f7-e1d7-4e73-8cee-73e27a051e62:
+    7bf994b5-9c67-42a9-9535-74570399cc0b:
       commands:
       - 'slimefunpet givepetitem %player_name% candy pet_candy 4'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: uncommon

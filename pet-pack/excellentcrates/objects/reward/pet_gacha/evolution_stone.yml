@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Evolution Stone x1","color":"#31BCFF","italic":false,"bold":true}},count:1,id:"minecraft:amethyst_cluster"}'
+      Value: '{count:1,id:"minecraft:amethyst_cluster"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    b7b186fe-3378-4123-a575-ad6fcbc77102:
+    a9f7a0c2-80a3-40d1-b4ef-687a67b5cced:
       commands:
       - 'slimefunpet givepetitem %player_name% evolution evolution_stone 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: rare

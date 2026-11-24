@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Auto-Feed Upgrade x1","color":"#FFB717","italic":false,"bold":true}},count:1,id:"minecraft:golden_carrot"}'
+      Value: '{count:1,id:"minecraft:golden_carrot"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    cb7e51b4-9a56-4c18-8271-ac15c0d82362:
+    fc6f6b17-75f6-43f5-a7b5-dc45cb14b148:
       commands:
       - 'slimefunpet givepetitem %player_name% auto_feed_upgrade auto_feed_upgrade 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: uncommon

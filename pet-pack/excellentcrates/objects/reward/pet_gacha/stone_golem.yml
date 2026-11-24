@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"[I] Stone Golem","italic":false,"bold":true},"minecraft:profile":{"properties":[{"name":"textures","value":"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzg1NGNlNmYwMTBmMzFlYzdjYmNjMGZlN2NkZTE4MTEwY2Q0OGFjMGEyM2NkZWYwZDU0MDQ2NTE1MWE1YjQ3ZDUifX19"}]}},count:1,id:"minecraft:player_head"}'
+      Value: '{count:1,id:"minecraft:player_head",components:{"minecraft:profile":{properties:[{name:"textures",value:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzg1NGNlNmYwMTBmMzFlYzdjYmNjMGZlN2NkZTE4MTEwY2Q0OGFjMGEyM2NkZWYwZDU0MDQ2NTE1MWE1YjQ3ZDUifX19"}]}}}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    3ac0b29f-5e0d-4816-8af2-b6712700ca84:
+    829683d0-bd62-44bf-a67c-7acd3bde876c:
       commands:
       - 'slimefunpet givepet %player_name% stone_golem 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: epic

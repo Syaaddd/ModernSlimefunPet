@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Stat Reroll Token x1","color":"#88D7FD","italic":false,"bold":true}},count:1,id:"minecraft:globe_banner_pattern"}'
+      Value: '{count:1,id:"minecraft:globe_banner_pattern"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    a781e932-0e1d-4192-a4ca-b21021809204:
+    80d59aaa-4242-4b72-948f-44eae29fa45c:
       commands:
       - 'slimefunpet givepetitem %player_name% reroll reroll_token 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: rare

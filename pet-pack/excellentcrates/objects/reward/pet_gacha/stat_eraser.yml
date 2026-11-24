@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Stat Eraser x5","color":"#FF8BC3","italic":false,"bold":true}},count:5,id:"minecraft:wind_charge"}'
+      Value: '{count:5,id:"minecraft:wind_charge"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    556916f1-00e4-4416-8009-bbfd2e055cef:
+    82757931-eec6-4749-8855-5ca59b74e96a:
       commands:
       - 'slimefunpet givepetitem %player_name% reroll stat_eraser 5'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: uncommon

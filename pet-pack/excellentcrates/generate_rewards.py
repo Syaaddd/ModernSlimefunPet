@@ -7,7 +7,6 @@ Only the 8 base pets (never a target of an evolution in pets.yml) are in the poo
 so an upgraded pet can never be rolled.
 """
 import base64
-import json
 import os
 import re
 import uuid
@@ -38,6 +37,22 @@ ICON_MATERIAL = {
     "blessed_reroll_token": "knowledge_book", "stat_shard": "large_amethyst_bud",
     "stat_eraser": "wind_charge", "stat_lock_charm": "name_tag",
 }
+# display tier per reward: the preview prints "Rarity: null" without a valid id.
+# Rarity weight does NOT enter the roll (RewardEvaluationService.rollReward uses
+# Reward.getWeight via WeightedRandomSelector; rarity only filters when a roll is
+# explicitly asked for one rarity), so this is cosmetic and the odds stay as computed.
+RARITY = {
+    "pet_treat": "common", "pet_feast": "common",
+    "pet_candy": "uncommon", "stat_eraser": "uncommon", "stat_shard": "uncommon",
+    "auto_feed_upgrade": "uncommon",
+    "auto_feed_unlocker": "rare", "revive_totem": "rare", "evolution_stone": "rare",
+    "reroll_token": "rare",
+    "super_candy": "epic", "blessed_evolution_stone": "epic", "blessed_reroll_token": "epic",
+    "stat_lock_charm": "epic",
+    "common_pet": "epic", "ember_pup": "epic", "coin_fox": "epic", "stone_golem": "epic",
+    "lazy_sloth": "epic",
+    "void_wisp": "legendary", "bloom_sprite": "legendary", "legendary_pet": "legendary",
+}
 # base pets only: roots of the evolution graph in live pets.yml
 PETS = [
     ("common_pet", 20), ("ember_pup", 10), ("coin_fox", 10), ("stone_golem", 8),
@@ -65,25 +80,90 @@ def minimessage(legacy):
     return "<gray>".join([out]) if not out.startswith("<") else out
 
 
-def component(text, colour=None, bold=None):
-    node = {"text": text}
-    if colour:
-        node["color"] = colour
-    node["italic"] = False
-    if bold is not None:
-        node["bold"] = bold
-    return node
-
-
 def item_icon(material, name, colour, amount):
-    comp = {"minecraft:custom_name": component("%s x%d" % (name, amount), colour, True)}
-    return '{%s,count:%d,id:"minecraft:%s"}' % (json.dumps(comp, separators=(",", ":")), amount, material)
+    """nightcore parses Data.Value as SNBT (Brigadier), not JSON - see assert_snbt."""
+    return '{count:%d,id:"minecraft:%s"}' % (amount, material)
 
 
 def head_icon(b64, name, colour):
-    comp = {"minecraft:custom_name": component(name, colour, True),
-            "minecraft:profile": {"properties": [{"name": "textures", "value": b64}]}}
-    return '{%s,count:1,id:"minecraft:player_head"}' % json.dumps(comp, separators=(",", ":"))
+    return ('{count:1,id:"minecraft:player_head",components:{"minecraft:profile":'
+            '{properties:[{name:"textures",value:"%s"}]}}}' % b64)
+
+
+def parse_snbt(text, pos=0):
+    """Minimal SNBT parser (Brigadier grammar) so a JSON icon cannot slip through again."""
+    while pos < len(text) and text[pos].isspace():
+        pos += 1
+    if pos >= len(text):
+        raise ValueError("unexpected end")
+    ch = text[pos]
+    if ch == "{":
+        pos += 1
+        while True:
+            while pos < len(text) and text[pos].isspace():
+                pos += 1
+            if text[pos] == "}":
+                return pos + 1
+            if text[pos] == '"':
+                pos = _quoted(text, pos)
+            else:
+                key = re.match(r"[A-Za-z0-9_.+-]+", text[pos:])
+                if not key:
+                    raise ValueError("compound key must be bare [A-Za-z0-9_.+-] or quoted at %d: %r"
+                                     % (pos, text[pos:pos + 12]))
+                pos += key.end()
+            while pos < len(text) and text[pos].isspace():
+                pos += 1
+            if text[pos] != ":":
+                raise ValueError("expected ':' at %d: %r" % (pos, text[pos:pos + 12]))
+            pos = parse_snbt(text, pos + 1)
+            while pos < len(text) and text[pos].isspace():
+                pos += 1
+            if text[pos] == ",":
+                pos += 1
+            elif text[pos] != "}":
+                raise ValueError("expected ',' or '}' at %d: %r" % (pos, text[pos:pos + 12]))
+    elif ch == "[":
+        pos += 1
+        while True:
+            while pos < len(text) and text[pos].isspace():
+                pos += 1
+            if text[pos] == "]":
+                return pos + 1
+            pos = parse_snbt(text, pos)
+            while pos < len(text) and text[pos].isspace():
+                pos += 1
+            if text[pos] == ",":
+                pos += 1
+            elif text[pos] != "]":
+                raise ValueError("expected ',' or ']' at %d" % pos)
+    elif ch == '"':
+        return _quoted(text, pos)
+    else:
+        token = re.match(r"[A-Za-z0-9_.+-]+[bslfd]?", text[pos:])
+        if not token:
+            raise ValueError("unexpected token at %d: %r" % (pos, text[pos:pos + 12]))
+        return pos + token.end()
+
+
+def _quoted(text, pos):
+    pos += 1
+    while pos < len(text):
+        if text[pos] == "\\":
+            pos += 2
+            continue
+        if text[pos] == '"':
+            return pos + 1
+        pos += 1
+    raise ValueError("unterminated string")
+
+
+def assert_snbt(value):
+    """Guards the bug that broke the preview: Data.Value is SNBT (nightcore ItemTag), not JSON."""
+    end = parse_snbt(value)
+    assert value[end:].strip() == "", "trailing junk after the icon compound: %r" % value[end:]
+    assert "{{" not in value, "opening double brace: Data.Value must be SNBT, not JSON"
+    return value
 
 
 REWARD = """base:
@@ -132,7 +212,8 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: %(rarity)s
 """
 
 
@@ -247,7 +328,8 @@ def main():
             "broadcast": "false",
             "uuid": uuid.uuid4(),
             "command": yaml_str("slimefunpet givepetitem %%player_name%% %s %s %d" % (ptype, sub, amount)),
-            "icon": item_icon(ICON_MATERIAL[rid], name, colour, amount),
+            "icon": assert_snbt(item_icon(ICON_MATERIAL[rid], name, colour, amount)),
+            "rarity": RARITY[rid],
         })
 
     for pet_id, weight in PETS:
@@ -262,7 +344,8 @@ def main():
             "broadcast": "true" if pet_id == "legendary_pet" else "false",
             "uuid": uuid.uuid4(),
             "command": yaml_str("slimefunpet givepet %%player_name%% %s 1" % pet_id),
-            "icon": head_icon(b64, re.sub(r"&.", "", legacy).strip(), None),
+            "icon": assert_snbt(head_icon(b64, re.sub(r"&.", "", legacy).strip(), None)),
+            "rarity": RARITY[pet_id],
         })
 
     total = sum(w for _, w in roll_weights)

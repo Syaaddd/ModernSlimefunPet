@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Pet Feast x5","color":"#FFF5A3","italic":false,"bold":true}},count:5,id:"minecraft:pumpkin_pie"}'
+      Value: '{count:5,id:"minecraft:pumpkin_pie"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    52cf5cf6-17d5-4633-a142-baba9a722b49:
+    fd48f73f-3a48-4614-b354-d995c5e4ae81:
       commands:
       - 'slimefunpet givepetitem %player_name% food large_feast 5'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: common

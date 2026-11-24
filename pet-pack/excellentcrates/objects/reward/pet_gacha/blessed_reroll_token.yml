@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Blessed Stat Reroll Token x1","color":"#70FFBA","italic":false,"bold":true}},count:1,id:"minecraft:knowledge_book"}'
+      Value: '{count:1,id:"minecraft:knowledge_book"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    75a4e318-afb1-46c9-b903-8ba1da455da3:
+    5e9e2043-130b-473f-ae3e-6e01b808f8c3:
       commands:
       - 'slimefunpet givepetitem %player_name% reroll blessed_reroll_token 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: epic

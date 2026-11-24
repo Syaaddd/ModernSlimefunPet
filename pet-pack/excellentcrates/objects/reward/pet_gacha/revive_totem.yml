@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Pet Revival Totem x1","color":"#FFE135","italic":false,"bold":true}},count:1,id:"minecraft:totem_of_undying"}'
+      Value: '{count:1,id:"minecraft:totem_of_undying"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    1fd72684-3a63-4590-a982-f6abb3a2b14f:
+    59d69df2-9473-4657-b41e-67d8e625609f:
       commands:
       - 'slimefunpet givepetitem %player_name% revive revive_totem 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: rare

@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Auto-Feed Unlocker x1","color":"#FFD45C","italic":false,"bold":true}},count:1,id:"minecraft:beetroot_soup"}'
+      Value: '{count:1,id:"minecraft:beetroot_soup"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    e7a76185-8cbc-490f-85c3-a3b1cd38d440:
+    cea9cb3e-f748-4034-a7ff-bd1c69142703:
       commands:
       - 'slimefunpet givepetitem %player_name% auto_feed_unlocker auto_feed_unlocker 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: rare

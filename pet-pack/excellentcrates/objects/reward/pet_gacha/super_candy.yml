@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Super Pet Candy x1","color":"#FFD460","italic":false,"bold":true}},count:1,id:"minecraft:golden_apple"}'
+      Value: '{count:1,id:"minecraft:golden_apple"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    9c2c3577-38c2-4248-a4e2-ab7b762f1121:
+    ed6d9823-b176-43cf-9957-5e8661097f15:
       commands:
       - 'slimefunpet givepetitem %player_name% candy super_candy 1'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: epic

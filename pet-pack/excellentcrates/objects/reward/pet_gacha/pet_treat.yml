@@ -6,7 +6,7 @@ preview:
   use_item_data: false
   icon:
     Data:
-      Value: '{{"minecraft:custom_name":{"text":"Pet Treat x10","color":"#CB883E","italic":false,"bold":true}},count:10,id:"minecraft:cookie"}'
+      Value: '{count:10,id:"minecraft:cookie"}'
       DataVersion: 5023
     Provider: vanilla
 broadcast:
@@ -16,7 +16,7 @@ commands:
   give_mode: NORMAL
   iterations: 1
   bundles:
-    2c8e5c8a-773e-4e47-9320-09c2b8abc97a:
+    0480a2ba-6942-4e59-a34c-3a1f2d57e7ea:
       commands:
       - 'slimefunpet givepetitem %player_name% food small_treat 10'
       weight: 0.0
@@ -44,4 +44,5 @@ limit:
       namespace: none
       value: none
 Rarity:
-  enabled: false
+  enabled: true
+  rarity_id: common
