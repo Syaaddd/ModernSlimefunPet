@@ -1,0 +1,47 @@
+base:
+  weight: 1500.0
+preview:
+  name: '<#FFF5A3>Pet Feast x5'
+  lore: []
+  use_item_data: false
+  icon:
+    Data:
+      Value: '{{"minecraft:custom_name":{"text":"Pet Feast x5","color":"#FFF5A3","italic":false,"bold":true}},count:5,id:"minecraft:pumpkin_pie"}'
+      DataVersion: 5023
+    Provider: vanilla
+broadcast:
+  enabled: false
+commands:
+  enabled: true
+  give_mode: NORMAL
+  iterations: 1
+  bundles:
+    52cf5cf6-17d5-4633-a142-baba9a722b49:
+      commands:
+      - 'slimefunpet givepetitem %player_name% food large_feast 5'
+      weight: 0.0
+items: {}
+cooldown:
+  global:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+  individual:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+limit:
+  enabled: false
+  global:
+    Enabled: false
+    Amount: 0
+  individual:
+    Enabled: false
+    Amount: 0
+  alternative:
+    enabled: false
+    reward_id:
+      namespace: none
+      value: none
+Rarity:
+  enabled: false

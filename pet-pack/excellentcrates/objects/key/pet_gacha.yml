@@ -1,0 +1,17 @@
+base:
+  virtual: false
+display:
+  name: <#A86BFF>Pet Gacha Key
+  lore:
+  - <gray>Opens the Pet Gacha crate.</gray>
+  - ''
+  - '<gray>Pets in the pool: <white>8 base pets only</white>'
+  - '<gray>Upgraded pets are never rolled.'
+item:
+  item:
+    Data:
+      Value: '{count:1,id:"minecraft:trial_key"}'
+      DataVersion: 5023
+    Provider: vanilla
+  stackable: true
+  inherit_display_settings: true

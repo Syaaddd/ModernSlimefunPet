@@ -1,0 +1,47 @@
+base:
+  weight: 3.0
+preview:
+  name: '<#FFD27A><bold>[I] Void Wisp</bold> <white>Base pet</white>'
+  lore: []
+  use_item_data: false
+  icon:
+    Data:
+      Value: '{{"minecraft:custom_name":{"text":"[I] Void Wisp","italic":false,"bold":true},"minecraft:profile":{"properties":[{"name":"textures","value":"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzNkOTBkMjdiNmRjNjliOTBkNDlhMzdmNjVkZmNlYjVmNjJlZDExY2Y3ZjkzNTE2NjRmMzYyYjVlNzlhMzJjYjQifX19"}]}},count:1,id:"minecraft:player_head"}'
+      DataVersion: 5023
+    Provider: vanilla
+broadcast:
+  enabled: false
+commands:
+  enabled: true
+  give_mode: NORMAL
+  iterations: 1
+  bundles:
+    0a15fc54-5501-4bc1-becd-8e9268ae03cb:
+      commands:
+      - 'slimefunpet givepet %player_name% void_wisp 1'
+      weight: 0.0
+items: {}
+cooldown:
+  global:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+  individual:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+limit:
+  enabled: false
+  global:
+    Enabled: false
+    Amount: 0
+  individual:
+    Enabled: false
+    Amount: 0
+  alternative:
+    enabled: false
+    reward_id:
+      namespace: none
+      value: none
+Rarity:
+  enabled: false

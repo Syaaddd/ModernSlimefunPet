@@ -1,0 +1,47 @@
+base:
+  weight: 900.0
+preview:
+  name: '<#FFE135>Pet Revival Totem x1'
+  lore: []
+  use_item_data: false
+  icon:
+    Data:
+      Value: '{{"minecraft:custom_name":{"text":"Pet Revival Totem x1","color":"#FFE135","italic":false,"bold":true}},count:1,id:"minecraft:totem_of_undying"}'
+      DataVersion: 5023
+    Provider: vanilla
+broadcast:
+  enabled: false
+commands:
+  enabled: true
+  give_mode: NORMAL
+  iterations: 1
+  bundles:
+    1fd72684-3a63-4590-a982-f6abb3a2b14f:
+      commands:
+      - 'slimefunpet givepetitem %player_name% revive revive_totem 1'
+      weight: 0.0
+items: {}
+cooldown:
+  global:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+  individual:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+limit:
+  enabled: false
+  global:
+    Enabled: false
+    Amount: 0
+  individual:
+    Enabled: false
+    Amount: 0
+  alternative:
+    enabled: false
+    reward_id:
+      namespace: none
+      value: none
+Rarity:
+  enabled: false

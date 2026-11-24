@@ -1,0 +1,47 @@
+base:
+  weight: 1.0
+preview:
+  name: '<#FFD27A><bold>[IV] Legendary Pet</bold> <white>Base pet</white>'
+  lore: []
+  use_item_data: false
+  icon:
+    Data:
+      Value: '{{"minecraft:custom_name":{"text":"[IV] Legendary Pet","italic":false,"bold":true},"minecraft:profile":{"properties":[{"name":"textures","value":"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHBzOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzMyNDFiODNkOWI1OWI5YjQzNjYwZDBjY2QxOTM4OGNkNzNjNjkwYmE0NDNhZjM0ZTlkZDdlMzIxNTBmODkxMyJ9fX0="}]}},count:1,id:"minecraft:player_head"}'
+      DataVersion: 5023
+    Provider: vanilla
+broadcast:
+  enabled: true
+commands:
+  enabled: true
+  give_mode: NORMAL
+  iterations: 1
+  bundles:
+    1c8cc50f-f797-40ba-aa28-8e5c7de2a0ab:
+      commands:
+      - 'slimefunpet givepet %player_name% legendary_pet 1'
+      weight: 0.0
+items: {}
+cooldown:
+  global:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+  individual:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+limit:
+  enabled: false
+  global:
+    Enabled: false
+    Amount: 0
+  individual:
+    Enabled: false
+    Amount: 0
+  alternative:
+    enabled: false
+    reward_id:
+      namespace: none
+      value: none
+Rarity:
+  enabled: false

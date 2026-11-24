@@ -1,0 +1,47 @@
+base:
+  weight: 700.0
+preview:
+  name: '<#FFA96E>Pet Candy x4'
+  lore: []
+  use_item_data: false
+  icon:
+    Data:
+      Value: '{{"minecraft:custom_name":{"text":"Pet Candy x4","color":"#FFA96E","italic":false,"bold":true}},count:4,id:"minecraft:glow_berries"}'
+      DataVersion: 5023
+    Provider: vanilla
+broadcast:
+  enabled: false
+commands:
+  enabled: true
+  give_mode: NORMAL
+  iterations: 1
+  bundles:
+    f436e3f7-e1d7-4e73-8cee-73e27a051e62:
+      commands:
+      - 'slimefunpet givepetitem %player_name% candy pet_candy 4'
+      weight: 0.0
+items: {}
+cooldown:
+  global:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+  individual:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+limit:
+  enabled: false
+  global:
+    Enabled: false
+    Amount: 0
+  individual:
+    Enabled: false
+    Amount: 0
+  alternative:
+    enabled: false
+    reward_id:
+      namespace: none
+      value: none
+Rarity:
+  enabled: false

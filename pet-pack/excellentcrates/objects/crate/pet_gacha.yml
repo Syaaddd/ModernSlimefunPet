@@ -1,0 +1,105 @@
+base:
+  permission_required: false
+display:
+  name: <#A86BFF>Pet Gacha
+  lore:
+  - <gray>Base pets only &8- <white>never an upgraded one</white>
+  - <gray>Pet chance: <white>1 in 185 keys</white>
+item:
+  item:
+    Data:
+      Value: '{count:1,id:"minecraft:purple_shulker_box"}'
+      DataVersion: 5023
+    Provider: vanilla
+  item_stackable: false
+  use_display: true
+opening:
+  enabled: true
+  opening_commands: []
+hologram:
+  enabled: true
+  text:
+  - <#A86BFF><bold>%crate_name%</bold>
+  - ''
+  - '<gray>%crate_description%</gray>'
+  - ''
+  - <#83ca16>→ <#70e510>Left-Click <gray>to preview the crate</gray>
+  - <#83ca16>→ <#70e510>Right-Click <gray>to open the crate</gray>
+  offset:
+    x: 0.0
+    y: 0.7
+    z: 0.0
+cooldowns:
+  global:
+    enabled: false
+    mode: DAILY
+    value: 0
+  individual:
+    enabled: false
+    mode: DAILY
+    value: 0
+animation:
+  enabled: true
+  profile: csgo_animation:default
+effect:
+  enabled: true
+  profile: vortex:default
+key_requirements:
+  enabled: true
+  keys:
+    pet_gacha:
+      amount: 1
+preview:
+  enabled: true
+  config: inventory:default
+rewards:
+  required_rewards: 1
+  reward_list:
+    a278ee44-7300-4e05-9b7e-c1e62f69d8d0:
+      reward_id: pet_treat
+    c7199b86-465b-4db0-bd2e-5f1c4dc72a20:
+      reward_id: pet_feast
+    8c321cee-1367-4749-a158-bcaf5903e9de:
+      reward_id: pet_candy
+    f8f5dd78-7dc8-41ee-bced-2c1f00c0427d:
+      reward_id: super_candy
+    72c141ea-95ce-4486-ad05-f546340c5485:
+      reward_id: auto_feed_unlocker
+    8ee23c71-e876-4edd-a342-0761bdc233e5:
+      reward_id: auto_feed_upgrade
+    f282090d-561e-4543-8281-a738672f6e5e:
+      reward_id: revive_totem
+    baf6c31d-5c75-4f7a-bd33-b9ffebb44774:
+      reward_id: evolution_stone
+    35094499-bedc-4a45-9439-29629f4c7748:
+      reward_id: blessed_evolution_stone
+    65e979c8-efed-4c86-9607-16dfc9d589ed:
+      reward_id: reroll_token
+    837ac107-b587-4fda-b1c8-bf544933596d:
+      reward_id: blessed_reroll_token
+    08d76462-9db8-4b99-9e74-9196cecaeb58:
+      reward_id: stat_shard
+    ffc9b6b2-cd95-4399-ba32-b6e4288231c4:
+      reward_id: stat_eraser
+    18727b32-7991-4848-819b-2a3466e3197d:
+      reward_id: stat_lock_charm
+    8d7eaa64-b1c8-4837-97c9-c28a1b605cbf:
+      reward_id: common_pet
+    9c73f4d9-72a1-40c3-8930-dcc867fe7d7a:
+      reward_id: ember_pup
+    1c397e9f-ce25-462b-b090-b362e857c8de:
+      reward_id: coin_fox
+    4de38a54-118c-435b-bba1-4f6748a0945c:
+      reward_id: stone_golem
+    7c75e094-b77c-41e6-9f3d-4ef6caf0d880:
+      reward_id: lazy_sloth
+    a7d2b673-32db-4921-aa4a-780fa5eb6e23:
+      reward_id: void_wisp
+    8b1c51cf-54f0-4ead-867b-08ff9f68c481:
+      reward_id: bloom_sprite
+    8e212a63-2279-4a6e-b997-f328cec324da:
+      reward_id: legendary_pet
+selective_rewards:
+  enabled: false
+blocks:
+  positions: {}

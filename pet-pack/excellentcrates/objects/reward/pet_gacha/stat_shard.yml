@@ -1,0 +1,47 @@
+base:
+  weight: 700.0
+preview:
+  name: '<#DCA9FC>Stat Shard x4'
+  lore: []
+  use_item_data: false
+  icon:
+    Data:
+      Value: '{{"minecraft:custom_name":{"text":"Stat Shard x4","color":"#DCA9FC","italic":false,"bold":true}},count:4,id:"minecraft:large_amethyst_bud"}'
+      DataVersion: 5023
+    Provider: vanilla
+broadcast:
+  enabled: false
+commands:
+  enabled: true
+  give_mode: NORMAL
+  iterations: 1
+  bundles:
+    e04104c6-a617-46c3-8992-9a6565193a53:
+      commands:
+      - 'slimefunpet givepetitem %player_name% reroll stat_shard 4'
+      weight: 0.0
+items: {}
+cooldown:
+  global:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+  individual:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+limit:
+  enabled: false
+  global:
+    Enabled: false
+    Amount: 0
+  individual:
+    Enabled: false
+    Amount: 0
+  alternative:
+    enabled: false
+    reward_id:
+      namespace: none
+      value: none
+Rarity:
+  enabled: false

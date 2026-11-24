@@ -1,0 +1,47 @@
+base:
+  weight: 800.0
+preview:
+  name: '<#88D7FD>Stat Reroll Token x1'
+  lore: []
+  use_item_data: false
+  icon:
+    Data:
+      Value: '{{"minecraft:custom_name":{"text":"Stat Reroll Token x1","color":"#88D7FD","italic":false,"bold":true}},count:1,id:"minecraft:globe_banner_pattern"}'
+      DataVersion: 5023
+    Provider: vanilla
+broadcast:
+  enabled: false
+commands:
+  enabled: true
+  give_mode: NORMAL
+  iterations: 1
+  bundles:
+    a781e932-0e1d-4192-a4ca-b21021809204:
+      commands:
+      - 'slimefunpet givepetitem %player_name% reroll reroll_token 1'
+      weight: 0.0
+items: {}
+cooldown:
+  global:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+  individual:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+limit:
+  enabled: false
+  global:
+    Enabled: false
+    Amount: 0
+  individual:
+    Enabled: false
+    Amount: 0
+  alternative:
+    enabled: false
+    reward_id:
+      namespace: none
+      value: none
+Rarity:
+  enabled: false

@@ -1,0 +1,47 @@
+base:
+  weight: 800.0
+preview:
+  name: '<#C0F18F>Stat Lock Charm x5'
+  lore: []
+  use_item_data: false
+  icon:
+    Data:
+      Value: '{{"minecraft:custom_name":{"text":"Stat Lock Charm x5","color":"#C0F18F","italic":false,"bold":true}},count:5,id:"minecraft:name_tag"}'
+      DataVersion: 5023
+    Provider: vanilla
+broadcast:
+  enabled: false
+commands:
+  enabled: true
+  give_mode: NORMAL
+  iterations: 1
+  bundles:
+    54279df1-4c77-43f6-8f6f-cffbd3230edb:
+      commands:
+      - 'slimefunpet givepetitem %player_name% stat_lock stat_lock_charm 5'
+      weight: 0.0
+items: {}
+cooldown:
+  global:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+  individual:
+    enabled: false
+    mode: CUSTOM
+    value: 0
+limit:
+  enabled: false
+  global:
+    Enabled: false
+    Amount: 0
+  individual:
+    Enabled: false
+    Amount: 0
+  alternative:
+    enabled: false
+    reward_id:
+      namespace: none
+      value: none
+Rarity:
+  enabled: false
